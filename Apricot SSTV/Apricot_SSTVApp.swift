@@ -9,6 +9,8 @@ import SwiftUI
 
 @main
 struct Apricot_SSTVApp: App {
+    init() { PhoneSync.shared.activate() }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()

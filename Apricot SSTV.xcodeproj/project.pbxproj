@@ -6,14 +6,53 @@
 	objectVersion = 110;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		5B35336B30936B8000287936 /* Apricot SSTV Watch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 5B35336130936B7F00287936 /* Apricot SSTV Watch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5B35336930936B8000287936 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5B35334730936A3900287936 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5B35336030936B7F00287936;
+			remoteInfo = "Apricot SSTV Watch Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		5B35336F30936B8000287936 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolder = Product;
+			files = (
+				5B35336B30936B8000287936 /* Apricot SSTV Watch Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		5B35334F30936A3900287936 /* Apricot SSTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Apricot SSTV.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B35336130936B7F00287936 /* Apricot SSTV Watch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Apricot SSTV Watch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B3533703093711F00287936 /* Apricot-SSTV-Watch-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Apricot-SSTV-Watch-Watch-App-Info.plist"; sourceTree = "<group>"; };
+		5BD9210D3094367C00C169CA /* Apricot-SSTV-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Apricot-SSTV-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		5B35335130936A3900287936 /* Apricot SSTV */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "Apricot SSTV";
+			sourceTree = "<group>";
+		};
+		5B35336230936B7F00287936 /* Apricot SSTV Watch Watch App */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Apricot SSTV Watch Watch App";
+			sourceTree = "<group>";
+		};
+		5BD920D630942AFD00C169CA /* Shared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Shared;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -24,13 +63,22 @@
 			files = (
 			);
 		};
+		5B35335E30936B7F00287936 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		5B35334630936A3900287936 = {
 			isa = PBXGroup;
 			children = (
+				5BD9210D3094367C00C169CA /* Apricot-SSTV-Info.plist */,
+				5B3533703093711F00287936 /* Apricot-SSTV-Watch-Watch-App-Info.plist */,
 				5B35335130936A3900287936 /* Apricot SSTV */,
+				5B35336230936B7F00287936 /* Apricot SSTV Watch Watch App */,
+				5BD920D630942AFD00C169CA /* Shared */,
 				5B35335030936A3900287936 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -39,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				5B35334F30936A3900287936 /* Apricot SSTV.app */,
+				5B35336130936B7F00287936 /* Apricot SSTV Watch Watch App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -53,15 +102,39 @@
 				5B35334B30936A3900287936 /* Sources */,
 				5B35334C30936A3900287936 /* Frameworks */,
 				5B35334D30936A3900287936 /* Resources */,
+				5B35336F30936B8000287936 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
+			dependencies = (
+				5B35336A30936B8000287936 /* PBXTargetDependency */,
+			);
 			fileSystemSynchronizedGroups = (
 				5B35335130936A3900287936 /* Apricot SSTV */,
+				5BD920D630942AFD00C169CA /* Shared */,
 			);
 			name = "Apricot SSTV";
 			productName = "Apricot SSTV";
 			productReference = 5B35334F30936A3900287936 /* Apricot SSTV.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5B35336030936B7F00287936 /* Apricot SSTV Watch Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5B35336C30936B8000287936 /* Build configuration list for PBXNativeTarget "Apricot SSTV Watch Watch App" */;
+			buildPhases = (
+				5B35335D30936B7F00287936 /* Sources */,
+				5B35335E30936B7F00287936 /* Frameworks */,
+				5B35335F30936B7F00287936 /* Resources */,
+			);
+			buildRules = (
+			);
+			fileSystemSynchronizedGroups = (
+				5B35336230936B7F00287936 /* Apricot SSTV Watch Watch App */,
+				5BD920D630942AFD00C169CA /* Shared */,
+			);
+			name = "Apricot SSTV Watch Watch App";
+			productName = "Apricot SSTV Watch Watch App";
+			productReference = 5B35336130936B7F00287936 /* Apricot SSTV Watch Watch App.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -77,6 +150,9 @@
 					5B35334E30936A3900287936 = {
 						CreatedOnToolsVersion = 27.1;
 					};
+					5B35336030936B7F00287936 = {
+						CreatedOnToolsVersion = 27.1;
+					};
 				};
 			};
 			buildConfigurationList = 5B35334A30936A3900287936 /* Build configuration list for PBXProject "Apricot SSTV" */;
@@ -85,6 +161,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 5B35334630936A3900287936;
 			minimizedProjectReferenceProxies = 1;
@@ -94,12 +171,18 @@
 			projectRoot = "";
 			targets = (
 				5B35334E30936A3900287936 /* Apricot SSTV */,
+				5B35336030936B7F00287936 /* Apricot SSTV Watch Watch App */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		5B35334D30936A3900287936 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		5B35335F30936B7F00287936 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
 			);
@@ -112,7 +195,20 @@
 			files = (
 			);
 		};
+		5B35335D30936B7F00287936 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5B35336A30936B8000287936 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5B35336030936B7F00287936 /* Apricot SSTV Watch Watch App */;
+			targetProxy = 5B35336930936B8000287936 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		5B35335830936A3A00287936 /* Debug configuration for PBXProject "Apricot SSTV" */ = {
@@ -246,11 +342,15 @@
 				DEVELOPMENT_TEAM = NXXC59K2ZD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Apricot-SSTV-Info.plist";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Apricot SSTV uses the microphone to receive and decode slow-scan television signals.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Apricot SSTV saves received pictures to your photo library.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -262,6 +362,7 @@
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Shared/Apricot-Bridging-Header.h";
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -278,11 +379,15 @@
 				DEVELOPMENT_TEAM = NXXC59K2ZD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Apricot-SSTV-Info.plist";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Apricot SSTV uses the microphone to receive and decode slow-scan television signals.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Apricot SSTV saves received pictures to your photo library.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -294,9 +399,84 @@
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Shared/Apricot-Bridging-Header.h";
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		5B35336D30936B8000287936 /* Debug configuration for PBXNativeTarget "Apricot SSTV Watch Watch App" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NXXC59K2ZD;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Apricot-SSTV-Watch-Watch-App-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Apricot SSTV Watch";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Apricot SSTV uses the microphone to receive and decode slow-scan television signals.";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.sodagray.Apricot-SSTV";
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sodagray.Apricot-SSTV.watchkitapp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Shared/Apricot-Bridging-Header.h";
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_WATCHOS_DEPLOYMENT_TARGET)";
+			};
+			name = Debug;
+		};
+		5B35336E30936B8000287936 /* Release configuration for PBXNativeTarget "Apricot SSTV Watch Watch App" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NXXC59K2ZD;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Apricot-SSTV-Watch-Watch-App-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Apricot SSTV Watch";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Apricot SSTV uses the microphone to receive and decode slow-scan television signals.";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.sodagray.Apricot-SSTV";
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sodagray.Apricot-SSTV.watchkitapp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Shared/Apricot-Bridging-Header.h";
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_WATCHOS_DEPLOYMENT_TARGET)";
 			};
 			name = Release;
 		};
@@ -316,6 +496,14 @@
 			buildConfigurations = (
 				5B35335B30936A3A00287936 /* Debug configuration for PBXNativeTarget "Apricot SSTV" */,
 				5B35335C30936A3A00287936 /* Release configuration for PBXNativeTarget "Apricot SSTV" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		5B35336C30936B8000287936 /* Build configuration list for PBXNativeTarget "Apricot SSTV Watch Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5B35336D30936B8000287936 /* Debug configuration for PBXNativeTarget "Apricot SSTV Watch Watch App" */,
+				5B35336E30936B8000287936 /* Release configuration for PBXNativeTarget "Apricot SSTV Watch Watch App" */,
 			);
 			defaultConfigurationName = Release;
 		};
