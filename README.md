@@ -52,8 +52,9 @@ decoder's test bench.
 
 ## Privacy
 
-Apricot SSTV collects no data. The full policy is in the app (Settings →
-Privacy Policy) and at <https://bd1fpn.cn/apricot-sstv/privacy.html>.
+Apricot SSTV collects no data. The full policy is at
+<https://bd1fpn.cn/apricot/privacy.html>, linked from the app (Settings →
+Privacy Policy).
 
 ## License
 
@@ -106,4 +107,4 @@ iPhone 发送你自己的图片。
 [`APPSTORE-EXCEPTION.md`](APPSTORE-EXCEPTION.md)）。本程序不提供任何担保。
 提交贡献即表示你同意按上述条款授权。
 
-**隐私政策**：<https://bd1fpn.cn/apricot-sstv/privacy.html>
+**隐私政策**：<https://bd1fpn.cn/apricot/privacy.html>

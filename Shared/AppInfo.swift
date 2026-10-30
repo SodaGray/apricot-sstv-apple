@@ -33,9 +33,7 @@ nonisolated enum AppInfo {
 
     static let license = URL(string: "https://www.gnu.org/licenses/gpl-3.0.html")!
 
-    /// The privacy policy on the web, for the App Store listing; the same
-    /// text is in the app (PrivacyView).
-    static let privacyPolicy = URL(string: "https://bd1fpn.cn/apricot-sstv/privacy.html")!
-    /// When the privacy policy last changed.
-    static let privacyDate = DateComponents(calendar: Calendar(identifier: .gregorian), year: 2026, month: 10, day: 29).date!
+    /// The privacy policy: one page on the website, linked from Settings
+    /// and About, and given to App Store Connect.
+    static let privacyPolicy = URL(string: "https://bd1fpn.cn/apricot/privacy.html")!
 }

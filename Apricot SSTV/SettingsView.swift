@@ -137,20 +137,8 @@ struct SettingsView: View {
             } label: {
                 Label("About Apricot SSTV", systemImage: "info.circle")
             }
-            NavigationLink {
-                PrivacyView()
-            } label: {
-                Label("Privacy Policy", systemImage: "hand.raised")
-            }
-            Link(destination: AppInfo.source) {
-                HStack {
-                    Label("Source Code", systemImage: "chevron.left.forwardslash.chevron.right")
-                    Spacer()
-                    Image(systemName: "arrow.up.right")
-                        .font(.footnote.weight(.semibold))
-                        .foregroundStyle(.tertiary)
-                }
-            }
+            WebLink("Privacy Policy", systemImage: "hand.raised", destination: AppInfo.privacyPolicy)
+            WebLink("Source Code", systemImage: "chevron.left.forwardslash.chevron.right", destination: AppInfo.source)
         } footer: {
             Text(verbatim: "\(AppInfo.name) \(AppInfo.version)")
                 .frame(maxWidth: .infinity)
@@ -201,6 +189,32 @@ struct SettingsView: View {
     private func deleteAll() {
         for meta in list.items {
             try? ReceptionStore.delete(id: meta.id)
+        }
+    }
+}
+
+/// A row that opens a web page in Safari: a label, and an arrow on the
+/// right instead of a chevron, so it doesn't look like it stays in the app.
+struct WebLink: View {
+    let title: LocalizedStringKey
+    let systemImage: String
+    let destination: URL
+
+    init(_ title: LocalizedStringKey, systemImage: String, destination: URL) {
+        self.title = title
+        self.systemImage = systemImage
+        self.destination = destination
+    }
+
+    var body: some View {
+        Link(destination: destination) {
+            HStack {
+                Label(title, systemImage: systemImage)
+                Spacer()
+                Image(systemName: "arrow.up.right")
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(.tertiary)
+            }
         }
     }
 }

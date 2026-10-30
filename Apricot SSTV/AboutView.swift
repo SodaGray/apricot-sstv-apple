@@ -38,9 +38,7 @@ struct AboutView: View {
             Section {
                 Label("No ads, no subscriptions, no account.", systemImage: "hand.raised")
                 Label("Nothing is collected or sent anywhere. Pictures stay on your iPhone and Apple Watch, and only move between the two.", systemImage: "lock")
-                NavigationLink("Privacy Policy") {
-                    PrivacyView()
-                }
+                WebLink("Privacy Policy", systemImage: "hand.raised", destination: AppInfo.privacyPolicy)
             } header: {
                 Text("Privacy")
             }
