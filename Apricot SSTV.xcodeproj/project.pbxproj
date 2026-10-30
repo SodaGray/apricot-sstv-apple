@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5B35336B30936B8000287936 /* Apricot SSTV Watch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 5B35336130936B7F00287936 /* Apricot SSTV Watch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		5BD92184309489B500C169CA /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 5BD92183309489B500C169CA /* AppIcon.icon */; };
+		5BD92185309489B500C169CA /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 5BD92183309489B500C169CA /* AppIcon.icon */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +39,7 @@
 		5B35336130936B7F00287936 /* Apricot SSTV Watch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Apricot SSTV Watch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B3533703093711F00287936 /* Apricot-SSTV-Watch-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Apricot-SSTV-Watch-Watch-App-Info.plist"; sourceTree = "<group>"; };
 		5BD9210D3094367C00C169CA /* Apricot-SSTV-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Apricot-SSTV-Info.plist"; sourceTree = "<group>"; };
+		5BD92183309489B500C169CA /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -79,6 +82,7 @@
 				5B35335130936A3900287936 /* Apricot SSTV */,
 				5B35336230936B7F00287936 /* Apricot SSTV Watch Watch App */,
 				5BD920D630942AFD00C169CA /* Shared */,
+				5BD92183309489B500C169CA /* AppIcon.icon */,
 				5B35335030936A3900287936 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -180,11 +184,13 @@
 		5B35334D30936A3900287936 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
+				5BD92184309489B500C169CA /* AppIcon.icon in Resources */,
 			);
 		};
 		5B35335F30936B7F00287936 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
+				5BD92185309489B500C169CA /* AppIcon.icon in Resources */,
 			);
 		};
 /* End PBXResourcesBuildPhase section */
@@ -337,6 +343,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NXXC59K2ZD;
@@ -374,6 +381,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NXXC59K2ZD;
@@ -411,6 +419,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NXXC59K2ZD;
@@ -448,6 +457,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NXXC59K2ZD;
