@@ -350,6 +350,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Apricot-SSTV-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Apricot SSTV";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Apricot SSTV uses the microphone to receive and decode SSTV pictures. With Save Raw Audio on, each picture's sound is kept with it on your device.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Apricot SSTV saves received pictures to your photo library.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -388,6 +390,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Apricot-SSTV-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Apricot SSTV";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Apricot SSTV uses the microphone to receive and decode SSTV pictures. With Save Raw Audio on, each picture's sound is kept with it on your device.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Apricot SSTV saves received pictures to your photo library.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
