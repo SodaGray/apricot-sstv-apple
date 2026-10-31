@@ -8,7 +8,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Apricot SSTV Watch"
+            "value" : "Apricot SSTV"
           }
         }
       }
@@ -37,7 +37,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Apricot SSTV 使用麦克风接收和解码慢扫描电视（SSTV）图片。开启“保存原始音频”时，每张图片的声音会随图片保存在你的设备上。"
           }
         }
@@ -55,7 +55,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Apricot SSTV 会把你选择保存的图片存入照片图库。"
           }
         }
