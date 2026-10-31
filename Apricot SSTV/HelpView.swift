@@ -47,16 +47,16 @@ struct HelpView: View {
 private struct GettingStartedHelp: View {
     var body: some View {
         HelpArticle("Getting Started") {
-            Text("Apricot SSTV turns the sound of slow-scan television into pictures. Tune your radio to a frequency where SSTV is sent, and let your iPhone or Apple Watch hear it.")
+            Text("Apricot SSTV turns the sound of slow-scan television into pictures, and your pictures into that sound, to send through your radio. To receive, tune your radio to a frequency where SSTV is sent, and let your iPhone or Apple Watch hear it.")
 
             HelpSection("Connect the audio") {
                 Text("Hold the iPhone near the radio's speaker, or, for a much cleaner signal, connect the radio's audio output to a USB audio interface plugged into the iPhone. Receive shows which input is in use.")
             }
             HelpSection("Listen") {
-                Text("Tap Listen. When a picture's VIS header is heard, the picture builds line by line, and it is saved to Pictures when it ends. You can lock the iPhone: receiving carries on.")
+                Text("You can lock the iPhone: receiving carries on.")
             }
             HelpSection("Set the level") {
-                Text("Adjust the radio's volume so the Level bar stays in the green, between the −40 and −10 dB marks. The red stretch at the right end means it's about to clip: if the bar turns red and says Clipping, turn the radio down.")
+                Text("Keep the Level bar in the green, between −40 and −10 dB. If it turns red and says Clipping, turn the radio down.")
             }
         }
     }
@@ -81,13 +81,13 @@ private struct ReceivingHelp: View {
                 Text("If the signal fades or the audio is interrupted, the picture carries on at the right line when it comes back within two minutes.")
             }
             HelpSection("Stopping by itself") {
-                Text("Listening uses a lot of battery, so it stops when no picture has come in for the Receive Timeout in Settings (10 minutes at first), never in the middle of a picture. In its last two minutes a countdown shows, with Keep Listening to start it over. Choose Never to listen until you tap Stop.")
+                Text("Listening stops when no picture has come in for the Receive Timeout in Settings, never in the middle of a picture.")
             }
             HelpSection("Recordings made elsewhere") {
-                Text("Decode Audio File, in the ⋯ menu on Receive, finds the pictures in a recording made with another device or app (WAV, M4A, MP3 and others), as if it were played to Receive. Each is saved in Pictures with its stretch of the recording as raw audio, to develop again in the darkroom; its note says which file it came from. The file itself isn't changed. (Import Library, in Settings, is something else: it takes back a folder this app exported.)")
+                Text("Decode Audio File, in the ⋯ menu on Receive, finds the pictures in a recording (WAV, M4A, MP3 and others). Each keeps its stretch of the recording as raw audio. When they were received is worked out from the file's date.")
             }
             HelpSection("Raw audio") {
-                Text("With Save Raw Audio on, each picture keeps the sound it was decoded from, from as long before the picture to as long after it as the picture takes to send, so nothing is lost if its start or end was misjudged. Share it from the picture's details as a WAV file to decode it in another program, or to show someone what was received. Tapping Stop ends the recording there. Turn it off in Settings to save space.")
+                Text("With Save Raw Audio on, each picture keeps its sound, with as long again before and after it as it takes to send, in case its start or end was misjudged. Tapping Stop ends the recording there.")
             }
         }
     }
@@ -96,23 +96,23 @@ private struct ReceivingHelp: View {
 private struct DarkroomHelp: View {
     var body: some View {
         HelpArticle("Darkroom") {
-            HelpSection("Developed again, not edited") {
-                Text("Many apps straighten a picture by bending the image afterwards: pixels are slid, stretched and filled in, and whatever was lost stays lost. The darkroom works on the sound instead. It decodes the picture's raw audio again, reading every line at the timing you set, so nothing is stretched or made up: every pixel comes from the signal, as when the picture first came in.")
+            HelpSection("How it works") {
+                Text("The darkroom decodes a picture's raw audio again. Every change you make is decoded again from the sound.")
             }
             HelpSection("What it needs") {
-                Text("The picture's raw audio, kept when Save Raw Audio is on (on the iPhone, and on the watch for its own pictures). A picture without it can still be shared, but not developed again. Open a picture and tap Edit, or Develop Again in the Darkroom.")
+                Text("The picture's raw audio, kept when Save Raw Audio is on.")
             }
             HelpSection("Develop") {
-                Text("Decodes the whole recording with the latest decoder: the slant fitted over the whole picture, syncs found where the first decode missed them, weak lines carried through. Often that's all a picture needs.")
+                Text("Decodes the whole recording again with the latest decoder. Often that's all a picture needs.")
             }
             HelpSection("By hand") {
-                Text("Then, from what Develop found: the mode, where the first line starts (a line at a time, or finely), the slant (the sender's clock error, set by hand or measured on the picture with two points on an upright edge or a region with upright edges) and the horizontal position. Every change is decoded again from the sound. Touch and hold the picture to compare with the picture as received.")
+                Text("The mode, where the first line starts, the slant and the horizontal position. The slant can be measured on the picture: two points on an edge that should be upright, or a region with upright edges. Touch and hold the picture to compare with the original.")
             }
             HelpSection("Nothing is overwritten") {
-                Text("Done keeps the developed picture beside the original, which is never changed, and the raw audio stays. Revert to Original goes back at any time.")
+                Text("The original picture and its raw audio are never changed. Revert to Original goes back at any time.")
             }
             HelpSection("Fragments") {
-                Text("A start too short to count as a picture, mostly a false start, is kept as a fragment, with its raw audio. Its sound may hold a whole picture whose start was missed. Fragments are shown apart: choose Fragments in the menu at the top right of Pictures.")
+                Text("A start too short to count as a picture is kept as a fragment, with its raw audio, which may hold a picture whose start was missed. Fragments are under the menu at the top right of Pictures.")
             }
         }
     }
@@ -122,10 +122,10 @@ private struct EventsHelp: View {
     var body: some View {
         HelpArticle("Notes and Events") {
             HelpSection("Notes") {
-                Text("Each picture's details have room for its frequency, its source (a satellite, a callsign) and a note. They're kept apart from how it was received, which never changes.")
+                Text("Each picture's details have room for its frequency, its source and a note.")
             }
             HelpSection("Events") {
-                Text("An event gathers the pictures of one occasion, such as an ISS SSTV weekend or a net. Make one current, and pictures received from then on, here or on Apple Watch, go into it until the end of its last day. Others can be added with Select in Pictures. An event's pictures are grouped by when they came in: a gap of more than 20 minutes starts a new group.")
+                Text("While an event is current, new pictures from the iPhone and Apple Watch go into it, until the end of its last day. In an event, a gap of more than 20 minutes starts a new group.")
             }
         }
     }
@@ -135,16 +135,16 @@ private struct SendingHelp: View {
     var body: some View {
         HelpArticle("Sending") {
             HelpSection("Connect the radio") {
-                Text("Connect the iPhone's audio output (a headphone adapter or a USB audio interface) to the radio's microphone or data input, and turn on VOX so the radio transmits when it hears the audio. The iPhone's volume sets the level: start low and raise it until the radio's ALC just begins to move.")
+                Text("Connect the iPhone's audio output (a headphone adapter or a USB audio interface) to the radio's microphone or data input, and turn on VOX. Raise the level until the radio's ALC just begins to move.")
             }
             HelpSection("Prepare the picture") {
-                Text("Choose a picture from the photo library, Favorites or Files, then tap it to move and zoom it in the frame. Favorites keeps pictures you send often, each where you last placed it, and two test cards for trying out a setup. Your callsign is drawn at the top left; add a second line, such as a signal report, if you like.")
+                Text("Favorites keeps pictures you send often, each where you last placed it. Built In has a test card, colour bars and the Mandelbrot set. Your callsign is drawn at the top left.")
             }
             HelpSection("Check before going on the air") {
                 Text("With a new setup, tap the share button to make a WAV and decode it with another SSTV program, or play it to Apricot SSTV on Apple Watch.")
             }
             HelpSection("Send") {
-                Text("Tap Send. Receiving stops while sending. Keep the radio connected until the progress bar finishes; you can lock the iPhone.")
+                Text("Receiving stops while sending. You can lock the iPhone.")
             }
             HelpSection("On the air") {
                 Text("Transmitting needs an amateur radio license and must follow its rules, including identifying your station.")
@@ -157,13 +157,13 @@ private struct WatchHelp: View {
     var body: some View {
         HelpArticle("Apple Watch") {
             HelpSection("Receiving on the watch") {
-                Text("Open Apricot SSTV on the watch, tap Listen, and keep the watch near the radio's speaker. The watch taps you when a picture starts, when it's saved, when the signal is lost, and when listening stops by itself.")
+                Text("The watch taps you when a picture starts, when it's saved, when the signal is lost, and when listening stops by itself.")
             }
             HelpSection("Lowering your wrist") {
-                Text("The first time you open the app on the watch, you choose what lowering your wrist does: keep listening, or stop to save battery (after the picture coming in). Change it under Wrist Down in the watch's Settings, which are apart from the iPhone's. If it stopped, the reason stays on screen, with a button to listen again and keep listening from then on.")
+                Text("Whether listening carries on with the wrist down is under Wrist Down in the watch's own Settings. A picture coming in is always finished first.")
             }
             HelpSection("Pictures come to the iPhone") {
-                Text("Every saved picture goes to the iPhone by itself when the iPhone app is installed and the two are near each other. You don't need to open either app. Its raw audio follows, if saved. In the watch's Pictures, a phone icon marks the ones the iPhone already has in full.")
+                Text("Pictures go to the iPhone by themselves, raw audio after them. In the watch's Pictures, a phone icon marks the ones the iPhone has.")
             }
             HelpSection("Freeing space") {
                 Text("Delete Synced, in the watch's Pictures, removes the pictures the iPhone already has. To keep less on the watch, turn off Save Raw Audio in the watch's Settings.")

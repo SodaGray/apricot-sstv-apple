@@ -71,7 +71,7 @@ struct ContentView: View {
                 Button {
                     rx.isRunning ? rx.stop() : rx.start()
                 } label: {
-                    Text(rx.isStarting ? LocalizedStringKey("Starting…") : rx.isRunning ? LocalizedStringKey("Stop") : LocalizedStringKey("Listen"))
+                    Text(rx.isStarting ? LocalizedStringKey("Starting…") : rx.isRunning ? LocalizedStringKey("Stop") : LocalizedStringKey("Start"))
                         .frame(maxWidth: .infinity)
                 }
                 .tint(rx.isRunning ? Color.red : Color.accentColor)
@@ -84,7 +84,7 @@ struct ContentView: View {
                         rx.wristPolicy = .keep
                         rx.start()
                     } label: {
-                        Text("Listen, and Keep Listening with Wrist Down")
+                        Text("Start, and Keep Listening with Wrist Down")
                             .frame(maxWidth: .infinity)
                     }
                     .font(.system(size: 13))
@@ -271,7 +271,7 @@ private struct PictureView: View {
                         VStack(spacing: 2) {
                             Text("Apricot SSTV")
                                 .font(.system(size: 13, weight: .semibold))
-                            Text(isRunning ? LocalizedStringKey("Listening…") : LocalizedStringKey("Tap to Listen"))
+                            Text(isRunning ? LocalizedStringKey("Listening…") : LocalizedStringKey("Tap to Start"))
                                 .font(.system(size: 10))
                                 .foregroundStyle(.secondary)
                         }

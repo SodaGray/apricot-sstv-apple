@@ -80,7 +80,7 @@ struct SettingsView: View {
         } header: {
             Text("Receiving")
         } footer: {
-            Text("Automatic finds the mode from each picture's VIS header. Choose a mode to receive only that one. Start Without VIS locks on to the line syncs when the header was missed.")
+            Text("Start Without VIS locks on to the line syncs when the header was missed.")
         }
 
         Section {
@@ -90,7 +90,7 @@ struct SettingsView: View {
                 }
             }
         } footer: {
-            Text("Listening stops when no picture has come in for this long, to save battery.")
+            Text("Listening stops when no picture has come in for this long.")
         }
 
         Section {
@@ -103,9 +103,9 @@ struct SettingsView: View {
             }
         } footer: {
             if rx.saveAudio {
-                Text("Keeps the sound of each picture with it as a WAV file, to share from the picture's details or develop again in the darkroom: from as long before the picture as it takes to send, to as long after it, in case its start or end was misjudged. 12 kHz holds everything the decoder uses: about 8 MB for a Martin M1 picture. Full Rate keeps the sound as it came in (usually 48 kHz), for other programs or for listening, at four times the size. A change takes effect the next time you tap Listen. Apple Watch has its own settings and always uses 12 kHz.")
+                Text("12 kHz holds everything the decoder uses: about 8 MB for a Martin M1 picture. Full Rate keeps the sound as it came in, usually 48 kHz, at four times the size. A change applies the next time you start. Apple Watch has its own setting, always at 12 kHz.")
             } else {
-                Text("Keeps the sound of each picture with it as a WAV file, to share from the picture's details or develop again in the darkroom. Apple Watch has its own settings.")
+                Text("Needed to develop a picture again in the darkroom. Apple Watch has its own setting.")
             }
         }
     }
@@ -121,7 +121,7 @@ struct SettingsView: View {
         } header: {
             Text("Sending")
         } footer: {
-            Text("Drawn at the top left of every picture you send, to identify your station.")
+            Text("Drawn at the top left of every picture you send.")
         }
     }
 
@@ -205,7 +205,7 @@ struct SettingsView: View {
                     for id in list.fragmentIDs { try? ReceptionStore.delete(id: id) }
                 }
             } message: {
-                Text("Fragments are too short to count as pictures, but their raw audio may hold a whole picture. Pictures are not affected.")
+                Text("Their raw audio may still hold a picture.")
             }
 
             Button("Delete All Pictures", role: .destructive) {
@@ -224,7 +224,7 @@ struct SettingsView: View {
         } header: {
             Text("Pictures")
         } footer: {
-            Text("Export Library saves every picture with its details, notes and raw audio, your events and your favorites, as a folder in Files. Import Library takes such a folder back; pictures already here are skipped. To find pictures in a recording made elsewhere, use Decode Audio File in the ⋯ menu on Receive.")
+            Text("Import Library takes back a folder made by Export Library. For a recording made elsewhere, use Decode Audio File on Receive.")
         }
         .alert(
             transferMessage ?? "",
@@ -259,7 +259,7 @@ struct SettingsView: View {
         } header: {
             Text("Apple Watch")
         } footer: {
-            Text("Pictures received on Apple Watch come to this iPhone by themselves when the two are near each other.")
+            Text("Pictures from Apple Watch come to this iPhone by themselves.")
         }
     }
 
@@ -344,9 +344,10 @@ struct WebLink: View {
             HStack {
                 Label(title, systemImage: systemImage)
                 Spacer()
+                // In the link's own colour: a faint arrow looked disabled.
                 Image(systemName: "arrow.up.right")
                     .font(.footnote.weight(.semibold))
-                    .foregroundStyle(.tertiary)
+                    .foregroundStyle(.tint)
             }
         }
     }

@@ -100,7 +100,7 @@ struct PhotoAdjustView: View {
             set(zoom: abs(working.zoom - 1) < 0.01 ? fit : 1)
         }
         .accessibilityLabel("Photo in the \(mode.name) frame")
-        .accessibilityHint("Drag to move, pinch to zoom, double-tap to switch between fill and fit.")
+        .accessibilityHint("Double-tap to switch between fill and fit.")
     }
 
     private func moveAndZoom(frameWidth: CGFloat, frameHeight: CGFloat) -> some Gesture {

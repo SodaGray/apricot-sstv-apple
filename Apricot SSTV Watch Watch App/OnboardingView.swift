@@ -61,7 +61,7 @@ struct OnboardingView: View {
         Group {
             Text("Wrist Down")
                 .font(.headline)
-            Text("After you tap Listen and lower your wrist:")
+            Text("After you tap Start and lower your wrist:")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
             choice(
@@ -87,7 +87,7 @@ struct OnboardingView: View {
         Group {
             Text("Raw Audio")
                 .font(.headline)
-            Text("Keep each picture's sound. It goes to the iPhone with the picture, where a bad one can be developed again from it in the darkroom.")
+            Text("Keeps each picture's sound, so a bad one can be developed again on the iPhone.")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
             choice("Save Raw Audio", "About 8 MB for a Martin M1 picture.", selected: purpose == .review && rx.saveAudio) {

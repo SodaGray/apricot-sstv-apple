@@ -76,7 +76,12 @@ struct OnboardingView: View {
                 FeatureRow(
                     systemImage: "wand.and.stars",
                     title: "Darkroom",
-                    text: "A picture can keep the sound it was decoded from. A bad one is then developed again from that sound, not bent or retouched as an image: every pixel still comes from the signal."
+                    text: "A picture that came out badly can be developed again from the sound it was decoded from: its start, slant and mode put right."
+                )
+                FeatureRow(
+                    systemImage: "calendar",
+                    title: "Notes and Events",
+                    text: "Give a picture a title, its frequency and source, and a note. Gather the pictures of one occasion, such as an ISS SSTV weekend, in an event."
                 )
             }
             .padding(.horizontal, 28)
@@ -92,7 +97,7 @@ struct OnboardingView: View {
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Keep Raw Audio?")
                         .font(.largeTitle.bold())
-                    Text("Each picture's sound, from as long before it to as long after it as the picture takes to send, in case its start or end was misjudged. If a picture comes out badly, it can be developed again from this sound in the darkroom, or the sound shared. Without it, only the picture is left.")
+                    Text("Each picture's sound, with a margin before and after. Without it, a bad picture can't be developed again.")
                         .foregroundStyle(.secondary)
                 }
                 .padding(.top, 48)

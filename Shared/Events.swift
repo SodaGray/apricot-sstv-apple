@@ -33,14 +33,17 @@ import Foundation
 nonisolated struct PictureNotes: Codable, Sendable, Equatable {
     var format = 1
     var event: UUID?
+    /// A name for the picture, shown in place of its mode.
+    var title = ""
     /// As typed, in MHz ("145.800").
     var frequency = ""
     /// Who or what sent it, as typed: a satellite, a callsign, anything.
     var source = ""
     var note = ""
 
-    init(event: UUID? = nil, frequency: String = "", source: String = "", note: String = "") {
+    init(event: UUID? = nil, title: String = "", frequency: String = "", source: String = "", note: String = "") {
         self.event = event
+        self.title = title
         self.frequency = frequency
         self.source = source
         self.note = note
@@ -51,13 +54,14 @@ nonisolated struct PictureNotes: Codable, Sendable, Equatable {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         format = try c.decodeIfPresent(Int.self, forKey: .format) ?? 1
         event = try c.decodeIfPresent(UUID.self, forKey: .event)
+        title = try c.decodeIfPresent(String.self, forKey: .title) ?? ""
         frequency = try c.decodeIfPresent(String.self, forKey: .frequency) ?? ""
         source = try c.decodeIfPresent(String.self, forKey: .source) ?? ""
         note = try c.decodeIfPresent(String.self, forKey: .note) ?? ""
     }
 
     var isEmpty: Bool {
-        event == nil && frequency.isEmpty && source.isEmpty && note.isEmpty
+        event == nil && title.isEmpty && frequency.isEmpty && source.isEmpty && note.isEmpty
     }
 }
 
@@ -75,6 +79,8 @@ nonisolated struct SSTVEvent: Codable, Sendable, Identifiable, Equatable, Hashab
     var note = ""
     /// The times it was the current event.
     var currentSpans: [DateInterval] = []
+    /// The picture shown for it (nil: its first picture).
+    var cover: String?
 
     init(name: String, firstDay: Date, lastDay: Date, frequency: String = "", note: String = "") {
         self.name = name
@@ -94,6 +100,7 @@ nonisolated struct SSTVEvent: Codable, Sendable, Identifiable, Equatable, Hashab
         frequency = try c.decodeIfPresent(String.self, forKey: .frequency) ?? ""
         note = try c.decodeIfPresent(String.self, forKey: .note) ?? ""
         currentSpans = try c.decodeIfPresent([DateInterval].self, forKey: .currentSpans) ?? []
+        cover = try c.decodeIfPresent(String.self, forKey: .cover)
     }
 
     /// Midnight after the last day.
@@ -210,6 +217,13 @@ nonisolated enum EventStore {
         guard var e = event(id: id), e.endsAt > now, !e.isCurrent(at: now) else { return }
         e.currentSpans.append(DateInterval(start: now, end: e.endsAt))
         try save(e)
+    }
+
+    /// Shows this picture for the event (nil: its first picture).
+    static func setCover(_ pictureID: String?, for id: UUID) {
+        guard var e = event(id: id) else { return }
+        e.cover = pictureID
+        try? save(e)
     }
 
     static func endCurrent(id: UUID) throws {

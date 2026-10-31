@@ -11,7 +11,8 @@
 //  sheet. The progress of a transmission shows under the picture.
 //
 //  A picture comes from the photo library, Favorites (pictures kept in
-//  the app, and two built-in test cards) or Files, from one menu. A
+//  the app), Built In (test card, colour bars, the Mandelbrot set) or
+//  Files, from one menu. A
 //  favorite remembers where it was placed in the frame. The mode is chosen
 //  from a list grouped by family, with each mode's size and length.
 //
@@ -20,6 +21,7 @@ import SwiftUI
 import PhotosUI
 import Combine
 import UniformTypeIdentifiers
+import AVFAudio
 
 struct SendView: View {
     @EnvironmentObject private var receiver: Receiver
@@ -32,6 +34,8 @@ struct SendView: View {
     // The text fields edit these drafts; the picture is redrawn only when
     // a field is left (or Return is pressed), not on every keystroke.
     @State private var callsignDraft = ""
+    /// Where the sound will go (the current audio route), kept up to date.
+    @State private var routeOutput = SendView.currentOutput()
     @State private var textDraft = ""
     @FocusState private var focus: Field?
 
@@ -48,6 +52,7 @@ struct SendView: View {
     @State private var loadingPhoto = false
     @State private var showLibrary = false
     @State private var showFavorites = false
+    @State private var showBuiltIn = false
     @State private var showFiles = false
     /// The favorite the current photo came from, so its placement is kept.
     @State private var favoriteID: String?
@@ -76,11 +81,22 @@ struct SendView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     sendButton
                 }
-                ToolbarItemGroup(placement: .keyboard) {
-                    Spacer()
+                // A spacer of the toolbar's own, so Done gets a glass of its
+                // own size (a Spacer inside the item stretched it, the word
+                // left at one end).
+                ToolbarSpacer(.flexible, placement: .keyboard)
+                ToolbarItem(placement: .keyboard) {
                     Button("Done") { focus = nil }
+                        .fontWeight(.semibold)
                 }
             }
+        }
+        .onReceive(
+            NotificationCenter.default
+                .publisher(for: AVAudioSession.routeChangeNotification)
+                .receive(on: DispatchQueue.main)
+        ) { _ in
+            routeOutput = SendView.currentOutput()
         }
         .sheet(item: $sharedWAV) { wav in
             ActivityView(url: wav.url) { sharedWAV = nil }
@@ -112,12 +128,10 @@ struct SendView: View {
         }
         .photosPicker(isPresented: $showLibrary, selection: $pickerItem, matching: .images)
         .sheet(isPresented: $showFavorites) {
-            FavoritesView { pick in
-                photo = PictureComposer.prepare(pick.photo)
-                placement = pick.placement
-                favoriteID = pick.favoriteID
-                recompose()
-            }
+            FavoritesView { pick in usePick(pick) }
+        }
+        .sheet(isPresented: $showBuiltIn) {
+            BuiltInView { pick in usePick(pick) }
         }
         .fileImporter(isPresented: $showFiles, allowedContentTypes: [.image]) { result in
             loadFile(result)
@@ -174,8 +188,9 @@ struct SendView: View {
                 .listRowInsets(EdgeInsets())
                 .disabled(tx.isBusy)
             } else if let composed {
-                Button {
-                    openAdjust()
+                // Tapping the picture chooses another, whenever not sending.
+                Menu {
+                    photoMenuItems
                 } label: {
                     Image(uiImage: composed)
                         .resizable()
@@ -187,8 +202,8 @@ struct SendView: View {
                 }
                 .buttonStyle(.plain)
                 .listRowInsets(EdgeInsets())
+                .disabled(tx.isBusy)
                 .accessibilityLabel("Picture to send")
-                .accessibilityHint("Opens the adjust screen.")
             }
         }
     }
@@ -208,6 +223,7 @@ struct SendView: View {
                 }
             } label: {
                 Label(photo == nil ? LocalizedStringKey("Choose Picture") : LocalizedStringKey("Change Picture"), systemImage: "photo.on.rectangle")
+                    .modifier(DimWhenDisabled())
             }
             .disabled(tx.isBusy)
 
@@ -215,10 +231,9 @@ struct SendView: View {
                 openAdjust()
             } label: {
                 Label("Adjust Position and Size", systemImage: "crop")
+                    .modifier(DimWhenDisabled())
             }
             .disabled(photo == nil || tx.isBusy)
-        } footer: {
-            Text("Tap the picture or Adjust to move and zoom the photo in the frame.")
         }
     }
 
@@ -228,6 +243,7 @@ struct SendView: View {
                 ModeList(selection: $modeVIS)
             } label: {
                 LabeledContent("Mode", value: mode.name)
+                    .modifier(DimWhenDisabled())
             }
             .disabled(tx.isBusy)
         } footer: {
@@ -249,6 +265,11 @@ struct SendView: View {
             Label("Favorites", systemImage: "star")
         }
         Button {
+            showBuiltIn = true
+        } label: {
+            Label("Built In", systemImage: "square.grid.2x2")
+        }
+        Button {
             showFiles = true
         } label: {
             Label("Files", systemImage: "folder")
@@ -256,7 +277,7 @@ struct SendView: View {
     }
 
     private var textSection: some View {
-        Section("Text on the picture") {
+        Section("Overlay Text") {
             TextField("Callsign", text: $callsignDraft)
                 .textInputAutocapitalization(.characters)
                 .autocorrectionDisabled()
@@ -299,7 +320,7 @@ struct SendView: View {
             }
             .tint(.red)
         } else {
-            Button("Send") {
+            Button("Start") {
                 send()
             }
             .buttonStyle(.glassProminent)
@@ -322,7 +343,7 @@ struct SendView: View {
                         } else if photo == nil {
                             Text("Choose a picture to send.")
                         } else {
-                            Text("Tap Send. The radio keys on VOX.")
+                            Text("The radio keys on VOX.")
                         }
                     }
                         .foregroundStyle(.secondary)
@@ -344,18 +365,31 @@ struct SendView: View {
             .font(.subheadline)
             .transaction { $0.animation = nil }
         } footer: {
-            Text(outputFooter)
+            if let output = outputName {
+                Text("Output: \(output)")
+            }
         }
     }
 
-    private var outputFooter: String {
-        if tx.state == .sending, let output = tx.outputName {
-            return String(localized: "Output: \(output). The iPhone's volume sets the level.")
-        }
-        return String(localized: "Connect the audio output (headphone adapter or USB interface) to the radio's audio input; the iPhone's volume sets the level. Before sending on the air with a new setup, share a WAV (top left) and check it with another SSTV decoder.")
+    /// The output in use while sending, otherwise the one it would go to.
+    private var outputName: String? {
+        if tx.state == .sending, let output = tx.outputName { return output }
+        return routeOutput.isEmpty ? nil : routeOutput
+    }
+
+    static func currentOutput() -> String {
+        AVAudioSession.sharedInstance().currentRoute.outputs.first?.portName ?? ""
     }
 
     // MARK: Actions
+
+    /// A picture from Favorites or Built In.
+    private func usePick(_ pick: FavoritePick) {
+        photo = PictureComposer.prepare(pick.photo)
+        placement = pick.placement
+        favoriteID = pick.favoriteID
+        recompose()
+    }
 
     private func loadPhoto() {
         guard let item = pickerItem else { return }
@@ -483,6 +517,18 @@ private struct ActivityView: UIViewControllerRepresentable {
     }
 
     func updateUIViewController(_ vc: UIActivityViewController, context: Context) {}
+}
+
+// MARK: - Disabled look
+
+/// Greys out a control's label while it can't be used (a menu's label,
+/// in a list, kept its colour when disabled).
+struct DimWhenDisabled: ViewModifier {
+    @Environment(\.isEnabled) private var isEnabled
+
+    func body(content: Content) -> some View {
+        content.opacity(isEnabled ? 1 : 0.4)
+    }
 }
 
 // MARK: - Mode list

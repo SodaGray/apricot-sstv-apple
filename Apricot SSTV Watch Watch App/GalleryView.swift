@@ -14,6 +14,8 @@ import Combine
 struct GalleryView: View {
     @StateObject private var list = ReceptionList()
     @State private var confirmDeleteSynced = false
+    /// Swiped to delete: asks first.
+    @State private var pendingDelete: ReceptionMeta?
 
     var body: some View {
         List {
@@ -30,9 +32,7 @@ struct GalleryView: View {
                 }
             }
             .onDelete { offsets in
-                for i in offsets {
-                    WatchSync.shared.delete(id: list.items[i].id)
-                }
+                pendingDelete = offsets.first.map { list.items[$0] }
             }
 
             if !list.syncedIDs.isEmpty {
@@ -51,6 +51,18 @@ struct GalleryView: View {
             }
         }
         .navigationTitle("Pictures")
+        .confirmationDialog(
+            list.syncedIDs.contains(pendingDelete?.id ?? "")
+                ? String(localized: "Delete this picture from the watch?")
+                : String(localized: "This picture isn't on the iPhone yet. Delete it?"),
+            isPresented: Binding(get: { pendingDelete != nil }, set: { if !$0 { pendingDelete = nil } }),
+            titleVisibility: .visible,
+            presenting: pendingDelete
+        ) { meta in
+            Button("Delete", role: .destructive) {
+                WatchSync.shared.delete(id: meta.id)
+            }
+        }
         .confirmationDialog(
             "Delete \(list.syncedIDs.count) pictures already on the iPhone?",
             isPresented: $confirmDeleteSynced,

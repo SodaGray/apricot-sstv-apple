@@ -62,6 +62,8 @@ struct GalleryView: View {
     @State private var selected: Set<String> = []
     @State private var confirmDelete = false
     @State private var newEventForSelection = false
+    /// A picture whose Delete was chosen from its menu: asks first.
+    @State private var pendingDelete: ReceptionMeta?
     @Environment(\.scenePhase) private var scenePhase
 
     /// A picture is showing: the tab bar makes way for its Share / Delete.
@@ -152,6 +154,16 @@ struct GalleryView: View {
             ) {
                 Button("Delete", role: .destructive) { deleteSelected() }
             }
+            .confirmationDialog(
+                "Delete this picture?",
+                isPresented: Binding(get: { pendingDelete != nil }, set: { if !$0 { pendingDelete = nil } }),
+                titleVisibility: .visible,
+                presenting: pendingDelete
+            ) { meta in
+                Button("Delete", role: .destructive) {
+                    try? ReceptionStore.delete(id: meta.id)
+                }
+            }
         }
         .onChange(of: scenePhase) {
             if scenePhase == .active { list.reload() }
@@ -166,13 +178,13 @@ struct GalleryView: View {
     private var grid: some View {
         ScrollView {
             if filter == .fragments {
-                Text("Too few rows to count as a picture: mostly false starts, sometimes a picture caught at its very end. Each is kept with its raw audio (if saved), which may hold the whole picture: open one and Edit to develop it in the darkroom.")
+                Text("Too few rows to count as pictures. Their raw audio may still hold one.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.top, 8)
             } else if let event = list.currentEvent, !selecting {
-                CurrentEventBanner(event: event)
+                CurrentEventBanner(event: event, cover: list.cover(of: event))
                     .padding(.top, 8)
             }
             LazyVGrid(
@@ -274,7 +286,11 @@ struct GalleryView: View {
                 path.append(.picture(meta.id))
             }
         } label: {
-            GalleryCell(meta: meta, selection: selecting ? selected.contains(meta.id) : nil)
+            GalleryCell(
+                meta: meta,
+                selection: selecting ? selected.contains(meta.id) : nil,
+                title: list.notes[meta.id]?.title ?? ""
+            )
         }
         .buttonStyle(.plain)
         .frame(maxWidth: .infinity)
@@ -284,7 +300,7 @@ struct GalleryView: View {
             if !selecting {
                 ShareLink(item: ReceptionStore.displayImageURL(for: meta.id))
                 Button(role: .destructive) {
-                    try? ReceptionStore.delete(id: meta.id)
+                    pendingDelete = meta
                 } label: {
                     Label("Delete", systemImage: "trash")
                 }
@@ -342,6 +358,8 @@ struct GalleryCell: View {
     let meta: ReceptionMeta
     /// nil when not selecting; otherwise whether this one is selected.
     let selection: Bool?
+    /// Its title (notes), shown in place of the mode.
+    var title: String = ""
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -360,11 +378,14 @@ struct GalleryCell: View {
                 }
                 .opacity(selection == false ? 0.75 : 1)
 
-            Text(meta.mode)
+            Text(verbatim: title.isEmpty ? meta.mode : title)
                 .font(.subheadline.weight(.semibold))
                 .lineLimit(1)
 
             HStack(spacing: 0) {
+                if !title.isEmpty {
+                    Text(verbatim: "\(meta.mode) · ")
+                }
                 Text(meta.startedAt, format: .dateTime.month(.abbreviated).day().hour().minute())
                 if meta.isFragment {
                     Text(verbatim: " · ")
@@ -491,7 +512,7 @@ private struct ReceptionDetailView: View {
             }
         }
         .scrollDismissesKeyboard(.interactively)
-        .navigationTitle(meta.mode)
+        .navigationTitle(notes.title.isEmpty ? meta.mode : notes.title)
         .navigationBarTitleDisplayMode(.inline)
         // As in Photos: the tab bar makes way (GalleryView hides it) for
         // the picture's own bar, Share at the left, Delete at the right.
@@ -524,14 +545,10 @@ private struct ReceptionDetailView: View {
             notesChanged = false
         }
         .toolbar {
-            if typing {
-                ToolbarItem(placement: .keyboard) {
-                    HStack {
-                        Spacer()
-                        Button("Done") { typing = false }
-                            .fontWeight(.semibold)
-                    }
-                }
+            ToolbarSpacer(.flexible, placement: .keyboard)
+            ToolbarItem(placement: .keyboard) {
+                Button("Done") { typing = false }
+                    .fontWeight(.semibold)
             }
         }
         .toolbar {
@@ -609,8 +626,6 @@ private struct ReceptionDetailView: View {
                         systemImage: "wand.and.stars"
                     )
                 }
-            } footer: {
-                Text("Decodes this picture again from its raw audio, with the timing you set: not an edit of the image, so nothing is stretched or made up.")
             }
         } else {
             Section {
@@ -618,9 +633,7 @@ private struct ReceptionDetailView: View {
                     .foregroundStyle(.secondary)
             } footer: {
                 if meta.device == "watch" {
-                    Text("This picture has no raw audio here, so it can't be developed again. If the watch kept it, it comes after the picture.")
-                } else {
-                    Text("This picture was kept without its sound, so it can't be developed again. With Save Raw Audio on, new pictures keep theirs.")
+                    Text("Raw audio from Apple Watch comes after its picture.")
                 }
             }
         }
@@ -630,6 +643,8 @@ private struct ReceptionDetailView: View {
 
     private var notesSection: some View {
         Section {
+            TextField("Title", text: $notes.title, prompt: Text("Title"))
+                .focused($typing)
             Picker("Event", selection: $notes.event) {
                 Text("None").tag(UUID?.none)
                 ForEach(list.events) { event in
@@ -695,8 +710,6 @@ private struct ReceptionDetailView: View {
             }
         } header: {
             Text("Raw Audio")
-        } footer: {
-            Text("The sound this picture was decoded from, as a WAV file. Share it to decode it again in another app.")
         }
     }
 

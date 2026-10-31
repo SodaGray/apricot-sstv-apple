@@ -27,7 +27,7 @@ struct SettingsView: View {
             } header: {
                 Text("Receiving")
             } footer: {
-                Text("Choose a mode to receive only that one. Start Without VIS locks on to the line syncs when the header was missed.")
+                Text("Start Without VIS locks on to the line syncs when the header was missed.")
             }
 
             Section {
@@ -47,7 +47,7 @@ struct SettingsView: View {
                     }
                 }
             } footer: {
-                Text("Listening stops when no picture has come in for this long, to save battery.")
+                Text("Listening stops when no picture has come in for this long.")
             }
 
             Section {

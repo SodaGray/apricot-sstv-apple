@@ -54,6 +54,20 @@ final class ReceptionList: ObservableObject {
         return events.first { $0.id == id }
     }
 
+    /// An event's pictures (not fragments), oldest first.
+    func pictures(in event: SSTVEvent) -> [ReceptionMeta] {
+        items
+            .filter { notes[$0.id]?.event == event.id && !fragmentIDs.contains($0.id) }
+            .sorted { $0.startedAt < $1.startedAt }
+    }
+
+    /// The picture shown for an event: the one chosen, or its first.
+    func cover(of event: SSTVEvent) -> ReceptionMeta? {
+        let pictures = pictures(in: event)
+        if let id = event.cover, let chosen = pictures.first(where: { $0.id == id }) { return chosen }
+        return pictures.first
+    }
+
     var currentEvent: SSTVEvent? {
         events.first { $0.isCurrent() }
     }

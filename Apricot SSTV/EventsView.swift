@@ -24,13 +24,13 @@ import Combine
 /// The top of the gallery while an event is current.
 struct CurrentEventBanner: View {
     let event: SSTVEvent
+    let cover: ReceptionMeta?
 
     var body: some View {
         NavigationLink(value: GalleryRoute.event(event.id)) {
             HStack(spacing: 12) {
-                Image(systemName: "calendar")
-                    .font(.title3)
-                    .foregroundStyle(.tint)
+                CoverView(cover: cover)
+                    .frame(width: 56, height: 42)
                 VStack(alignment: .leading, spacing: 1) {
                     Text(event.displayName)
                         .font(.subheadline.weight(.semibold))
@@ -50,6 +50,24 @@ struct CurrentEventBanner: View {
             .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
         }
         .buttonStyle(.plain)
+    }
+}
+
+/// An event's picture, or a calendar where it has none yet.
+struct CoverView: View {
+    let cover: ReceptionMeta?
+
+    var body: some View {
+        if let cover {
+            Thumbnail(meta: cover, cornerRadius: 6)
+        } else {
+            RoundedRectangle(cornerRadius: 6, style: .continuous)
+                .fill(Color(.tertiarySystemFill))
+                .overlay {
+                    Image(systemName: "calendar")
+                        .foregroundStyle(.secondary)
+                }
+        }
     }
 }
 
@@ -82,7 +100,7 @@ struct EventsListView: View {
                 ContentUnavailableView {
                     Label("No Events", systemImage: "calendar")
                 } description: {
-                    Text("An event gathers the pictures of one occasion: an ISS SSTV weekend, a net, a test with a friend. While one is current, new pictures go into it by themselves.")
+                    Text("While an event is current, new pictures go into it by themselves.")
                 } actions: {
                     Button("New Event") { creating = true }
                         .buttonStyle(.glassProminent)
@@ -138,8 +156,16 @@ struct EventsListView: View {
     }
 
     private func row(_ event: SSTVEvent) -> some View {
-        let count = list.notes.values.filter { $0.event == event.id }.count
-        return VStack(alignment: .leading, spacing: 2) {
+        let count = list.pictures(in: event).count
+        return HStack(spacing: 12) {
+            CoverView(cover: list.cover(of: event))
+                .frame(width: 64, height: 48)
+            rowText(event, count: count)
+        }
+    }
+
+    private func rowText(_ event: SSTVEvent, count: Int) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
             HStack(spacing: 6) {
                 Text(event.displayName)
                     .font(.headline)
@@ -240,7 +266,7 @@ struct EventDetailView: View {
                 info(event)
 
                 if pictures.isEmpty {
-                    Text("No pictures yet. Pictures received while the event is current go here; others can be added from the gallery with Select.")
+                    Text("No pictures yet. Add some with Select in Pictures.")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -273,6 +299,12 @@ struct EventDetailView: View {
 
     private func info(_ event: SSTVEvent) -> some View {
         VStack(alignment: .leading, spacing: 10) {
+            if let cover = list.cover(of: event) {
+                // Touch and hold a picture below to choose another.
+                Thumbnail(meta: cover, cornerRadius: 10)
+                    .aspectRatio(320.0 / 256.0, contentMode: .fit)
+                    .frame(maxWidth: .infinity)
+            }
             Label(dayRange(event), systemImage: "calendar")
             if !event.frequency.isEmpty {
                 Label {
@@ -299,11 +331,11 @@ struct EventDetailView: View {
                 }
                 .buttonStyle(.glass)
             } else if event.hasEnded {
-                Text("This event has ended. To add new pictures to it as they come in, change its last day.")
+                Text("Ended. Change its last day to make it current again.")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
             } else {
-                Text("Make it current, and pictures received from now on (here or on Apple Watch) go into it until the end of its last day.")
+                Text("While current, new pictures from here and Apple Watch go into it, until the end of its last day.")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                 Button {
@@ -355,12 +387,19 @@ struct EventDetailView: View {
 
     private func cell(_ meta: ReceptionMeta) -> some View {
         NavigationLink(value: GalleryRoute.picture(meta.id)) {
-            GalleryCell(meta: meta, selection: nil)
+            GalleryCell(meta: meta, selection: nil, title: list.notes[meta.id]?.title ?? "")
         }
         .buttonStyle(.plain)
         .frame(maxWidth: .infinity)
         .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: 12, style: .continuous))
         .contextMenu {
+            if let event, list.cover(of: event)?.id != meta.id {
+                Button {
+                    EventStore.setCover(meta.id, for: eventID)
+                } label: {
+                    Label("Set as Cover", systemImage: "photo")
+                }
+            }
             ShareLink(item: ReceptionStore.displayImageURL(for: meta.id))
             Button {
                 EventStore.setEvent(nil, for: [meta.id])
@@ -413,7 +452,7 @@ struct EventEditor: View {
                         }
                     }
                 } footer: {
-                    Text("Pictures that join this event take its frequency, unless one was written for them.")
+                    Text("Pictures that join take this frequency, unless they have one.")
                 }
                 Section {
                     TextField("Note", text: $note, prompt: Text("Note"), axis: .vertical)
@@ -424,7 +463,7 @@ struct EventEditor: View {
                         Toggle("Current Event", isOn: $makeCurrent)
                             .disabled(lastDayEnded)
                     } footer: {
-                        Text("Pictures received from now on, here or on Apple Watch, go into it until the end of its last day. You can stop this at any time.")
+                        Text("While current, new pictures from here and Apple Watch go into it, until the end of its last day.")
                     }
                 }
             }

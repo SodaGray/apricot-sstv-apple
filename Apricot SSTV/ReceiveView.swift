@@ -175,7 +175,7 @@ struct ReceiveView: View {
             }
             .tint(.red)
         } else {
-            Button("Listen") {
+            Button("Start") {
                 rx.start()
             }
             .buttonStyle(.glassProminent)

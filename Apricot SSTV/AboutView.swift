@@ -30,14 +30,7 @@ struct AboutView: View {
             }
 
             Section {
-                Text("Receive slow-scan television pictures from a radio on your iPhone or Apple Watch, and send your own from your iPhone.")
-            } header: {
-                Text("What It Does")
-            }
-
-            Section {
-                Label("No ads, no subscriptions, no account.", systemImage: "hand.raised")
-                Label("Nothing is collected or sent anywhere. Pictures stay on your iPhone and Apple Watch, and only move between the two.", systemImage: "lock")
+                Label("Nothing is collected or sent anywhere.", systemImage: "lock")
                 WebLink("Privacy Policy", systemImage: "hand.raised", destination: AppInfo.privacyPolicy)
             } header: {
                 Text("Privacy")
@@ -81,8 +74,6 @@ struct AboutView: View {
                 }
             } header: {
                 Text("Modes")
-            } footer: {
-                Text("Every mode can be received and sent, with the VIS header or, when it was missed, from the line syncs.")
             }
         }
         .navigationTitle("About")

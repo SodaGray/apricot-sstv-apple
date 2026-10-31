@@ -147,6 +147,7 @@ enum TestCard: String, CaseIterable, Identifiable {
         let format = UIGraphicsImageRendererFormat()
         format.scale = 1
         format.opaque = true
+        format.preferredRange = .standard       // plain 8-bit sRGB, as sent
         return UIGraphicsImageRenderer(size: size, format: format)
     }
 
@@ -264,7 +265,7 @@ struct FavoritesView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var favorites: [Favorite] = []
     @State private var thumbnails: [String: UIImage] = [:]
-    @State private var cards: [TestCard: UIImage] = [:]
+    @State private var pendingRemove: Favorite?
 
     private let columns = [GridItem(.adaptive(minimum: 104), spacing: 12)]
 
@@ -272,26 +273,14 @@ struct FavoritesView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    section("Built In") {
-                        ForEach(TestCard.allCases) { card in
-                            tile(cards[card], title: card.title) {
-                                if let image = cards[card] {
-                                    onPick(FavoritePick(photo: image, placement: PhotoPlacement(), favoriteID: nil))
-                                    dismiss()
-                                }
-                            }
-                        }
-                    }
-
-                    section("Your Pictures") {
+                    LazyVGrid(columns: columns, spacing: 12) {
                         ForEach(favorites) { fav in
                             tile(thumbnails[fav.id], title: nil) {
                                 pick(fav)
                             }
                             .contextMenu {
                                 Button(role: .destructive) {
-                                    FavoritesStore.delete(id: fav.id)
-                                    reload()
+                                    pendingRemove = fav
                                 } label: {
                                     Label("Remove from Favorites", systemImage: "trash")
                                 }
@@ -300,7 +289,7 @@ struct FavoritesView: View {
                     }
 
                     if favorites.isEmpty {
-                        Text("To keep a picture here, choose Add to Favorites in the photo menu after placing it in the frame.")
+                        Text("Add a picture here with Add to Favorites in the photo menu.")
                             .font(.footnote)
                             .foregroundStyle(.secondary)
                     }
@@ -315,16 +304,17 @@ struct FavoritesView: View {
                 }
             }
         }
-        .task {
-            for card in TestCard.allCases { cards[card] = card.image }
-            reload()
-        }
-    }
-
-    private func section<Content: View>(_ title: LocalizedStringKey, @ViewBuilder content: () -> Content) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(title).font(.headline)
-            LazyVGrid(columns: columns, spacing: 12) { content() }
+        .onAppear { reload() }
+        .confirmationDialog(
+            "Remove this picture from Favorites?",
+            isPresented: Binding(get: { pendingRemove != nil }, set: { if !$0 { pendingRemove = nil } }),
+            titleVisibility: .visible,
+            presenting: pendingRemove
+        ) { fav in
+            Button("Remove from Favorites", role: .destructive) {
+                FavoritesStore.delete(id: fav.id)
+                reload()
+            }
         }
     }
 
@@ -351,8 +341,22 @@ struct FavoritesView: View {
         favorites = FavoritesStore.list()
         for fav in favorites where thumbnails[fav.id] == nil {
             if let image = UIImage(contentsOfFile: fav.photoURL.path) {
-                thumbnails[fav.id] = image.preparingThumbnail(of: CGSize(width: 320, height: 240)) ?? image
+                thumbnails[fav.id] = Self.thumbnail(of: image)
             }
+        }
+    }
+
+    /// A small copy for a tile, plain 8-bit sRGB.
+    static func thumbnail(of image: UIImage) -> UIImage {
+        let size = CGSize(width: 320, height: 240)
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = 1
+        format.opaque = true
+        format.preferredRange = .standard
+        return UIGraphicsImageRenderer(size: size, format: format).image { _ in
+            let s = max(size.width / max(1, image.size.width), size.height / max(1, image.size.height))
+            let w = image.size.width * s, h = image.size.height * s
+            image.draw(in: CGRect(x: (size.width - w) / 2, y: (size.height - h) / 2, width: w, height: h))
         }
     }
 

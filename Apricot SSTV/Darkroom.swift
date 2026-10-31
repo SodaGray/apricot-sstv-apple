@@ -464,8 +464,6 @@ struct DarkroomView: View {
                             record(continuous: false)
                             revert()
                         }
-                    } message: {
-                        Text("Done keeps it reverted; Cancel leaves the picture as it was. The raw audio stays, so it can be developed again at any time.")
                     }
                 }
             }
@@ -509,7 +507,7 @@ struct DarkroomView: View {
                 .listRowInsets(EdgeInsets())
                 .disabled(working)
             } footer: {
-                Text("Decodes the whole raw audio again with the latest decoder: the slant fitted over the whole picture, weak lines carried through. Then adjust it by hand below. Everything here works on the sound, not on the image: each change reads the signal again, so nothing is stretched or made up.")
+                Text("Decodes the whole raw audio again with the latest decoder.")
             }
 
             if let settings {
@@ -757,8 +755,6 @@ struct DarkroomView: View {
                     Text(verbatim: SSTVDecoder.modeName(vis: vis) ?? "VIS \(vis)").tag(vis)
                 }
             }
-        } footer: {
-            Text("If the VIS header was misread, the picture was decoded in the wrong mode.")
         }
 
         Section {
@@ -792,8 +788,6 @@ struct DarkroomView: View {
             .disabled(s.detectedStart == nil || s.detectedStart == s.startSeconds)
         } header: {
             Text("Vertical Position")
-        } footer: {
-            Text("Where the picture's first line starts in the recording. Move it a line at a time if the top of the picture is missing or the picture starts too low.")
         }
 
         Section {
@@ -827,8 +821,6 @@ struct DarkroomView: View {
             .disabled(shown == nil || working || tool != nil)
         } header: {
             Text("Slant")
-        } footer: {
-            Text("Turn off fitting to set the sender's clock error yourself, when the fit leans the picture. Or measure it on the picture: put two marks on one edge that should be upright, or drag across a part with upright edges, and Apply.")
         }
 
         Section {
@@ -1059,7 +1051,7 @@ private struct Mark: View {
 /// one side, it keeps changing the value above, slowly near the middle and
 /// faster the further it's pulled (the speed grows with the square of the
 /// pull), until it's let go.
-private struct FineRow: View {
+struct FineRow: View {
     /// Change per second with the control pulled all the way.
     let maxRate: Double
     /// One step for VoiceOver's swipe up / down.

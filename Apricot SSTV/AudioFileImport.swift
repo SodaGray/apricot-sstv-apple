@@ -292,10 +292,6 @@ struct DecodeAudioFileView: View {
                         .multilineTextAlignment(.center)
                 } else {
                     ProgressView(value: progress)
-                    Text("Decoding the whole recording, as if it were played to Receive. The file itself isn't changed.")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                        .multilineTextAlignment(.center)
                 }
                 Spacer()
             }
@@ -328,10 +324,10 @@ struct DecodeAudioFileView: View {
             } else {
                 Text("Found \(r.pictures) pictures and \(r.fragments) fragments.")
                 if r.skipped > 0 {
-                    Text("\(r.skipped) were already in Pictures and were left as they are.")
+                    Text("\(r.skipped) were already in Pictures.")
                         .foregroundStyle(.secondary)
                 }
-                Text("They're in Pictures, each with its stretch of the recording as raw audio, to develop again in the darkroom. When they were received is worked out from the file's date.")
+                Text("When they were received is worked out from the file's date.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
