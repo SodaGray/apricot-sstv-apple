@@ -4,8 +4,8 @@
 //  Apricot SSTV Watch Watch App
 //
 //  Pictures saved on the watch, newest first, each marked when the
-//  iPhone has it. Swipe to delete one; "Delete Synced" clears those
-//  already on the iPhone.
+//  iPhone has it (and its audio, if saved). Swipe to delete one;
+//  "Delete Synced" clears those already on the iPhone.
 //
 
 import SwiftUI
@@ -82,6 +82,13 @@ private struct ReceptionRow: View {
                     .font(.system(size: 11))
                     .foregroundStyle(.secondary)
                     .lineLimit(1)
+                // Too few rows for a picture: kept for its raw audio.
+                if meta.isFragment {
+                    Text("Fragment · \(meta.rows) rows")
+                        .font(.system(size: 11))
+                        .foregroundStyle(.orange)
+                        .lineLimit(1)
+                }
             }
 
             Spacer(minLength: 0)
@@ -102,6 +109,8 @@ private struct ReceptionDetailView: View {
 
     @Environment(\.dismiss) private var dismiss
     @State private var confirmDelete = false
+    /// Length of the picture's audio, if it has any.
+    @State private var audioSeconds: Double?
 
     var body: some View {
         ScrollView {
@@ -127,6 +136,9 @@ private struct ReceptionDetailView: View {
                         row("Sync", "\(meta.syncGood * 100 / meta.syncSeen)%")
                     }
                     row("Offset", "\(signed(meta.offsetHz)) Hz")
+                    if let audioSeconds {
+                        row("Audio", Duration.seconds(audioSeconds).formatted(.time(pattern: .minuteSecond)))
+                    }
                     row("iPhone", synced ? String(localized: "Synced") : String(localized: "Not yet"))
                 }
                 .padding(.top, 2)
@@ -139,6 +151,10 @@ private struct ReceptionDetailView: View {
                 .padding(.top, 4)
             }
             .padding(.horizontal, 2)
+        }
+        .onAppear { loadAudio() }
+        .onReceive(NotificationCenter.default.publisher(for: .receptionsChanged)) { _ in
+            loadAudio()
         }
         .confirmationDialog(
             synced
@@ -156,6 +172,17 @@ private struct ReceptionDetailView: View {
 
     private func signed(_ n: Int) -> String {
         n > 0 ? "+\(n)" : "\(n)"
+    }
+
+    private func loadAudio() {
+        guard let info = ReceptionStore.audioInfo(id: meta.id), info.sampleRate > 0,
+              ReceptionStore.hasAudio(id: meta.id)
+        else {
+            audioSeconds = nil
+            return
+        }
+        let samples = max(0, ReceptionStore.audioByteCount(id: meta.id) - 44) / 2
+        audioSeconds = Double(samples) / Double(info.sampleRate)
     }
 
     private func row(_ title: LocalizedStringKey, _ value: String) -> some View {

@@ -10,10 +10,16 @@
 //  while it's encoded, off the main thread) and then opens the share
 //  sheet. The progress of a transmission shows under the picture.
 //
+//  A picture comes from the photo library, Favorites (pictures kept in
+//  the app, and two built-in test cards) or Files, from one menu. A
+//  favorite remembers where it was placed in the frame. The mode is chosen
+//  from a list grouped by family, with each mode's size and length.
+//
 
 import SwiftUI
 import PhotosUI
 import Combine
+import UniformTypeIdentifiers
 
 struct SendView: View {
     @EnvironmentObject private var receiver: Receiver
@@ -40,6 +46,12 @@ struct SendView: View {
     @State private var sharedWAV: SharedWAV?
     @State private var shareError: String?
     @State private var loadingPhoto = false
+    @State private var showLibrary = false
+    @State private var showFavorites = false
+    @State private var showFiles = false
+    /// The favorite the current photo came from, so its placement is kept.
+    @State private var favoriteID: String?
+    @State private var photoError: String?
 
     private var mode: SSTVMode {
         SSTVMode.byVIS(modeVIS) ?? SSTVMode.all[0]
@@ -51,6 +63,7 @@ struct SendView: View {
                 pictureSection
                 transmissionSection
                 modeSection
+                photoSection
                 textSection
             }
             .navigationTitle("Send")
@@ -97,9 +110,32 @@ struct SendView: View {
             textDraft = overlayText
             recompose()
         }
+        .photosPicker(isPresented: $showLibrary, selection: $pickerItem, matching: .images)
+        .sheet(isPresented: $showFavorites) {
+            FavoritesView { pick in
+                photo = PictureComposer.prepare(pick.photo)
+                placement = pick.placement
+                favoriteID = pick.favoriteID
+                recompose()
+            }
+        }
+        .fileImporter(isPresented: $showFiles, allowedContentTypes: [.image]) { result in
+            loadFile(result)
+        }
+        .alert(
+            "Couldn't Open the Picture",
+            isPresented: Binding(get: { photoError != nil }, set: { if !$0 { photoError = nil } })
+        ) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(photoError ?? "")
+        }
         .onChange(of: focus) { commitText() }
         .onChange(of: pickerItem) { loadPhoto() }
-        .onChange(of: placement) { recompose() }
+        .onChange(of: placement) {
+            recompose()
+            if let favoriteID { FavoritesStore.update(id: favoriteID, placement: placement) }
+        }
         .onChange(of: modeVIS) { recompose() }
         .onChange(of: callsign) { recompose() }
         .onChange(of: overlayText) { recompose() }
@@ -108,14 +144,16 @@ struct SendView: View {
     // MARK: Sections
 
     /// The picture edge to edge in a section of its own (the section
-    /// rounds it, as on Receive), then the photo controls.
-    @ViewBuilder
+    /// rounds it, as on Receive). Under it the transmission's progress,
+    /// then the mode, then the photo controls.
     private var pictureSection: some View {
         Section {
             if photo == nil {
                 // Nothing to show yet: the same light placeholder as
                 // Receive, and tapping it picks a photo.
-                PhotosPicker(selection: $pickerItem, matching: .images) {
+                Menu {
+                    photoMenuItems
+                } label: {
                     Color(.secondarySystemFill)
                         .aspectRatio(CGFloat(mode.width) / CGFloat(mode.height), contentMode: .fit)
                         .overlay {
@@ -125,7 +163,7 @@ struct SendView: View {
                                 VStack(spacing: 6) {
                                     Image(systemName: "photo.badge.plus")
                                         .font(.largeTitle)
-                                    Text("Choose a Photo")
+                                    Text("Choose a Picture")
                                         .font(.subheadline)
                                 }
                                 .foregroundStyle(.secondary)
@@ -153,10 +191,23 @@ struct SendView: View {
                 .accessibilityHint("Opens the adjust screen.")
             }
         }
+    }
 
+    private var photoSection: some View {
         Section {
-            PhotosPicker(selection: $pickerItem, matching: .images) {
-                Label(photo == nil ? LocalizedStringKey("Choose Photo") : LocalizedStringKey("Change Photo"), systemImage: "photo.on.rectangle")
+            Menu {
+                photoMenuItems
+                if photo != nil {
+                    Divider()
+                    Button {
+                        addToFavorites()
+                    } label: {
+                        Label(favoriteID == nil ? LocalizedStringKey("Add to Favorites") : LocalizedStringKey("In Favorites"), systemImage: favoriteID == nil ? "star" : "star.fill")
+                    }
+                    .disabled(favoriteID != nil)
+                }
+            } label: {
+                Label(photo == nil ? LocalizedStringKey("Choose Picture") : LocalizedStringKey("Change Picture"), systemImage: "photo.on.rectangle")
             }
             .disabled(tx.isBusy)
 
@@ -167,18 +218,40 @@ struct SendView: View {
             }
             .disabled(photo == nil || tx.isBusy)
         } footer: {
-            Text("The frame is \(mode.width) × \(mode.height). Tap the picture or Adjust to move and zoom the photo in it.")
+            Text("Tap the picture or Adjust to move and zoom the photo in the frame.")
         }
     }
 
     private var modeSection: some View {
-        Section("Mode") {
-            Picker("Mode", selection: $modeVIS) {
-                ForEach(SSTVMode.all) { m in
-                    Text(verbatim: "\(m.name)   \(m.lengthText)").tag(m.vis)
-                }
+        Section {
+            NavigationLink {
+                ModeList(selection: $modeVIS)
+            } label: {
+                LabeledContent("Mode", value: mode.name)
             }
             .disabled(tx.isBusy)
+        } footer: {
+            Text(verbatim: "\(mode.width) × \(mode.height) · \(mode.lengthText)")
+        }
+    }
+
+    /// Where a picture can come from.
+    @ViewBuilder
+    private var photoMenuItems: some View {
+        Button {
+            showLibrary = true
+        } label: {
+            Label("Photo Library", systemImage: "photo.on.rectangle")
+        }
+        Button {
+            showFavorites = true
+        } label: {
+            Label("Favorites", systemImage: "star")
+        }
+        Button {
+            showFiles = true
+        } label: {
+            Label("Files", systemImage: "folder")
         }
     }
 
@@ -241,12 +314,13 @@ struct SendView: View {
             VStack(alignment: .leading, spacing: 6) {
                 switch tx.state {
                 case .idle:
-                    Text(verbatim: "\(mode.name) · \(mode.lengthText)")
+                    // The mode is in its own row below: here, only the state.
+                    Text(photo == nil ? LocalizedStringKey("No Picture Yet") : LocalizedStringKey("Ready to Send"))
                     Group {
                         if let notice = tx.notice {
                             Text(notice)
                         } else if photo == nil {
-                            Text("Choose a photo to send.")
+                            Text("Choose a picture to send.")
                         } else {
                             Text("Tap Send. The radio keys on VOX.")
                         }
@@ -293,7 +367,39 @@ struct SendView: View {
             else { return }
             photo = PictureComposer.prepare(image)
             placement = PhotoPlacement()
+            favoriteID = nil
             recompose()
+            pickerItem = nil        // so picking the same photo again loads it again
+        }
+    }
+
+    /// A picture picked in Files: read it while the app may.
+    private func loadFile(_ result: Result<URL, any Error>) {
+        switch result {
+        case .success(let url):
+            let scoped = url.startAccessingSecurityScopedResource()
+            defer { if scoped { url.stopAccessingSecurityScopedResource() } }
+            guard let data = try? Data(contentsOf: url), let image = UIImage(data: data) else {
+                photoError = String(localized: "The file isn't a picture Apricot SSTV can read.")
+                return
+            }
+            photo = PictureComposer.prepare(image)
+            placement = PhotoPlacement()
+            favoriteID = nil
+            recompose()
+        case .failure(let error):
+            photoError = error.localizedDescription
+        }
+    }
+
+    /// Keeps the photo, with its place in the frame, for sending again.
+    private func addToFavorites() {
+        guard let photo else { return }
+        do {
+            try FavoritesStore.add(photo: photo, placement: placement)
+            favoriteID = FavoritesStore.list().first?.id
+        } catch {
+            photoError = error.localizedDescription
         }
     }
 
@@ -377,4 +483,63 @@ private struct ActivityView: UIViewControllerRepresentable {
     }
 
     func updateUIViewController(_ vc: UIActivityViewController, context: Context) {}
+}
+
+// MARK: - Mode list
+
+/// Every mode, by family, with its picture size and how long it takes.
+private struct ModeList: View {
+    @Binding var selection: Int
+    @Environment(\.dismiss) private var dismiss
+
+    private struct Family: Identifiable {
+        let name: String
+        let vis: [Int]
+        var id: String { name }
+    }
+
+    private static let families = [
+        Family(name: "Robot", vis: [8, 12]),
+        Family(name: "Martin", vis: [44, 40]),
+        Family(name: "Scottie", vis: [60, 56, 76]),
+        Family(name: "PD", vis: [93, 99, 95, 98, 96, 97, 94]),
+    ]
+
+    var body: some View {
+        List {
+            ForEach(Self.families) { family in
+                Section {
+                    ForEach(family.vis.compactMap { SSTVMode.byVIS($0) }) { m in
+                        Button {
+                            selection = m.vis
+                            dismiss()
+                        } label: {
+                            HStack {
+                                Text(verbatim: m.name)
+                                    .foregroundStyle(.primary)
+                                Spacer()
+                                Text(verbatim: "\(m.width) × \(m.height)")
+                                    .foregroundStyle(.secondary)
+                                    .frame(minWidth: 76, alignment: .trailing)
+                                Text(verbatim: m.lengthText)
+                                    .foregroundStyle(.secondary)
+                                    .frame(minWidth: 44, alignment: .trailing)
+                                Image(systemName: "checkmark")
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(.tint)
+                                    .opacity(m.vis == selection ? 1 : 0)
+                                    .accessibilityHidden(m.vis != selection)
+                            }
+                            .monospacedDigit()
+                        }
+                        .accessibilityAddTraits(m.vis == selection ? .isSelected : [])
+                    }
+                } header: {
+                    Text(verbatim: family.name)
+                }
+            }
+        }
+        .navigationTitle("Mode")
+        .navigationBarTitleDisplayMode(.inline)
+    }
 }

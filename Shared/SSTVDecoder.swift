@@ -42,6 +42,10 @@ nonisolated struct SSTVStatus: Sendable, Equatable {
     var relocks: Int
     var images: Int
     var revision: UInt32
+    /// Where the picture's line 0 sync starts, seconds into the audio fed.
+    var startSeconds: Double
+    /// The clock error as fitted right now, whether or not it's settled.
+    var ppmFit: Double
 
     var progress: Double {
         height > 0 ? min(1, Double(line) / Double(height)) : 0
@@ -84,6 +88,8 @@ nonisolated struct SSTVStatus: Sendable, Equatable {
         relocks = Int(c.relocks)
         images = Int(c.images)
         revision = UInt32(c.revision)
+        startSeconds = c.start_s
+        ppmFit = c.ppm_fit
     }
 }
 
@@ -128,6 +134,31 @@ nonisolated final class SSTVDecoder {
             }
             done += n
         }
+    }
+
+    /// Feeds 16-bit samples as they are (a recording read back).
+    func feed(int16 samples: UnsafePointer<Int16>, count: Int) {
+        guard count > 0 else { return }
+        sstv_feed(rx, samples, Int32(clamping: count), 1)
+    }
+
+    // MARK: Darkroom
+
+    /// Starts a picture of this mode with its line 0 sync `seconds` into
+    /// the audio, before any is fed; from then on no VIS or line syncs start
+    /// another, and it never ends as lost. False if the mode isn't decoded.
+    func start(vis: Int, at seconds: Double, offsetHz: Double = 0) -> Bool {
+        sstv_start_at(rx, Int32(clamping: vis), seconds, offsetHz) != 0
+    }
+
+    /// Fixes the line period at this clock error (ppm) instead of fitting it.
+    func setSlant(ppm: Double?) {
+        sstv_set_slant(rx, ppm == nil ? 0 : 1, ppm ?? 0)
+    }
+
+    /// Samples every line this much later (the picture moves left).
+    func setShift(milliseconds: Double) {
+        sstv_set_shift(rx, milliseconds)
     }
 
     /// `count` samples were lost; keeps the picture's timing exact.

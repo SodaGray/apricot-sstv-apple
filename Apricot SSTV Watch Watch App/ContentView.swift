@@ -4,7 +4,12 @@
 //  Apricot SSTV Watch Watch App
 //
 //  Receive screen: the picture as it builds, what's being received,
-//  a tuning bar and a level meter, and Listen / Stop.
+//  the tone and level meters (Meters.swift), and Listen / Stop. With the
+//  wrist down (screen dimmed) the meters are hidden and the picture is
+//  redrawn once a second, together with the rows and the progress, so it
+//  never looks stuck. When listening stopped by itself, the reason stays
+//  on screen with a way to keep it from happening again; in the timeout's
+//  last two minutes, a countdown and Keep Listening.
 //
 
 import SwiftUI
@@ -15,23 +20,52 @@ struct ContentView: View {
     @StateObject private var rx = Receiver()
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.isLuminanceReduced) private var isLuminanceReduced
+    @AppStorage("onboarding.done") private var onboardingDone = false
+    /// The iPhone's current event: pictures received now go into it.
+    @AppStorage(CurrentEventInfo.nameKey) private var eventName = ""
+    @AppStorage(CurrentEventInfo.untilKey) private var eventUntil: Double = 0
 
     var body: some View {
         NavigationStack {
             receiveScreen
+        }
+        // First launch: what it does, and the two choices.
+        .fullScreenCover(isPresented: .constant(!onboardingDone)) {
+            OnboardingView(purpose: .firstLaunch, rx: rx)
         }
     }
 
     private var receiveScreen: some View {
         ScrollView {
             VStack(spacing: 6) {
+                // Tapping the picture starts listening (a big target on a
+                // small screen); it never stops it: that's only the Stop
+                // button, so a touch while receiving can't end a picture.
                 PictureView(image: rx.picture, status: rx.status, isRunning: rx.isRunning)
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        if !rx.isRunning && !rx.isStarting { rx.start() }
+                    }
+                    .accessibilityAddTraits(rx.isRunning ? [] : .isButton)
 
                 stateText
 
-                if rx.isRunning {
-                    TuningBar(toneHz: rx.status?.toneHz)
-                    LevelMeter(db: rx.levelDB, clipping: rx.clipping)
+                if !eventName.isEmpty, Date.now.timeIntervalSince1970 < eventUntil {
+                    Label(eventName, systemImage: "calendar")
+                        .font(.system(size: 11))
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                        .accessibilityLabel(Text("Event: \(eventName)"))
+                }
+
+                // The timeout is about to stop listening: put it off.
+                if rx.isRunning, rx.stopsIn != nil {
+                    Button("Keep Listening") { rx.keepListening() }
+                        .controlSize(.small)
+                }
+
+                if rx.isRunning && !isLuminanceReduced {
+                    meters
                 }
 
                 Button {
@@ -40,8 +74,22 @@ struct ContentView: View {
                     Text(rx.isStarting ? LocalizedStringKey("Starting…") : rx.isRunning ? LocalizedStringKey("Stop") : LocalizedStringKey("Listen"))
                         .frame(maxWidth: .infinity)
                 }
-                .tint(rx.isRunning ? .red : .green)
+                .tint(rx.isRunning ? Color.red : Color.accentColor)
                 .disabled(rx.isStarting)
+
+                // Stopped because the wrist went down or the app was left:
+                // say so, and offer to stop doing that.
+                if !rx.isRunning, let reason = rx.stoppedBy, reason != .timeout {
+                    Button {
+                        rx.wristPolicy = .keep
+                        rx.start()
+                    } label: {
+                        Text("Listen, and Keep Listening with Wrist Down")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .font(.system(size: 13))
+                    .buttonBorderShape(.roundedRectangle(radius: 14))
+                }
 
                 details
 
@@ -49,6 +97,13 @@ struct ContentView: View {
                     GalleryView()
                 } label: {
                     Label("Pictures", systemImage: "photo.on.rectangle")
+                        .frame(maxWidth: .infinity)
+                }
+
+                NavigationLink {
+                    SettingsView(rx: rx)
+                } label: {
+                    Label("Settings", systemImage: "gearshape")
                         .frame(maxWidth: .infinity)
                 }
 
@@ -100,7 +155,7 @@ struct ContentView: View {
             if let sub = subline {
                 Text(sub)
                     .font(.system(size: 11))
-                    .foregroundStyle(rx.stalled || rx.clipping ? .orange : .secondary)
+                    .foregroundStyle(rx.clipping ? .red : rx.stalled ? .yellow : .secondary)
                     .lineLimit(2)
                     .multilineTextAlignment(.center)
             }
@@ -118,11 +173,48 @@ struct ContentView: View {
 
     private var subline: String? {
         if rx.stalled { return String(localized: "No audio") }
+        if let n = rx.stopsIn, rx.isRunning {
+            let time = String(format: "%d:%02d", n / 60, n % 60)
+            return String(localized: "No picture: stops in \(time)")
+        }
         if let notice = rx.notice { return notice }
         guard rx.isRunning else { return nil }
         if rx.clipping { return String(localized: "Too loud: turn the radio down") }
-        guard let s = rx.status, s.receiving else { return String(localized: "Waiting for VIS") }
+        guard let s = rx.status, s.receiving else { return rx.waitingText }
         return String(localized: "RX \(s.line)/\(s.height)")
+    }
+
+    // MARK: Meters
+
+    /// The same as on the iPhone: name and reading above, bar below.
+    private var meters: some View {
+        VStack(spacing: 4) {
+            meterLabel("Tone", toneValue)
+            ToneMeter(toneHz: rx.status?.toneHz)
+            meterLabel("Level", levelValue, color: rx.clipping ? .red : .secondary)
+                .padding(.top, 2)
+            LevelMeter(db: rx.levelDB, clipping: rx.clipping)
+        }
+        .padding(.vertical, 2)
+    }
+
+    private var toneValue: String {
+        guard let hz = rx.status?.toneHz else { return "—" }
+        return "\(hz) Hz"
+    }
+
+    private var levelValue: String {
+        if rx.clipping { return String(localized: "CLIP") }
+        return rx.levelDB <= -119 ? "—" : String(format: "%.0f dB", rx.levelDB)
+    }
+
+    private func meterLabel(_ title: LocalizedStringKey, _ value: String, color: Color = .secondary) -> some View {
+        HStack {
+            Text(title).foregroundStyle(.secondary)
+            Spacer(minLength: 4)
+            Text(value).foregroundStyle(color).monospacedDigit()
+        }
+        .font(.system(size: 11))
     }
 
     // MARK: Details
@@ -179,7 +271,7 @@ private struct PictureView: View {
                         VStack(spacing: 2) {
                             Text("Apricot SSTV")
                                 .font(.system(size: 13, weight: .semibold))
-                            Text(isRunning ? LocalizedStringKey("Listening…") : LocalizedStringKey("Tap Listen"))
+                            Text(isRunning ? LocalizedStringKey("Listening…") : LocalizedStringKey("Tap to Listen"))
                                 .font(.system(size: 10))
                                 .foregroundStyle(.secondary)
                         }
@@ -189,91 +281,12 @@ private struct PictureView: View {
             if let status, status.receiving {
                 GeometryReader { geo in
                     Rectangle()
-                        .fill(.green)
+                        .fill(.tint)
                         .frame(width: geo.size.width * status.progress, height: 2)
                 }
                 .frame(height: 2)
             }
         }
         .clipShape(RoundedRectangle(cornerRadius: 4))
-    }
-}
-
-// MARK: - Tuning bar
-
-/// 1100–2400 Hz, marks at sync (1200), black (1500), VIS leader (1900)
-/// and white (2300); the cursor is the live tone.
-private struct TuningBar: View {
-    let toneHz: Int?
-
-    private static let lo = 1100.0
-    private static let hi = 2400.0
-    private static let marks: [Double] = [1200, 1500, 1900, 2300]
-
-    var body: some View {
-        GeometryReader { geo in
-            let w = geo.size.width
-            ZStack(alignment: .leading) {
-                Capsule().fill(Color(white: 0.15))
-                ForEach(Self.marks, id: \.self) { hz in
-                    Rectangle()
-                        .fill(hz == 1200 ? Color.blue : Color.gray)
-                        .frame(width: 1.5)
-                        .offset(x: x(hz, w))
-                }
-                if let toneHz {
-                    Rectangle()
-                        .fill(.orange)
-                        .frame(width: 3)
-                        .offset(x: x(Double(toneHz), w) - 0.75)
-                }
-            }
-        }
-        .frame(height: 7)
-    }
-
-    private func x(_ hz: Double, _ width: Double) -> Double {
-        let t = (hz - Self.lo) / (Self.hi - Self.lo)
-        return max(0, min(1, t)) * (width - 2)
-    }
-}
-
-// MARK: - Level meter
-
-/// RMS level, −60 … 0 dBFS.
-private struct LevelMeter: View {
-    let db: Double
-    let clipping: Bool
-
-    var body: some View {
-        HStack(spacing: 4) {
-            GeometryReader { geo in
-                let t = max(0, min(1, (db + 60) / 60))
-                ZStack(alignment: .leading) {
-                    Capsule().fill(Color(white: 0.15))
-                    Capsule()
-                        .fill(color)
-                        .frame(width: geo.size.width * t)
-                }
-            }
-            .frame(height: 5)
-
-            Group {
-                if clipping {
-                    Text("CLIP")
-                } else {
-                    Text(verbatim: String(format: "%.0f dB", db))
-                }
-            }
-                .font(.system(size: 10).monospacedDigit())
-                .foregroundStyle(clipping ? .red : .secondary)
-                .frame(width: 38, alignment: .trailing)
-        }
-    }
-
-    private var color: Color {
-        if clipping || db > -3 { return .red }
-        if db > -12 { return .yellow }
-        return .green
     }
 }

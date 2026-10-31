@@ -6,17 +6,25 @@
 //  The iPhone's receive screen, a system Form like Send, so corners,
 //  margins and spacing come from the system. Every row is an ordinary
 //  list row: a label on the left, its value on the right, and for the
-//  two meters a bar under it. Listen / Stop is at the top right, like
+//  two meters a bar under it (Meters.swift, shared with the watch).
+//  Problems (no audio, too loud) show in red under the picture, other
+//  notices in grey. Listen / Stop is at the top right, like
 //  Send / Stop on the Send tab; receiving options are in the ⋯ menu at
 //  the top left.
 //
 
 import SwiftUI
 import Combine
+import UniformTypeIdentifiers
 
 struct ReceiveView: View {
     @EnvironmentObject private var rx: Receiver
     @EnvironmentObject private var tx: Transmitter
+    /// Pictures received now go into it (Events.swift).
+    @State private var currentEvent: SSTVEvent?
+    /// Decode Audio File: picking the file, then decoding it.
+    @State private var pickingAudio = false
+    @State private var decodingURL: URL?
 
     var body: some View {
         NavigationStack {
@@ -25,32 +33,42 @@ struct ReceiveView: View {
                     PictureView(image: rx.picture, status: rx.status)
                         .listRowInsets(EdgeInsets())
                 } footer: {
-                    if let warning {
-                        Text(warning).foregroundStyle(.orange)
+                    if let problem {
+                        Text(problem).foregroundStyle(.red)
+                    } else if let notice = rx.notice {
+                        Text(notice)
                     }
-                }
-
-                Section {
-                    LabeledContent("Status", value: status)
-                LabeledContent("Mode", value: modeName)
-                    if let s = rx.status, s.receiving {
-                        LabeledContent("Rows", value: String(localized: "\(s.line) of \(s.height)"))
-                    }
-                    LabeledContent("Saved", value: "\(rx.savedCount)")
                 }
 
                 Section("Signal") {
                     MeterRow(
                         title: "Tone",
                         value: toneValue,
-                        bar: TuningBar(toneHz: rx.isRunning ? rx.status?.toneHz : nil)
+                        bar: ToneMeter(toneHz: rx.isRunning ? rx.status?.toneHz : nil, showsScale: true)
                     )
                     MeterRow(
                         title: "Level",
                         value: levelValue,
                         valueColor: rx.clipping ? .red : .secondary,
-                        bar: LevelBar(db: rx.isRunning ? rx.levelDB : -120, clipping: rx.clipping)
+                        bar: LevelMeter(db: rx.isRunning ? rx.levelDB : -120, clipping: rx.clipping, showsScale: true)
                     )
+                }
+
+                Section {
+                    LabeledContent("Status", value: status)
+                    LabeledContent("Mode", value: modeName)
+                    if let s = rx.status, s.receiving {
+                        LabeledContent("Rows", value: String(localized: "\(s.line) of \(s.height)"))
+                    }
+                    LabeledContent("Saved", value: "\(rx.savedCount)")
+                    if let currentEvent, currentEvent.isCurrent() {
+                        LabeledContent("Event", value: currentEvent.displayName)
+                    }
+                    // The receive timeout's last two minutes.
+                    if let n = rx.stopsIn, rx.isRunning {
+                        LabeledContent("Stops in", value: String(format: "%d:%02d", n / 60, n % 60))
+                        Button("Keep Listening") { rx.keepListening() }
+                    }
                 }
 
                 if let s = rx.status, s.mode != nil {
@@ -73,6 +91,18 @@ struct ReceiveView: View {
                 }
             }
             .monospacedDigit()
+            .fileImporter(isPresented: $pickingAudio, allowedContentTypes: [.audio]) { result in
+                if case .success(let url) = result { decodingURL = url }
+            }
+            .sheet(isPresented: Binding(get: { decodingURL != nil }, set: { if !$0 { decodingURL = nil } })) {
+                if let decodingURL {
+                    DecodeAudioFileView(url: decodingURL, fullRate: rx.fullRateAudio)
+                }
+            }
+            .onAppear { currentEvent = EventStore.current }
+            .onReceive(NotificationCenter.default.publisher(for: .eventsChanged)) { _ in
+                currentEvent = EventStore.current
+            }
             .navigationTitle("Receive")
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
@@ -110,6 +140,16 @@ struct ReceiveView: View {
                     } else {
                         Text("Lock on to line syncs when the VIS header was missed.")
                     }
+                }
+            }
+            Section {
+                // A recording made elsewhere, decoded as if played to Receive
+                // (AudioFileImport.swift). Not Settings → Import Library.
+                Button {
+                    pickingAudio = true
+                } label: {
+                    Label("Decode Audio File…", systemImage: "waveform")
+                    Text("Find the pictures in a recording made elsewhere.")
                 }
             }
             Section {
@@ -153,12 +193,13 @@ struct ReceiveView: View {
         return String(localized: "Waiting for a picture")
     }
 
-    /// Problems worth seeing at a glance; other notices are in Status.
-    private var warning: String? {
-        guard rx.isRunning else { return rx.notice }
+    /// Problems worth seeing at a glance, in red under the picture (in
+    /// place of the latest notice).
+    private var problem: String? {
+        guard rx.isRunning else { return nil }
         if rx.stalled { return String(localized: "No audio is coming in.") }
         if rx.clipping { return String(localized: "Too loud: turn the radio down.") }
-        return rx.notice
+        return nil
     }
 
     /// The chosen mode's name, or nil for any mode.
@@ -248,68 +289,3 @@ private struct PictureView: View {
     }
 }
 
-// MARK: - Bars
-
-/// 1100–2400 Hz: sync (1200), black (1500), VIS leader (1900), white
-/// (2300) as ticks; the live tone as a marker.
-private struct TuningBar: View {
-    let toneHz: Int?
-
-    private static let lo = 1100.0
-    private static let hi = 2400.0
-    private static let marks: [Double] = [1200, 1500, 1900, 2300]
-
-    var body: some View {
-        GeometryReader { geo in
-            let w = geo.size.width
-            ZStack(alignment: .leading) {
-                Capsule().fill(Color(.tertiarySystemFill))
-                ForEach(Self.marks, id: \.self) { hz in
-                    Rectangle()
-                        .fill(Color(.systemGray3))
-                        .frame(width: 2)
-                        .offset(x: x(hz, w))
-                }
-                if let toneHz {
-                    Capsule()
-                        .fill(.tint)
-                        .frame(width: 4)
-                        .offset(x: x(Double(toneHz), w) - 1)
-                }
-            }
-        }
-        .frame(height: 8)
-        .accessibilityHidden(true)
-    }
-
-    private func x(_ hz: Double, _ width: Double) -> Double {
-        let t = (hz - Self.lo) / (Self.hi - Self.lo)
-        return max(0, min(1, t)) * (width - 2)
-    }
-}
-
-/// RMS level, −60 … 0 dBFS.
-private struct LevelBar: View {
-    let db: Double
-    let clipping: Bool
-
-    var body: some View {
-        GeometryReader { geo in
-            let t = max(0, min(1, (db + 60) / 60))
-            ZStack(alignment: .leading) {
-                Capsule().fill(Color(.tertiarySystemFill))
-                Capsule()
-                    .fill(color)
-                    .frame(width: geo.size.width * t)
-            }
-        }
-        .frame(height: 8)
-        .accessibilityHidden(true)
-    }
-
-    private var color: Color {
-        if clipping || db > -3 { return .red }
-        if db > -12 { return .yellow }
-        return .green
-    }
-}

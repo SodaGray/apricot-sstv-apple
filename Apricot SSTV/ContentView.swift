@@ -8,7 +8,8 @@
 //  look at another tab, and sending can stop receiving first.
 //
 //  The haptics for starting, stopping and finishing are here, so they
-//  play whichever tab is showing.
+//  play whichever tab is showing. On first launch the introduction
+//  (OnboardingView) covers everything until its one choice is made.
 //
 //  Every tab uses the standard large title (as in Messages): buttons on
 //  the bar above it, and on scrolling the large title slides up and out
@@ -33,6 +34,7 @@ struct ContentView: View {
     @StateObject private var transmitter = Transmitter()
     @State private var tab: AppTab = .receive
     @Environment(\.scenePhase) private var scenePhase
+    @AppStorage("onboarding.done") private var onboardingDone = false
 
     var body: some View {
         TabView(selection: $tab) {
@@ -51,6 +53,11 @@ struct ContentView: View {
         }
         .environmentObject(receiver)
         .environmentObject(transmitter)
+        // First launch: what the app does, and the raw-audio choice.
+        .fullScreenCover(isPresented: .constant(!onboardingDone)) {
+            OnboardingView(purpose: .firstLaunch)
+                .environmentObject(receiver)
+        }
         // Listening started / stopped.
         .sensoryFeedback(trigger: receiver.isRunning) { _, running in
             running ? .impact(weight: .heavy) : .impact(weight: .light)

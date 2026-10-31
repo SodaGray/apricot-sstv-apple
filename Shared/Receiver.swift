@@ -16,6 +16,15 @@
 //  Platform differences are marked #if os(watchOS): haptics, the device
 //  name in meta.json, and handing saved pictures to WatchSync.
 //
+//  The core also keeps each picture's audio (RawAudioRecorder), with as
+//  much again before and after as the picture takes to send (at least
+//  the 2-minute resume window after a loss).
+//
+//  Listening stops by itself after a set time without a picture, and on
+//  the watch when the wrist goes down or the app is left (wristPolicy),
+//  but never in the middle of a picture. Each change of state taps the
+//  wrist (Haptics).
+//
 
 import Foundation
 import AVFAudio
@@ -28,13 +37,41 @@ import WatchKit
 import UIKit
 #endif
 
+// MARK: - Settings
+
+/// Watch: what lowering the wrist or leaving the app does to listening.
+nonisolated enum WristPolicy: String, CaseIterable, Identifiable, Sendable {
+    /// Keep listening until Stop (or the receive timeout). The default.
+    case keep
+    /// Keep listening while dimmed; stop when the app is left.
+    case keepWhenDimmed
+    /// Stop (after the picture in progress) when the screen dims or the
+    /// app is left: saves the most battery.
+    case stop
+
+    var id: Self { self }
+}
+
+/// Why listening stopped by itself.
+nonisolated enum AutoStopReason: Sendable {
+    /// The screen dimmed (wrist down), and wristPolicy says stop.
+    case dimmed
+    /// The app was left, and wristPolicy says stop.
+    case left
+    /// No picture for the receive timeout.
+    case timeout
+}
+
 // MARK: - Core (tap thread)
 
 nonisolated enum ReceiverEvent: Sendable {
     case started(mode: String, viaVIS: Bool)
+    /// A start from line syncs got far enough to be a real picture (the
+    /// rows a picture needs to be kept), not noise.
+    case confirmed(mode: String)
     case resumed(mode: String)
     /// updated: the same picture saved again after it resumed.
-    case finished(mode: String, saved: Bool, updated: Bool)
+    case finished(mode: String, end: SSTVStatus.End, saved: Bool, updated: Bool)
     /// A VIS for a mode this build doesn't decode, or not the chosen one.
     case skipped(mode: String, vis: Int)
     case saveFailed(String)
@@ -48,6 +85,8 @@ nonisolated struct ReceiverSnapshot: @unchecked Sendable {
     var clipping: Bool
     var lostSamples: Int64
     var lastBufferUptime: Double
+    /// Still recording the margin after a picture (stopping now would cut it).
+    var recordingTail: Bool
 }
 
 nonisolated private struct ImageBox: @unchecked Sendable {
@@ -75,15 +114,45 @@ nonisolated final class ReceiverCore: @unchecked Sendable {
     private var pictureChanged = false
     private var events: [ReceiverEvent] = []
     private var savedIDs: Set<String> = []
+    private let recorder: RawAudioRecorder
+    private var saveAudio = true
 
     nonisolated private struct Reception {
         var id: String
         var startedAt: Date
         var mode: String
         var visCode: Int?
+        /// A VIS start, or a sync start that reached the rows to keep.
+        var confirmed: Bool
     }
 
-    init?(sampleRate: Double, device: String) {
+    /// How long a mode takes to send, for the recording's margins.
+    static func sendSeconds(mode: String?) -> Double {
+        switch mode {
+        case "Robot 36": 36
+        case "Robot 72": 72
+        case "Martin M1": 114
+        case "Martin M2": 58
+        case "Scottie S1": 110
+        case "Scottie S2": 71
+        case "Scottie DX": 269
+        case "PD50": 50
+        case "PD90": 90
+        case "PD120": 126
+        case "PD160": 161
+        case "PD180": 187
+        case "PD240": 248
+        case "PD290": 289
+        default: 120
+        }
+    }
+
+    /// Rows a picture needs to be kept (fewer: a false start).
+    private static func minRows(_ s: SSTVStatus) -> Int {
+        max(16, s.height / 8)
+    }
+
+    init?(sampleRate: Double, device: String, fullRateAudio: Bool = false) {
         guard let decoder = SSTVDecoder(sampleRate: Int(sampleRate.rounded())) else {
             return nil
         }
@@ -91,6 +160,11 @@ nonisolated final class ReceiverCore: @unchecked Sendable {
         self.device = device
         self.decoder = decoder
         self.prev = decoder.status
+        self.recorder = RawAudioRecorder(
+            inputRate: sampleRate,
+            directory: ReceptionStore.recordingDirectory,
+            fullRate: fullRateAudio
+        )
     }
 
     /// Built here, outside the main actor, because the engine calls it
@@ -107,12 +181,23 @@ nonisolated final class ReceiverCore: @unchecked Sendable {
         lock.withLock { restarted = true }
     }
 
-    /// Ends the picture in progress (saving it if it's worth keeping).
+    /// Ends the picture in progress (saving it, and its audio, if it's
+    /// worth keeping).
     func finish() {
         lock.withLock {
             decoder.abort()
             checkTransitions()
             if decoder.updatePicture() { pictureChanged = true }
+            if let done = recorder.finish() { attach(done) }
+        }
+    }
+
+    /// Keep each picture's audio. Turning it off ends a recording in
+    /// progress (what was recorded is kept).
+    func setSaveAudio(_ on: Bool) {
+        lock.withLock {
+            saveAudio = on
+            if !on, let done = recorder.finish() { attach(done) }
         }
     }
 
@@ -136,6 +221,7 @@ nonisolated final class ReceiverCore: @unchecked Sendable {
             decoder.abort()
             checkTransitions()
             decoder.updatePicture()
+            if let done = recorder.finish() { attach(done) }
 
             decoder.clear()
             decoder.updatePicture()
@@ -157,7 +243,8 @@ nonisolated final class ReceiverCore: @unchecked Sendable {
                 levelDB: levelDB,
                 clipping: now < clipUntil,
                 lostSamples: lost,
-                lastBufferUptime: lastBufferEnd
+                lastBufferUptime: lastBufferEnd,
+                recordingTail: recorder.isRecordingTail
             )
         }
     }
@@ -204,7 +291,11 @@ nonisolated final class ReceiverCore: @unchecked Sendable {
             if gap > 0 {
                 decoder.gap(Int(gap))
                 lost += gap
+                if let done = recorder.gap(inputCount: Int(gap)) { attach(done) }
             }
+            // The recorder first, so a picture starting in this buffer
+            // finds the buffer already in its pre-roll.
+            if let done = recorder.feed(samples, count: count) { attach(done) }
             decoder.feed(samples, count: count)
             lastBufferEnd = now
 
@@ -246,6 +337,12 @@ nonisolated final class ReceiverCore: @unchecked Sendable {
             decoder.updatePicture()
             pictureChanged = true
             save(s)
+            // As much again as the picture takes to send, however it ended
+            // (the decoder may have called the end early). After a loss, at
+            // least the resume window (120 s, and a few lines more to notice
+            // the return), in case it comes back on the same lines.
+            let margin = Self.sendSeconds(mode: s.mode)
+            recorder.end(after: s.end == .lost ? max(130, margin) : margin)
         }
 
         if newPicture {
@@ -253,16 +350,30 @@ nonisolated final class ReceiverCore: @unchecked Sendable {
             let resumed = !prev.receiving && s.relocks > prev.relocks && current != nil
             if resumed {
                 events.append(.resumed(mode: mode))
+                recorder.keepGoing()
             } else {
                 let started = Date()
                 current = Reception(
                     id: ReceptionStore.makeID(startedAt: started, mode: mode),
                     startedAt: started,
                     mode: mode,
-                    visCode: s.start == .vis ? s.lastVIS : nil
+                    visCode: s.start == .vis ? s.lastVIS : nil,
+                    confirmed: s.start == .vis
                 )
                 events.append(.started(mode: mode, viaVIS: s.start == .vis))
+
+                // A new recording (the previous one, if any, ends here).
+                let done = saveAudio && current != nil
+                    ? recorder.begin(id: current!.id, before: Self.sendSeconds(mode: mode))
+                    : recorder.finish()
+                if let done { attach(done) }
             }
+        }
+
+        if s.receiving, var r = current, !r.confirmed, s.line >= Self.minRows(s) {
+            r.confirmed = true
+            current = r
+            events.append(.confirmed(mode: r.mode))
         }
     }
 
@@ -271,10 +382,13 @@ nonisolated final class ReceiverCore: @unchecked Sendable {
     private func save(_ s: SSTVStatus) {
         guard let r = current else { return }
 
-        // Too little to keep (and false sync starts end up here).
-        let minRows = max(16, s.height / 8)
-        guard s.line >= minRows, let image = decoder.makeImage() else {
-            events.append(.finished(mode: r.mode, saved: false, updated: false))
+        // Too few rows to count as a picture (false sync starts end up
+        // here too) is still kept, as a fragment: its raw audio may hold
+        // the whole picture, for the darkroom. It's kept quietly (no tap,
+        // no notice), and the gallery keeps fragments apart.
+        let fragment = s.line < Self.minRows(s)
+        guard s.line >= 1, let image = decoder.makeImage() else {
+            events.append(.finished(mode: r.mode, end: s.end, saved: false, updated: false))
             return
         }
 
@@ -299,8 +413,10 @@ nonisolated final class ReceiverCore: @unchecked Sendable {
             sampleRate: Int(sampleRate.rounded()),
             device: device
         )
-        let updated = !savedIDs.insert(r.id).inserted
-        events.append(.finished(mode: r.mode, saved: true, updated: updated))
+        // (A fragment isn't counted as saved, so if it resumes into a
+        // picture, that picture is.)
+        let updated = fragment ? false : !savedIDs.insert(r.id).inserted
+        events.append(.finished(mode: r.mode, end: s.end, saved: !fragment, updated: updated))
 
         let box = ImageBox(image: image)
         saveQueue.async { [self] in
@@ -314,6 +430,19 @@ nonisolated final class ReceiverCore: @unchecked Sendable {
                     events.append(.saveFailed(error.localizedDescription))
                 }
             }
+        }
+    }
+
+    /// Files a finished recording with its picture, then sends it on.
+    /// If the picture wasn't kept (no rows at all), the recording is dropped.
+    private func attach(_ done: RawAudioRecorder.Finished) {
+        saveQueue.async {
+            let kept = (try? ReceptionStore.attachAudio(id: done.id, from: done.url, info: done.info)) ?? false
+            #if os(watchOS)
+            if kept { WatchSync.shared.sendAudio(id: done.id) }
+            #else
+            _ = kept
+            #endif
         }
     }
 
@@ -384,6 +513,11 @@ final class Receiver: ObservableObject {
     /// The input in use ("iPhone Microphone", a USB interface's name).
     @Published private(set) var inputName: String?
     @Published private(set) var sampleRate: Double = 0
+    /// Why listening last stopped by itself (nil after Listen, or a Stop).
+    @Published private(set) var stoppedBy: AutoStopReason?
+    /// Seconds until the receive timeout stops listening, in its last
+    /// two minutes; nil otherwise.
+    @Published private(set) var stopsIn: Int?
 
     /// Start a picture from its line syncs when the VIS header was missed
     /// (the decoder's autosync). On by default, as on the iPod; remembered.
@@ -392,6 +526,21 @@ final class Receiver: ObservableObject {
             UserDefaults.standard.set(autosync, forKey: "rx.autosync")
             core?.setAutosync(autosync)
         }
+    }
+
+    /// Keep each picture's audio with it (audio.wav), to share or decode
+    /// again later. On by default; remembered.
+    @Published var saveAudio: Bool = UserDefaults.standard.object(forKey: "rx.saveAudio") as? Bool ?? true {
+        didSet {
+            UserDefaults.standard.set(saveAudio, forKey: "rx.saveAudio")
+            core?.setSaveAudio(saveAudio)
+        }
+    }
+
+    /// iPhone: raw audio at the input's own rate (usually 48 kHz) instead
+    /// of the decoder's 12 kHz. Takes effect at the next Listen; remembered.
+    @Published var fullRateAudio: Bool = UserDefaults.standard.bool(forKey: "rx.audioFullRate") {
+        didSet { UserDefaults.standard.set(fullRateAudio, forKey: "rx.audioFullRate") }
     }
 
     /// The one mode to receive (its VIS code), or nil for any mode, found
@@ -403,11 +552,47 @@ final class Receiver: ObservableObject {
         }
     }
 
+    /// Watch: what lowering the wrist or leaving the app does to
+    /// listening. Keeps listening by default (what anyone expects after
+    /// tapping Listen); chosen at first launch; remembered.
+    @Published var wristPolicy: WristPolicy = WristPolicy(
+        rawValue: UserDefaults.standard.string(forKey: "rx.wristPolicy") ?? ""
+    ) ?? .keep {
+        didSet {
+            UserDefaults.standard.set(wristPolicy.rawValue, forKey: "rx.wristPolicy")
+            updateLeaving()
+        }
+    }
+
+    /// Stop listening after this many minutes without a picture; 0 never.
+    /// 10 by default; remembered.
+    @Published var timeoutMinutes: Int = UserDefaults.standard.object(forKey: "rx.timeout") as? Int ?? 10 {
+        didSet {
+            UserDefaults.standard.set(timeoutMinutes, forKey: "rx.timeout")
+        }
+    }
+
+    static let timeoutChoices = [0, 5, 10, 15, 30]
+
+    /// "Waiting for VIS", or for the one mode chosen.
+    var waitingText: String {
+        if let vis = chosenMode, let name = SSTVDecoder.modeName(vis: vis) {
+            return String(localized: "Waiting for \(name)")
+        }
+        return String(localized: "Waiting for VIS")
+    }
+
     private static func loadChosenMode() -> Int? {
         guard let vis = UserDefaults.standard.object(forKey: "rx.mode") as? Int,
               SSTVDecoder.isSupported(vis: vis)
         else { return nil }
         return vis
+    }
+
+    init() {
+        // Nothing is recording yet: anything in .recording is from a run
+        // that ended mid-picture.
+        ReceptionStore.removeLeftoverRecordings()
     }
 
     #if os(watchOS)
@@ -423,6 +608,13 @@ final class Receiver: ObservableObject {
     private var visible = true
     private var active = true
     private var noticeUntil: Double = 0
+    /// When the last picture ended, or listening began (nil during a picture).
+    private var idleSince: Double?
+    /// When the wrist went down or the app was left, if that should stop
+    /// listening (see wristPolicy).
+    private var leftSince: Double?
+    /// A short look away doesn't stop it.
+    private static let leaveGrace = 5.0
 
     // MARK: Start / stop
 
@@ -430,6 +622,7 @@ final class Receiver: ObservableObject {
         guard !isRunning, !isStarting else { return }
         isStarting = true
         notice = nil
+        stoppedBy = nil
 
         Task {
             defer { isStarting = false }
@@ -449,6 +642,11 @@ final class Receiver: ObservableObject {
 
     func stop() {
         guard isRunning else { return }
+        // Cleared first: the poll below must not decide to stop again.
+        idleSince = nil
+        leftSince = nil
+        stopsIn = nil
+        stoppedBy = nil
         teardown()
         AudioSessionControl.deactivate()
         core?.finish()
@@ -469,6 +667,9 @@ final class Receiver: ObservableObject {
 
         try startEngine(core: core)
         isRunning = true
+        idleSince = ProcessInfo.processInfo.systemUptime
+        leftSince = nil
+        updateLeaving()
         setScreenStaysOn(true)
         startPolling()
     }
@@ -479,11 +680,17 @@ final class Receiver: ObservableObject {
         guard format.sampleRate >= 8000, format.channelCount > 0 else {
             throw ReceiverError.noInput
         }
-        guard let core = ReceiverCore(sampleRate: format.sampleRate, device: Self.deviceName) else {
+        #if os(iOS)
+        let fullRate = fullRateAudio
+        #else
+        let fullRate = false            // 5 minutes held at 48 kHz is too much for the watch
+        #endif
+        guard let core = ReceiverCore(sampleRate: format.sampleRate, device: Self.deviceName, fullRateAudio: fullRate) else {
             throw ReceiverError.decoder
         }
         core.setAutosync(autosync)
         core.setMode(vis: chosenMode)
+        core.setSaveAudio(saveAudio)
         sampleRate = format.sampleRate
         return core
     }
@@ -559,7 +766,25 @@ final class Receiver: ObservableObject {
     func setScene(visible: Bool, active: Bool) {
         self.visible = visible
         self.active = active
+        updateLeaving()
         if visible { poll() }
+    }
+
+    /// Watch: starts (or cancels) the countdown to stopping when the
+    /// wrist goes down or the app is left, as wristPolicy says.
+    private func updateLeaving() {
+        #if os(watchOS)
+        let leaving = switch wristPolicy {
+        case .stop: !active
+        case .keepWhenDimmed: !visible
+        case .keep: false
+        }
+        if leaving && isRunning {
+            if leftSince == nil { leftSince = ProcessInfo.processInfo.systemUptime }
+        } else {
+            leftSince = nil
+        }
+        #endif
     }
 
     // MARK: Notifications
@@ -605,42 +830,132 @@ final class Receiver: ObservableObject {
         }
     }
 
+    /// Active: everything. Dimmed (wrist down): the status line only; the
+    /// picture when one starts or is saved. Hidden: nothing for the UI;
+    /// events (haptics) and stopping still run.
     private func poll() {
         guard let core else { return }
         let now = ProcessInfo.processInfo.systemUptime
+        // Dimmed too: the picture, the rows and the progress move together,
+        // once a second, so it never looks stuck.
         let snap = core.snapshot(includeImage: visible)
 
-        if let image = snap.image { picture = image }
-        if status != snap.status { status = snap.status }
-        levelDB = snap.levelDB
-        clipping = snap.clipping
-        lostSeconds = Double(snap.lostSamples) / core.sampleRate
-
-        if isRunning, snap.lastBufferUptime > 0 {
-            let silent = now - snap.lastBufferUptime > 2
-            if silent != stalled { stalled = silent }
+        if visible {
+            if let image = snap.image { picture = image }
+            if status != snap.status { status = snap.status }
+            lostSeconds = Double(snap.lostSamples) / core.sampleRate
+            if isRunning, snap.lastBufferUptime > 0 {
+                let silent = now - snap.lastBufferUptime > 2
+                if silent != stalled { stalled = silent }
+            }
+        }
+        if active {
+            levelDB = snap.levelDB
+            clipping = snap.clipping
         }
 
         for event in core.drainEvents() {
             handle(event)
         }
+
         if notice != nil, now > noticeUntil { notice = nil }
+        if isRunning { checkAutoStop(snap, now: now) }
     }
 
-    private func handle(_ event: ReceiverEvent) {
+    // MARK: Stopping by itself
+
+    /// The countdown is shown for this long before the timeout.
+    private static let countdownSeconds = 120.0
+
+    /// Starts the timeout over, as if a picture had just ended.
+    func keepListening() {
+        guard isRunning else { return }
+        idleSince = ProcessInfo.processInfo.systemUptime
+        stopsIn = nil
+    }
+
+    /// Stops after the timeout without a picture, or once the wrist is down
+    /// or the app left (wristPolicy), but never during a picture or the
+    /// recording's margin after it: those are finished first.
+    private func checkAutoStop(_ snap: ReceiverSnapshot, now: Double) {
+        guard !restarting else { return }
+        let s = snap.status
+        if s.receiving {
+            idleSince = nil
+        } else if idleSince == nil {
+            idleSince = now
+        }
+
+        // The last two minutes before the timeout are counted down.
+        var left: Int?
+        if !s.receiving, timeoutMinutes > 0, let idle = idleSince {
+            let remaining = Double(timeoutMinutes) * 60 - (now - idle)
+            if remaining <= Self.countdownSeconds { left = max(0, Int(remaining.rounded(.up))) }
+        }
+        if left != stopsIn { stopsIn = left }
+
+        guard !s.receiving, !snap.recordingTail else { return }
+
+        let reason: AutoStopReason
+        if let since = leftSince, now - since >= Self.leaveGrace {
+            reason = visible ? .dimmed : .left
+        } else if let left, left == 0 {
+            reason = .timeout
+        } else {
+            return
+        }
+
+        // A picture was just saved: let its tap finish first (the next
+        // poll stops), so the two are felt apart.
+        guard now - Haptics.lastPlayed >= 1.5 else { return }
+
+        Haptics.stop()
+        stop()
+        stoppedBy = reason
+        // Shown until the next Listen, so it's there when the wrist comes up.
+        let day = 86_400.0
+        switch reason {
+        case .dimmed: show("Stopped when the screen dimmed", seconds: day)
+        case .left: show("Stopped after leaving the app", seconds: day)
+        case .timeout: show("No picture for \(timeoutMinutes) min: stopped", seconds: day)
+        }
+    }
+
+    /// Haptics and notices for one event. True if the picture changed
+    /// (one started, or was saved).
+    @discardableResult
+    private func handle(_ event: ReceiverEvent) -> Bool {
         switch event {
         case let .started(mode, viaVIS):
-            // A sync start may be a false start, so only a VIS buzzes.
+            // A sync start may be a false start: it taps once confirmed.
             if viaVIS { Haptics.start() }
             show("\(mode) started", seconds: 3)
+            return true
+        case .confirmed:
+            Haptics.start()
+            return false
         case let .resumed(mode):
+            Haptics.start()
             show("\(mode) resumed", seconds: 3)
-        case let .finished(mode, saved, updated):
-            if saved {
-                if !updated { savedCount += 1 }
+            return false
+        case let .finished(mode, end, saved, updated):
+            guard saved else { return false }
+            if !updated { savedCount += 1 }
+            switch end {
+            case .complete:
                 Haptics.success()
                 show("\(mode) saved", seconds: 5)
+            case .lost:
+                Haptics.lost()
+                show("\(mode) saved: signal lost", seconds: 5)
+            case .noMemory:
+                Haptics.failure()
+                show("\(mode) saved: out of memory", seconds: 5)
+            default:
+                // Stopped, or a new picture took over: no tap.
+                show("\(mode) saved", seconds: 5)
             }
+            return true
         case let .skipped(mode, vis):
             if let chosen = chosenMode, SSTVDecoder.isSupported(vis: vis) {
                 let name = SSTVDecoder.modeName(vis: chosen) ?? String(localized: "the chosen mode")
@@ -648,9 +963,11 @@ final class Receiver: ObservableObject {
             } else {
                 show("Skip \(mode): not supported", seconds: 5)
             }
+            return false
         case let .saveFailed(message):
             Haptics.failure()
             show("Save failed: \(message)", seconds: 30)
+            return false
         }
     }
 
@@ -671,31 +988,71 @@ final class Receiver: ObservableObject {
 
 // MARK: - Haptics
 
+/// One tap per change of state, so the watch can be followed without
+/// looking: a picture starts (or resumes), is saved, is lost, or
+/// listening stops by itself.
 @MainActor
 enum Haptics {
+    /// Uptime of the last tap, so two aren't played on top of each other.
+    private(set) static var lastPlayed: Double = 0
+
     static func start() {
         #if os(watchOS)
-        WKInterfaceDevice.current().play(.start)
+        play(.start)
         #else
+        played()
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         #endif
     }
 
     static func success() {
         #if os(watchOS)
-        WKInterfaceDevice.current().play(.success)
+        play(.success)
         #else
+        played()
         UINotificationFeedbackGenerator().notificationOccurred(.success)
+        #endif
+    }
+
+    /// The signal was lost; what came in was saved.
+    static func lost() {
+        #if os(watchOS)
+        play(.directionDown)
+        #else
+        played()
+        UINotificationFeedbackGenerator().notificationOccurred(.warning)
         #endif
     }
 
     static func failure() {
         #if os(watchOS)
-        WKInterfaceDevice.current().play(.failure)
+        play(.failure)
         #else
+        played()
         UINotificationFeedbackGenerator().notificationOccurred(.error)
         #endif
     }
+
+    /// Listening stopped by itself (timeout, wrist down). On the iPhone,
+    /// ContentView's feedback for isRunning already plays it.
+    static func stop() {
+        #if os(watchOS)
+        play(.stop)
+        #else
+        played()
+        #endif
+    }
+
+    private static func played() {
+        lastPlayed = ProcessInfo.processInfo.systemUptime
+    }
+
+    #if os(watchOS)
+    private static func play(_ type: WKHapticType) {
+        played()
+        WKInterfaceDevice.current().play(type)
+    }
+    #endif
 }
 
 nonisolated enum ReceiverError: LocalizedError {

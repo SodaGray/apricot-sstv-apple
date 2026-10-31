@@ -2,13 +2,33 @@
 /*
  * sstv_dsp.h -- portable SSTV receiver core, float, no libm.
  *
- * iPHONE / WATCH BUILD: copied from the iPod repository at
- * a238f65 with two changes:
+ * iPHONE / WATCH BUILD: copied from the iPod repository at a238f65 with
+ * these changes (the iPod's cable input never met wind, traffic or echo;
+ * a microphone does, and the phone and watch have memory to spare):
  *  - Every mode is stored at full size (SSTV_MAX_W x SSTV_MAX_H =
  *    800 x 616, PD290's size) instead of the nano's half size for PD120
  *    and up; IMG_BYTES in sstv_dsp.c grows to match. The decoder already
  *    had the full-size path; only the limit kept PD modes at half size.
  *  - sstv_set_mode: receive one chosen mode only (VIS and autosync).
+ *  - A high-pass (450 Hz, 4th order) before the mixer: rumble no longer
+ *    hides VIS bits and syncs or pulls the tuning-offset estimate away.
+ *  - Lost only when the picture itself is gone: a period with no sync but
+ *    with picture tone (small tone steps) carries on along the fitted line
+ *    grid. Syncs are the first thing a weak or echoing signal loses.
+ *  - A picture's sync pulses are forgotten when it ends, so autosync no
+ *    longer "starts" a new picture on its last lines.
+ *  - A VIS heard while the current picture's syncs are still coming in is
+ *    ignored (grey picture content can look like a VIS leader).
+ *  - Robot 36: the lines vote on which carries R-Y and which B-Y, so one
+ *    misread separator no longer swaps a line's colours.
+ *  - Autosync accepts a pulse that is 55 % sync tone (was 70 %).
+ *  - The level ring holds a whole picture (was 11.9 s), so every line is
+ *    re-timed when the slant fit improves. About 4.5 MB.
+ *  - Darkroom: sstv_start_at, sstv_set_slant, sstv_set_shift, and the
+ *    picture's start and line period in SstvStatus, for decoding a
+ *    recording again by hand.
+ * Tested against field recordings from an Apple Watch (acoustic, outdoors)
+ * and the iPod's host test bench (66/66).
  *
  * Modes: Robot 36 / 72, Martin M1 / M2, Scottie S1 / S2 / DX,
  * PD50 / 90 / 120 / 160 / 180 / 240 / 290 -- every mode is a row of one table
@@ -74,6 +94,9 @@ typedef struct {
     unsigned long images;   /* images completed (>= 83 % of their lines) */
     unsigned long gaps;     /* input samples reported lost (sstv_gap) */
     unsigned revision;      /* bumps whenever the picture changes */
+    double start_s;         /* where the current/last picture's line 0 sync starts,
+                               seconds of input from the first sample fed */
+    double ppm_fit;         /* its clock error as fitted right now (ppm), valid or not */
 } SstvStatus;
 
 typedef struct SstvRx SstvRx;
@@ -117,6 +140,21 @@ void sstv_set_mode(SstvRx *s, int vis);
 /* Prior for the clock error (ppm), used until the fit takes over. The decoder
  * updates its own prior after every good image; this seeds it. */
 void sstv_set_ppm_prior(SstvRx *s, int ppm);
+
+/* Darkroom: decoding a recording again with settings chosen by hand.
+ * sstv_start_at, called before any audio is fed, starts a picture of the
+ * mode with this VIS code whose line 0 sync starts `seconds` into the audio
+ * (the tuning offset given), and from then on: no VIS starts anything,
+ * autosync is off, and the picture never ends as "lost" (it ends when all
+ * its lines are drawn, or with the audio). 0 if the mode isn't decoded. */
+int  sstv_start_at(SstvRx *s, int vis, double seconds, double offset_hz);
+/* Fix the line period at this clock error (ppm, as SstvStatus.ppm) instead
+ * of fitting it; the phase is still fitted to the syncs found. fixed = 0
+ * goes back to fitting. Set before the picture starts. */
+void sstv_set_slant(SstvRx *s, int fixed, double ppm);
+/* Sample every line `ms` later than its sync says (the picture moves left;
+ * negative: right). */
+void sstv_set_shift(SstvRx *s, double ms);
 
 /* Name for a VIS code ("Robot 36", "Martin M1", ...), or 0 if unknown. */
 const char *sstv_vis_name(int code);

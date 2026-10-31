@@ -14,11 +14,16 @@ Apple Watch, and send your own from your iPhone.
   header was missed; or receive one chosen mode only.
 - **Straight pictures**: the sender's clock error is measured from the line
   syncs and corrected as the picture comes in.
-- **Apple Watch receives on its own**, with the wrist down, and sends each
-  picture to the iPhone when the two are near each other.
+- **Apple Watch receives on its own** and sends each picture to the
+  iPhone when the two are near each other. It taps your wrist as a
+  picture starts, is saved or is lost, and stops listening by itself
+  (after a set time without a picture, or when you lower your wrist) to
+  save battery.
 - **Sending**: place a photo in the frame, add your callsign, and send it
   through the headphone adapter or a USB audio interface with VOX, or
   share it as a WAV.
+- **Raw audio**: each picture can keep the sound it was decoded from (on
+  by default), to share as a WAV and decode again elsewhere.
 - **English and Simplified Chinese**, with built-in help.
 - **No data collected**: no ads, no accounts, no analytics, no third-party
   code, no network connections of its own.
@@ -92,9 +97,12 @@ iPhone 发送你自己的图片。
   以及 PD50 / 90 / 120 / 160 / 180 / 240 / 290，全部以原始分辨率接收。
 - 通过 **VIS 头自动开始**，漏掉 VIS 头时也能按行同步开始；也可以只接收指定的一种模式。
 - 根据行同步测量发送方的时钟偏差，**边接收边把图片拉直**。
-- **Apple Watch 可以独立接收**，放下手腕也不中断；两台设备靠近时，图片自动传到 iPhone。
+- **Apple Watch 可以独立接收**，两台设备靠近时图片自动传到 iPhone。图片开始、保存、信号丢失时轻敲手腕；
+  一段时间没有图片或放下手腕后自动停止接收，以节省电量（都可以设置）。
 - **发送**：把照片放进画面、加上呼号，通过耳机转接器或 USB 声卡配合 VOX 发射，
   也可以分享为 WAV 文件。
+- **原始音频**：每张图片可以保留解码它所用的声音（默认开启），可分享为 WAV 文件，
+  用其他程序重新解码。
 - 支持**英文和简体中文**，内置帮助。
 - **不收集任何数据**：没有广告、账户、统计分析和第三方代码，App 本身不联网。
 

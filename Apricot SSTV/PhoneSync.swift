@@ -3,10 +3,11 @@
 //  PhoneSync.swift
 //  Apricot SSTV
 //
-//  Receives pictures from the watch. The system can launch the app in
-//  the background to deliver them, so the session is activated in the
-//  App's init, before any screen exists. An arriving file is only valid
-//  during the delegate call, so it's copied into the store right there.
+//  Receives pictures, and their audio, from the watch. The system can
+//  launch the app in the background to deliver them, so the session is
+//  activated in the App's init, before any screen exists. An arriving
+//  file is only valid during the delegate call, so it's copied into the
+//  store right there.
 //
 
 import Foundation
@@ -45,6 +46,17 @@ nonisolated final class PhoneSync: NSObject, WCSessionDelegate, @unchecked Senda
         return s.isWatchAppInstalled ? .ready : .appNotInstalled
     }
 
+    // MARK: Current event (shown on the watch)
+
+    /// Tells the watch the current event's name, or that there's none.
+    /// The latest message replaces any not yet delivered.
+    func sendCurrentEvent() {
+        guard WCSession.isSupported() else { return }
+        let s = WCSession.default
+        guard s.activationState == .activated, s.isPaired, s.isWatchAppInstalled else { return }
+        try? s.updateApplicationContext(CurrentEventInfo.message(for: EventStore.current))
+    }
+
     // MARK: WCSessionDelegate
 
     /// Pairing or the watch app's install state changed: Settings shows it.
@@ -55,11 +67,23 @@ nonisolated final class PhoneSync: NSObject, WCSessionDelegate, @unchecked Senda
     }
 
     func session(_ session: WCSession, didReceive file: WCSessionFile) {
-        guard let meta = ReceptionTransfer.meta(from: file.metadata) else { return }
-        do {
-            try ReceptionStore.importReception(imageAt: file.fileURL, meta: meta)
-        } catch {
-            print("[PhoneSync] import \(meta.id) failed: \(error.localizedDescription)")
+        switch ReceptionTransfer.kind(from: file.metadata) {
+        case .picture:
+            guard let meta = ReceptionTransfer.meta(from: file.metadata) else { return }
+            do {
+                try ReceptionStore.importReception(imageAt: file.fileURL, meta: meta)
+            } catch {
+                print("[PhoneSync] import \(meta.id) failed: \(error.localizedDescription)")
+            }
+        case .audio:
+            guard let audio = ReceptionTransfer.audio(from: file.metadata) else { return }
+            do {
+                try ReceptionStore.importAudio(id: audio.id, from: file.fileURL, info: audio.info)
+            } catch {
+                print("[PhoneSync] audio \(audio.id) failed: \(error.localizedDescription)")
+            }
+        case nil:
+            break
         }
     }
 
@@ -69,6 +93,7 @@ nonisolated final class PhoneSync: NSObject, WCSessionDelegate, @unchecked Senda
         error: Error?
     ) {
         sessionWatchStateDidChange(session)
+        sendCurrentEvent()
     }
 
     func sessionDidBecomeInactive(_ session: WCSession) {}

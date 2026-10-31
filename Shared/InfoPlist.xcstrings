@@ -32,13 +32,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Apricot SSTV uses the microphone to receive and decode slow-scan television signals."
+            "value" : "Apricot SSTV uses the microphone to receive and decode SSTV pictures. With Save Raw Audio on, each picture's sound is kept with it on your device."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Apricot SSTV 使用麦克风接收和解码慢扫描电视（SSTV）信号。"
+            "value" : "Apricot SSTV 使用麦克风接收和解码慢扫描电视（SSTV）图片。开启“保存原始音频”时，每张图片的声音会随图片保存在你的设备上。"
           }
         }
       }

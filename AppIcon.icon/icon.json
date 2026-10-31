@@ -153,6 +153,10 @@
               "value" : "0_screen_light.png"
             },
             {
+              "idiom" : "square",
+              "value" : "0_screen_light.png"
+            },
+            {
               "idiom" : "watchOS",
               "value" : "0_screen_light.png"
             }

@@ -345,12 +345,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 14;
 				DEVELOPMENT_TEAM = NXXC59K2ZD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Apricot-SSTV-Info.plist";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Apricot SSTV uses the microphone to receive and decode slow-scan television signals.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Apricot SSTV uses the microphone to receive and decode SSTV pictures. With Save Raw Audio on, each picture's sound is kept with it on your device.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Apricot SSTV saves received pictures to your photo library.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -362,7 +362,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sodagray.Apricot-SSTV";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -383,12 +383,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 14;
 				DEVELOPMENT_TEAM = NXXC59K2ZD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Apricot-SSTV-Info.plist";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Apricot SSTV uses the microphone to receive and decode slow-scan television signals.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Apricot SSTV uses the microphone to receive and decode SSTV pictures. With Save Raw Audio on, each picture's sound is kept with it on your device.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Apricot SSTV saves received pictures to your photo library.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -400,7 +400,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sodagray.Apricot-SSTV";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -421,13 +421,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 14;
 				DEVELOPMENT_TEAM = NXXC59K2ZD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Apricot-SSTV-Watch-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Apricot SSTV Watch";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Apricot SSTV uses the microphone to receive and decode slow-scan television signals.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Apricot SSTV uses the microphone to receive and decode SSTV pictures. With Save Raw Audio on, each picture's sound is kept with it on your device.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.sodagray.Apricot-SSTV";
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
@@ -435,7 +435,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sodagray.Apricot-SSTV.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -459,13 +459,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 14;
 				DEVELOPMENT_TEAM = NXXC59K2ZD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Apricot-SSTV-Watch-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Apricot SSTV Watch";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Apricot SSTV uses the microphone to receive and decode slow-scan television signals.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Apricot SSTV uses the microphone to receive and decode SSTV pictures. With Save Raw Audio on, each picture's sound is kept with it on your device.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.sodagray.Apricot-SSTV";
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
@@ -473,7 +473,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sodagray.Apricot-SSTV.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;

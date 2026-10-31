@@ -1,2367 +1,4510 @@
 {
-  "sourceLanguage" : "en",
-  "strings" : {
-    " · from Watch" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : " · 来自手表"
+  "sourceLanguage": "en",
+  "strings": {
+    " · from File": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": " · 来自文件"
           }
         }
       }
     },
-    "%@ only" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "仅 %@"
+    " · from Watch": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": " · 来自手表"
           }
         }
       }
     },
-    "%@ resumed" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ 已续收"
+    "%@ (unsure)": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@（不确定）"
           }
         }
       }
     },
-    "%@ saved" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ 已保存"
+    "%@ Audio": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 音频"
           }
         }
       }
     },
-    "%@ started" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ 已开始"
+    "%@ only": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仅 %@"
           }
         }
       }
     },
-    "%lld of %lld" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld / %2$lld"
+    "%@ resumed": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 已续收"
           }
         }
       }
     },
-    "%lld Selected" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已选择 %lld 张"
+    "%@ saved": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 已保存"
           }
         }
       }
     },
-    "© %@ %@. Apricot SSTV is free software: you can redistribute it and modify it under the terms of the GNU General Public License, version 3. It comes with no warranty. Its decoder began as Apricot SSTV for the iPod nano." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "© %1$@ %2$@。Apricot SSTV 是自由软件：你可以依照 GNU 通用公共许可证第 3 版的条款重新分发和修改它。本软件不提供任何担保。它的解码器源自 iPod nano 版的 Apricot SSTV。"
+    "%@ saved: out of memory": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 已保存：内存不足"
           }
         }
       }
     },
-    "A missed start" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "漏掉了开头"
+    "%@ saved: signal lost": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 已保存：信号丢失"
           }
         }
       }
     },
-    "A picture was sent but nothing happened." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "有人发了图片，但没有反应。"
+    "%@ started": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 已开始"
           }
         }
       }
     },
-    "About" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "关于"
+    "%lld min": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld 分钟"
           }
         }
       }
     },
-    "About Apricot SSTV" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "关于 Apricot SSTV"
+    "%lld of %lld": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld / %2$lld"
           }
         }
       }
     },
-    "Adjust Photo" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "调整照片"
+    "%lld of %lld rows": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld/%2$lld 行"
           }
         }
       }
     },
-    "Adjust Position and Size" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "调整位置和大小"
+    "%lld pictures": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld 张图片"
           }
+        },
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld picture"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld pictures"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld rows": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld 行"
+          }
+        },
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld row"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld rows"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld Selected": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已选择 %lld 张"
+          }
+        }
+      }
+    },
+    "%lld were already in Pictures and were left as they are.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld 张已经在“图片”里，保持原样。"
+          }
+        }
+      }
+    },
+    "12 kHz": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "12 kHz"
+          }
+        }
+      }
+    },
+    "A missed start": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "漏掉了开头"
+          }
+        }
+      }
+    },
+    "A picture can keep the sound it was decoded from. A bad one is then developed again from that sound, not bent or retouched as an image: every pixel still comes from the signal.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每张图片都可以保留它解码时的声音。收得不好的图片可以用这段声音重新冲洗，而不是对图像做变形或修饰：每个像素仍然来自信号本身。"
+          }
+        }
+      }
+    },
+    "A picture was sent but nothing happened.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "有人发了图片，但没有反应。"
+          }
+        }
+      }
+    },
+    "A start too short to count as a picture, mostly a false start, is kept as a fragment, with its raw audio. Its sound may hold a whole picture whose start was missed. Fragments are shown apart: choose Fragments in the menu at the top right of Pictures.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "太短、算不上一张图的接收（多半是误触发）会作为片段连同原始音频一起保存。它的声音里可能有一整张错过了开头的图。片段单独显示：在“图片”页右上角的菜单里选“片段”。"
+          }
+        }
+      }
+    },
+    "About": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "关于"
+          }
+        }
+      }
+    },
+    "About 8 MB for a Martin M1 picture.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一张 Martin M1 图片约 8 MB。"
+          }
+        }
+      }
+    },
+    "About Apricot SSTV": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "关于 Apricot SSTV"
+          }
+        }
+      }
+    },
+    "Add to Event": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "加入活动"
+          }
+        }
+      }
+    },
+    "Add to Favorites": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "添加到常用图片"
+          }
+        }
+      }
+    },
+    "Adjust Photo": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "调整照片"
+          }
+        }
+      }
+    },
+    "Adjust Position and Size": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "调整位置和大小"
+          }
+        }
+      }
+    },
+    "Adjust the radio's volume so the Level bar stays in the green, between the −40 and −10 dB marks. The red stretch at the right end means it's about to clip: if the bar turns red and says Clipping, turn the radio down.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "调节电台音量，让“电平”条保持在绿色，大约在 −40 和 −10 dB 两个刻度之间。最右端的红色区段表示快要削波了：如果电平条变红并显示“削波”，就把电台音量调小。"
+          }
+        }
+      }
+    },
+    "After you tap Listen and lower your wrist:": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "轻点“接收”并放下手腕后："
+          }
+        }
+      }
+    },
+    "All Pictures": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "全部图片"
+          }
+        }
+      }
+    },
+    "An event gathers the pictures of one occasion, such as an ISS SSTV weekend or a net. Make one current, and pictures received from then on, here or on Apple Watch, go into it until the end of its last day. Others can be added with Select in Pictures. An event's pictures are grouped by when they came in: a gap of more than 20 minutes starts a new group.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "活动用来归拢同一场合的图片，比如一次 ISS SSTV 活动或一次网络点名。把它设为当前活动后，之后在这台 iPhone 或 Apple Watch 上收到的图片都会归入，直到最后一天结束。其他图片可以在“图片”页用“选择”加入。活动里的图片按接收时间分组：间隔超过 20 分钟就另起一组。"
+          }
+        }
+      }
+    },
+    "An event gathers the pictures of one occasion: an ISS SSTV weekend, a net, a test with a friend. While one is current, new pictures go into it by themselves.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "活动用来归拢同一场合收到的图片：一次 ISS SSTV 活动、一次网络点名、和朋友的一次测试。设为当前活动后，新收到的图片会自动归入。"
+          }
+        }
+      }
+    },
+    "Apple Watch": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Watch"
+          }
+        }
+      }
+    },
+    "Apply": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "应用"
+          }
+        }
+      }
+    },
+    "Apricot SSTV": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apricot SSTV"
+          }
+        }
+      }
+    },
+    "Apricot SSTV collects no data.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apricot SSTV 不收集任何数据。"
+          }
+        }
+      }
+    },
+    "Apricot SSTV turns the sound of slow-scan television into pictures. Tune your radio to a frequency where SSTV is sent, and let your iPhone or Apple Watch hear it.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apricot SSTV 能把慢扫描电视（SSTV）的声音还原成图片。把电台调到有 SSTV 信号的频率，让 iPhone 或 Apple Watch 听到它就行。"
+          }
+        }
+      }
+    },
+    "Audio": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "音频"
+          }
+        }
+      }
+    },
+    "Audio File": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "音频文件"
+          }
+        }
+      }
+    },
+    "Audio lost": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "丢失的音频"
+          }
+        }
+      }
+    },
+    "Automatic": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自动"
+          }
+        }
+      }
+    },
+    "Automatic finds the mode from each picture's VIS header. Choose a mode to receive only that one. Start Without VIS locks on to the line syncs when the header was missed.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“自动”会根据每张图片的 VIS 头识别模式。选择某个模式则只接收这一种。“无 VIS 也开始”会在漏掉 VIS 头时按行同步锁定。"
+          }
+        }
+      }
+    },
+    "Automatic suits most listening. If you know what's coming, such as PD120 from the International Space Station, choose that mode in Settings or the ⋯ menu on Receive. Other modes are then ignored, which also avoids false starts in noise.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "大多数情况下用“自动”即可。如果你知道将要收到什么，例如国际空间站的 PD120，可以在“设置”或“接收”页的 ⋯ 菜单中选择该模式。之后其他模式会被忽略，这也能避免在噪声中误触发。"
+          }
+        }
+      }
+    },
+    "Built In": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "内置"
+          }
+        }
+      }
+    },
+    "By %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "作者：%@"
+          }
+        }
+      }
+    },
+    "By hand": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "手动调整"
+          }
+        }
+      }
+    },
+    "Callsign": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "呼号"
+          }
+        }
+      }
+    },
+    "Can't send: %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法发送：%@"
+          }
+        }
+      }
+    },
+    "Can't start: %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法开始：%@"
+          }
+        }
+      }
+    },
+    "Cancel": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "取消"
+          }
+        }
+      }
+    },
+    "Center": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "居中"
+          }
+        }
+      }
+    },
+    "Change Picture": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "更换图片"
+          }
+        }
+      }
+    },
+    "Check before going on the air": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "发射前先检查"
+          }
+        }
+      }
+    },
+    "Check that the Level bar moves, that Mode is Automatic or matches the picture, and that the tuning marker sits near 1900 Hz during the VIS header. Weak or distorted audio can hide the header; Start Without VIS helps.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "检查电平条是否在动、模式是否为“自动”或与图片一致，以及 VIS 头期间调谐标记是否在 1900 Hz 附近。音频太弱或失真可能听不出 VIS 头，这时“无 VIS 也开始”会有帮助。"
+          }
+        }
+      }
+    },
+    "Choose a mode to receive only that one. Start Without VIS locks on to the line syncs when the header was missed.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择一种模式后只接收这一种。“无 VIS 也开始”会在漏掉 VIS 头时按行同步锁定开始。"
+          }
+        }
+      }
+    },
+    "Choose a Picture": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择图片"
+          }
+        }
+      }
+    },
+    "Choose a picture from the photo library, Favorites or Files, then tap it to move and zoom it in the frame. Favorites keeps pictures you send often, each where you last placed it, and two test cards for trying out a setup. Your callsign is drawn at the top left; add a second line, such as a signal report, if you like.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "从照片图库、“常用图片”或“文件”中选择一张图片，然后轻点它，在画框中移动和缩放。“常用图片”保存你经常发送的图片，每张都记得上次放置的位置，另外还有两张测试卡，用来检验设备连接。你的呼号画在左上角；如果需要，可以再加一行文字，比如信号报告。"
+          }
+        }
+      }
+    },
+    "Choose a picture to send.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择一张要发送的图片。"
+          }
+        }
+      }
+    },
+    "Choose All Pictures in the menu at the top right.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在右上角的菜单中选择“全部图片”。"
+          }
+        }
+      }
+    },
+    "Choose Picture": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择图片"
+          }
+        }
+      }
+    },
+    "Choosing a mode": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择模式"
+          }
+        }
+      }
+    },
+    "Clear Picture": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "清除图片"
+          }
+        }
+      }
+    },
+    "CLIP": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "削波"
+          }
+        }
+      }
+    },
+    "Clipping": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "削波"
+          }
+        }
+      }
+    },
+    "Clock": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "时钟"
+          }
+        }
+      }
+    },
+    "Clock Error": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "时钟偏差"
+          }
+        }
+      }
+    },
+    "Color Bars": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "彩条"
+          }
+        }
+      }
+    },
+    "Complete": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "完整"
+          }
+        }
+      }
+    },
+    "Connect the audio": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "连接音频"
+          }
+        }
+      }
+    },
+    "Connect the audio output (headphone adapter or USB interface) to the radio's audio input; the iPhone's volume sets the level. Before sending on the air with a new setup, share a WAV (top left) and check it with another SSTV decoder.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "将音频输出（耳机转接器或 USB 声卡）连接到电台的音频输入，用 iPhone 的音量调节电平。使用新设置正式发射前，请先分享一个 WAV 文件（左上角），并用其他 SSTV 解码器检查。"
+          }
+        }
+      }
+    },
+    "Connect the iPhone's audio output (a headphone adapter or a USB audio interface) to the radio's microphone or data input, and turn on VOX so the radio transmits when it hears the audio. The iPhone's volume sets the level: start low and raise it until the radio's ALC just begins to move.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "把 iPhone 的音频输出（耳机转接器或 USB 声卡）接到电台的话筒或数据输入，并打开 VOX，让电台听到音频时自动发射。用 iPhone 的音量调节电平：从小音量开始，逐渐调大，直到电台的 ALC 刚开始动作。"
+          }
+        }
+      }
+    },
+    "Connect the radio": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "连接电台"
+          }
+        }
+      }
+    },
+    "Continue": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "继续"
+          }
+        }
+      }
+    },
+    "Could not write image.png": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法写入 image.png"
+          }
+        }
+      }
+    },
+    "Couldn't Make the WAV": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法生成 WAV"
+          }
+        }
+      }
+    },
+    "Couldn't Open the Picture": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法打开图片"
+          }
+        }
+      }
+    },
+    "Current": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "当前"
+          }
+        }
+      }
+    },
+    "Current Event": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "当前活动"
+          }
+        }
+      }
+    },
+    "Darkroom": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "暗室"
+          }
+        }
+      }
+    },
+    "Decode Audio File": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "解码音频文件"
+          }
+        }
+      }
+    },
+    "Decode Audio File, in the ⋯ menu on Receive, finds the pictures in a recording made with another device or app (WAV, M4A, MP3 and others), as if it were played to Receive. Each is saved in Pictures with its stretch of the recording as raw audio, to develop again in the darkroom; its note says which file it came from. The file itself isn't changed. (Import Library, in Settings, is something else: it takes back a folder this app exported.)": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“接收”页 ⋯ 菜单里的“解码音频文件”可以从别的设备或软件录下的录音（WAV、M4A、MP3 等）里找出图片，就像把它放给“接收”听一样。每张图片都会存进“图片”，并带上录音中属于它的那一段作为原始音频，可以在暗室里重新冲洗；它的备注会写明来自哪个文件。原文件不会被改动。（“设置”里的“导入资料库”是另一回事：它用来导回本 app 导出的文件夹。）"
+          }
+        }
+      }
+    },
+    "Decode Audio File…": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "解码音频文件…"
+          }
+        }
+      }
+    },
+    "Decoded from the audio file “%@”, at %@ into it.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "解码自音频文件“%1$@”，位于 %2$@ 处。"
+          }
+        }
+      }
+    },
+    "decoder could not start": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "解码器无法启动"
+          }
+        }
+      }
+    },
+    "Decodes the whole raw audio again with the latest decoder: the slant fitted over the whole picture, weak lines carried through. Then adjust it by hand below. Everything here works on the sound, not on the image: each change reads the signal again, so nothing is stretched or made up.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用最新的解码器把整段原始音频重新解码：在整张图上拟合斜度，弱信号的行也能接着解下去。然后可以在下面手动调整。这里的一切都作用于声音而不是图像：每次改动都会重新读取信号，没有任何拉伸或凭空生成。"
+          }
+        }
+      }
+    },
+    "Decodes the whole recording with the latest decoder: the slant fitted over the whole picture, syncs found where the first decode missed them, weak lines carried through. Often that's all a picture needs.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用最新的解码器把整段录音重新解码：在整张图上拟合斜度，补上第一次漏掉的同步，弱信号的行也能接着解下去。很多时候这一步就够了。"
+          }
+        }
+      }
+    },
+    "Decodes this picture again from its raw audio, with the timing you set: not an edit of the image, so nothing is stretched or made up.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "按你设定的时序，用原始音频把这张图重新解码。这不是修图，没有任何拉伸或凭空生成。"
+          }
+        }
+      }
+    },
+    "Decoding the whole recording, as if it were played to Receive. The file itself isn't changed.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在解码整段录音，就像把它放给“接收”听一样。原文件不会被改动。"
+          }
+        }
+      }
+    },
+    "Delete": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除"
+          }
+        }
+      }
+    },
+    "Delete %lld pictures already on the iPhone?": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "要删除 iPhone 上已有的 %lld 张图片吗？"
+          }
+        }
+      }
+    },
+    "Delete %lld pictures?": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "要删除 %lld 张图片吗？"
+          }
+        }
+      }
+    },
+    "Delete all %lld fragments from this iPhone?": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "从这台 iPhone 删除全部 %lld 个片段？"
+          }
+        }
+      }
+    },
+    "Delete all %lld pictures from this iPhone?": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "要从这台 iPhone 删除全部 %lld 张图片吗？"
+          }
+        }
+      }
+    },
+    "Delete All Fragments": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除所有片段"
+          }
+        }
+      }
+    },
+    "Delete All Pictures": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除所有图片"
+          }
+        }
+      }
+    },
+    "Delete All Raw Audio": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除所有原始音频"
+          }
+        }
+      }
+    },
+    "Delete Event": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除活动"
+          }
+        }
+      }
+    },
+    "Delete Raw Audio": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除原始音频"
+          }
+        }
+      }
+    },
+    "Delete Synced (%lld)": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除已同步的（%lld）"
+          }
+        }
+      }
+    },
+    "Delete Synced, in the watch's Pictures, removes the pictures the iPhone already has. To keep less on the watch, turn off Save Raw Audio in the watch's Settings.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "手表“图片”里的“删除已同步的”会删除 iPhone 上已有的图片。想让手表上少存一些，可以在手表的“设置”里关闭“保存原始音频”。"
+          }
+        }
+      }
+    },
+    "Delete the raw audio of every picture on this iPhone?": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "要删除这台 iPhone 上所有图片的原始音频吗？"
+          }
+        }
+      }
+    },
+    "Delete this event?": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除这个活动？"
+          }
+        }
+      }
+    },
+    "Delete this picture from the watch?": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "要从手表上删除这张图片吗？"
+          }
+        }
+      }
+    },
+    "Delete this picture's raw audio?": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "要删除这张图片的原始音频吗？"
+          }
+        }
+      }
+    },
+    "Delete this picture?": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "要删除这张图片吗？"
+          }
+        }
+      }
+    },
+    "Delete “%@”?": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除“%@”？"
+          }
+        }
+      }
+    },
+    "Deleted Event": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已删除的活动"
+          }
+        }
+      }
+    },
+    "Deselect All": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "取消全选"
+          }
+        }
+      }
+    },
+    "Develop": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冲洗"
+          }
+        }
+      }
+    },
+    "Develop Again in the Darkroom": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在暗室中重新冲洗"
+          }
+        }
+      }
+    },
+    "Develop in the Darkroom": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在暗室中冲洗"
+          }
+        }
+      }
+    },
+    "Develop once to adjust the picture by hand.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "先冲洗一次，再手动调整图片。"
+          }
+        }
+      }
+    },
+    "Developed again": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已重新冲洗"
+          }
+        }
+      }
+    },
+    "Developed again, not edited": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重新冲洗，而不是修图"
+          }
+        }
+      }
+    },
+    "Does Apricot SSTV collect any data?": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apricot SSTV 会收集数据吗？"
+          }
+        }
+      }
+    },
+    "Done": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "完成"
+          }
+        }
+      }
+    },
+    "Done keeps it reverted; Cancel leaves the picture as it was. The raw audio stays, so it can be developed again at any time.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "点“完成”才会真正复原；点“取消”则保持原样。原始音频会保留，随时可以重新冲洗。"
+          }
+        }
+      }
+    },
+    "Done keeps the developed picture beside the original, which is never changed, and the raw audio stays. Revert to Original goes back at any time.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "点“完成”会把冲洗好的图片保存在原图旁边，原图永远不变，原始音频也保留。随时可以“复原为原图”。"
+          }
+        }
+      }
+    },
+    "Drag across upright edges": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "拖出一个框，框住竖直的边"
+          }
+        }
+      }
+    },
+    "Drag both marks onto one upright edge": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "把两个标记拖到同一条竖直的边上"
+          }
+        }
+      }
+    },
+    "Drag to move, pinch to zoom, double-tap to switch between fill and fit.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "拖移可移动，双指捏合可缩放，轻点两下可在填满与完整显示之间切换。"
+          }
+        }
+      }
+    },
+    "Drawn at the top left of every picture you send, to identify your station.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "画在每张发送图片的左上角，用来表明你的电台身份。"
+          }
+        }
+      }
+    },
+    "Each picture's details have room for its frequency, its source (a satellite, a callsign) and a note. They're kept apart from how it was received, which never changes.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每张图片的详情里可以填写频率、来源（卫星或呼号）和备注。它们和接收记录分开保存，接收记录本身永远不变。"
+          }
+        }
+      }
+    },
+    "Each picture's sound, from as long before it to as long after it as the picture takes to send, in case its start or end was misjudged. If a picture comes out badly, it can be developed again from this sound in the darkroom, or the sound shared. Without it, only the picture is left.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存每张图片的声音，前后各多留一段与该图发送时长相同的余量，以防开头或结尾判断错。如果图片收得不好，可以在暗室里用这段声音重新冲洗，也可以把声音分享出去。不保存的话，就只剩下图片本身。"
+          }
+        }
+      }
+    },
+    "Edit": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "编辑"
+          }
+        }
+      }
+    },
+    "Edit Event": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "编辑活动"
+          }
+        }
+      }
+    },
+    "Either that mode isn't one of the 14 that Apricot SSTV handles, or you chose a single mode and this picture is a different one.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "要么这个模式不在 Apricot SSTV 支持的 14 种之内，要么你只选择了一种模式，而这张图片是别的模式。"
+          }
+        }
+      }
+    },
+    "Encoding %@…": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在编码 %@…"
+          }
+        }
+      }
+    },
+    "Ended": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "结束方式"
+          }
+        }
+      }
+    },
+    "Event": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "活动"
+          }
+        }
+      }
+    },
+    "Event Deleted": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "活动已删除"
+          }
+        }
+      }
+    },
+    "Event: %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "活动：%@"
+          }
+        }
+      }
+    },
+    "Events": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "活动"
+          }
+        }
+      }
+    },
+    "Every mode can be received and sent, with the VIS header or, when it was missed, from the line syncs.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每种模式都可以接收和发送；可以通过 VIS 头识别，漏掉 VIS 头时也可以通过行同步识别。"
+          }
+        }
+      }
+    },
+    "Every saved picture goes to the iPhone by itself when the iPhone app is installed and the two are near each other. You don't need to open either app. Its raw audio follows, if saved. In the watch's Pictures, a phone icon marks the ones the iPhone already has in full.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "只要 iPhone 上装了 App 且两台设备在附近，每张保存的图片都会自动传到 iPhone，无需打开任何一边的 App。如果保存了原始音频，音频会随后传过去。在手表的“图片”中，带手机图标的表示 iPhone 上已经全部有了。"
+          }
+        }
+      }
+    },
+    "Export Library saves every picture with its details, notes and raw audio, your events and your favorites, as a folder in Files. Import Library takes such a folder back; pictures already here are skipped. To find pictures in a recording made elsewhere, use Decode Audio File in the ⋯ menu on Receive.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“导出资料库”会把所有图片及其接收信息、备注、原始音频，以及活动和常用图片，作为一个文件夹存到“文件”中。“导入资料库”可以把这样的文件夹导回来；已经有的图片会跳过。如果要从别处录下的录音里找图片，请用“接收”页 ⋯ 菜单里的“解码音频文件”。"
+          }
+        }
+      }
+    },
+    "Export Library…": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "导出资料库…"
+          }
+        }
+      }
+    },
+    "Fades and gaps": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "衰落和中断"
+          }
+        }
+      }
+    },
+    "Favorites": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "常用图片"
+          }
+        }
+      }
+    },
+    "Files": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "文件"
+          }
+        }
+      }
+    },
+    "Fill Frame": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "填满画面"
+          }
+        }
+      }
+    },
+    "Filter": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "筛选"
+          }
+        }
+      }
+    },
+    "Find the pictures in a recording made elsewhere.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "从别处录下的录音里找出图片。"
+          }
+        }
+      }
+    },
+    "Fine": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "细调"
+          }
+        }
+      }
+    },
+    "First Day": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "第一天"
+          }
+        }
+      }
+    },
+    "Fit Whole Photo": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "完整显示照片"
+          }
+        }
+      }
+    },
+    "Fitted to the Syncs": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "按同步脉冲拟合"
+          }
+        }
+      }
+    },
+    "Found %lld pictures and %lld fragments.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "找到 %1$lld 张图片和 %2$lld 个片段。"
+          }
+        }
+      }
+    },
+    "Fragment · %lld rows": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "片段 · %lld 行"
+          }
+        },
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Fragment · %lld row"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Fragment · %lld rows"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Fragments": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "片段"
+          }
+        }
+      }
+    },
+    "Fragments are too short to count as pictures, but their raw audio may hold a whole picture. Pictures are not affected.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "片段太短，算不上图片，但它们的原始音频里可能有整张图。图片不受影响。"
+          }
+        }
+      }
+    },
+    "Free Software": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自由软件"
+          }
+        }
+      }
+    },
+    "Free software under the GNU GPL v3, with no warranty.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "依照 GNU GPL v3 发布的自由软件，不提供任何担保。"
+          }
+        }
+      }
+    },
+    "Freeing space": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "释放空间"
+          }
+        }
+      }
+    },
+    "Frequency": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "频率"
+          }
+        }
+      }
+    },
+    "From a Region": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "框选测量"
+          }
+        }
+      }
+    },
+    "From Apple Watch": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "来自 Apple Watch"
+          }
+        }
+      }
+    },
+    "From Audio Files": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "来自音频文件"
+          }
+        }
+      }
+    },
+    "From iPhone": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "来自 iPhone"
+          }
+        }
+      }
+    },
+    "Full Rate": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "完整采样率"
+          }
+        }
+      }
+    },
+    "Get Started": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "开始使用"
+          }
+        }
+      }
+    },
+    "Getting Started": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "入门"
+          }
+        }
+      }
+    },
+    "Help": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "帮助"
+          }
+        }
+      }
+    },
+    "Hold the iPhone near the radio's speaker, or, for a much cleaner signal, connect the radio's audio output to a USB audio interface plugged into the iPhone. Receive shows which input is in use.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "把 iPhone 放在电台扬声器旁边；想要干净得多的信号，可以把电台的音频输出接到插在 iPhone 上的 USB 声卡。“接收”页会显示当前使用的输入。"
+          }
+        }
+      }
+    },
+    "Horizontal Position": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "左右位置"
+          }
+        }
+      }
+    },
+    "If the sender's clock runs a little fast or slow, a picture would lean. Apricot SSTV measures this from the line syncs and straightens the picture as it goes; Sender's clock shows the difference in ppm.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "如果发送方的时钟稍快或稍慢，图片就会倾斜。Apricot SSTV 会根据行同步测出这个偏差，边接收边把图片拉直；“发送方时钟”以 ppm 显示这个偏差。"
+          }
+        }
+      }
+    },
+    "If the signal fades or the audio is interrupted, the picture carries on at the right line when it comes back within two minutes.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "如果信号衰落或音频中断，只要在两分钟内恢复，图片会从正确的那一行继续。"
+          }
+        }
+      }
+    },
+    "If the VIS header was misread, the picture was decoded in the wrong mode.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "如果 VIS 头读错了，图片就会按错误的模式解码。"
+          }
+        }
+      }
+    },
+    "Image": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "图像"
+          }
+        }
+      }
+    },
+    "Import Library…": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "导入资料库…"
+          }
+        }
+      }
+    },
+    "Imported %lld pictures, %lld events and %lld favorites. %lld were already here.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "导入了 %1$lld 张图片、%2$lld 个活动和 %3$lld 张常用图片。%4$lld 张已经存在。"
+          }
+        }
+      }
+    },
+    "In Favorites": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已在常用图片中"
+          }
+        }
+      }
+    },
+    "Input": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "输入"
+          }
+        }
+      }
+    },
+    "Input changed": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "输入设备已更改"
+          }
+        }
+      }
+    },
+    "Interrupted": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已中断"
+          }
+        }
+      }
+    },
+    "Interrupted by a new picture": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "被新图片打断"
+          }
+        }
+      }
+    },
+    "Introduction": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "功能介绍"
+          }
+        }
+      }
+    },
+    "Invalid picture ID": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无效的图片 ID"
+          }
+        }
+      }
+    },
+    "iPhone": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iPhone"
+          }
+        }
+      }
+    },
+    "iPod nano Version": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iPod nano 版"
+          }
+        }
+      }
+    },
+    "ISS SSTV, a net, a test…": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ISS SSTV、网络点名、测试…"
+          }
+        }
+      }
+    },
+    "It says a mode was skipped.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "提示某个模式被跳过了。"
+          }
+        }
+      }
+    },
+    "Its marks are the tones SSTV uses: 1200 Hz (sync), 1500 Hz (black), 1900 Hz (the VIS leader) and 2300 Hz (white). During a picture the marker moves between black and white; a steady 1900 Hz means a picture is about to start. Tuning errors up to ±150 Hz are corrected from the VIS header.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "刻度对应 SSTV 使用的音调：1200 Hz（同步）、1500 Hz（黑）、1900 Hz（VIS 引导音）和 2300 Hz（白）。接收图片时，标记在黑与白之间移动；稳定停在 1900 Hz 表示一张图片即将开始。±150 Hz 以内的调谐误差会根据 VIS 头自动校正。"
+          }
+        }
+      }
+    },
+    "Its pictures stay, in no event.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "其中的图片会保留，不再属于任何活动。"
+          }
+        }
+      }
+    },
+    "Keep each picture's sound. It goes to the iPhone with the picture, where a bad one can be developed again from it in the darkroom.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存每张图片的声音。它会随图片传到 iPhone，收得不好的图片可以在暗室里用它重新冲洗。"
+          }
+        }
+      }
+    },
+    "Keep Listening": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "继续接收"
+          }
+        }
+      }
+    },
+    "Keep Raw Audio?": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存原始音频吗？"
+          }
+        }
+      }
+    },
+    "Keep While Dimmed": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "暗屏时继续"
+          }
+        }
+      }
+    },
+    "Keeps the sound of each picture and sends it to the iPhone with the picture.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存每张图片的声音，并随图片一起传到 iPhone。"
+          }
+        }
+      }
+    },
+    "Keeps the sound of each picture with it as a WAV file, to share from the picture's details or develop again in the darkroom. Apple Watch has its own settings.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "把每张图片的声音作为 WAV 文件和图片一起保存，可以在图片详情里分享，或在暗室里重新冲洗。Apple Watch 有自己的设置。"
+          }
+        }
+      }
+    },
+    "Keeps the sound of each picture with it as a WAV file, to share from the picture's details or develop again in the darkroom: from as long before the picture as it takes to send, to as long after it, in case its start or end was misjudged. 12 kHz holds everything the decoder uses: about 8 MB for a Martin M1 picture. Full Rate keeps the sound as it came in (usually 48 kHz), for other programs or for listening, at four times the size. A change takes effect the next time you tap Listen. Apple Watch has its own settings and always uses 12 kHz.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "把每张图片的声音作为 WAV 文件和图片一起保存，可以在图片详情里分享，或在暗室里重新冲洗：前后各多留一段与该图发送时长相同的余量，以防开头或结尾判断错。12 kHz 已包含解码器用到的全部信息，一张 Martin M1 约 8 MB。“完整采样率”按收到时的原样保存（通常是 48 kHz），适合交给其他软件或回放收听，体积是 4 倍。更改在下次点“收听”时生效。Apple Watch 有自己的设置，始终使用 12 kHz。"
+          }
+        }
+      }
+    },
+    "Last Day": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最后一天"
+          }
+        }
+      }
+    },
+    "Last picture": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最近一张图片"
+          }
+        }
+      }
+    },
+    "Length": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "时长"
+          }
+        }
+      }
+    },
+    "Level": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "电平"
+          }
+        }
+      }
+    },
+    "License": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "许可证"
+          }
+        }
+      }
+    },
+    "Line 0 starts at": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "第一行起点"
+          }
+        }
+      }
+    },
+    "Line syncs (no VIS)": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "行同步（无 VIS）"
+          }
+        }
+      }
+    },
+    "Listen": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "接收"
+          }
+        }
+      }
+    },
+    "Listen, and Keep Listening with Wrist Down": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "接收，放下手腕也继续"
+          }
+        }
+      }
+    },
+    "Listening": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在接收"
+          }
+        }
+      }
+    },
+    "Listening carries on until you tap Stop, with the wrist down or in another app.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "放下手腕或打开别的 App 都继续接收，直到你轻点“停止”。"
+          }
+        }
+      }
+    },
+    "Listening carries on with the wrist down, and stops when you leave the app, after the picture coming in.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "放下手腕时继续接收，离开 App 时停止；如果正在收图，等这张收完再停。"
+          }
+        }
+      }
+    },
+    "Listening stops when no picture has come in for this long, to save battery.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "超过这么久没有收到图片，就停止接收，以节省电量。"
+          }
+        }
+      }
+    },
+    "Listening uses a lot of battery, so it stops when no picture has come in for the Receive Timeout in Settings (10 minutes at first), never in the middle of a picture. In its last two minutes a countdown shows, with Keep Listening to start it over. Choose Never to listen until you tap Stop.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "接收很耗电，所以超过“设置”中的“接收超时”（默认 10 分钟）没有收到图片时会自动停止，但不会在收图中途停止。最后两分钟会显示倒计时，轻点“继续接收”可以重新计时。选择“永不”则一直接收，直到你轻点“停止”。"
+          }
+        }
+      }
+    },
+    "Listening…": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在接收…"
+          }
+        }
+      }
+    },
+    "Lock on to %@ line syncs when the VIS header was missed.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "漏掉 VIS 头时，按 %@ 的行同步锁定。"
+          }
+        }
+      }
+    },
+    "Lock on to line syncs when the VIS header was missed.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "漏掉 VIS 头时，按行同步锁定。"
+          }
+        }
+      }
+    },
+    "Lost": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "丢失"
+          }
+        }
+      }
+    },
+    "Lowering your wrist": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "放下手腕"
+          }
+        }
+      }
+    },
+    "Make Current": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "设为当前活动"
+          }
+        }
+      }
+    },
+    "Make it current, and pictures received from now on (here or on Apple Watch) go into it until the end of its last day.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "设为当前活动后，从现在起收到的图片（无论在这台 iPhone 还是 Apple Watch 上）都会归入它，直到最后一天结束。"
+          }
+        }
+      }
+    },
+    "Making the WAV": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在生成 WAV"
+          }
+        }
+      }
+    },
+    "Many apps straighten a picture by bending the image afterwards: pixels are slid, stretched and filled in, and whatever was lost stays lost. The darkroom works on the sound instead. It decodes the picture's raw audio again, reading every line at the timing you set, so nothing is stretched or made up: every pixel comes from the signal, as when the picture first came in.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "很多软件纠正图片的方法，是事后对图像本身做变形：把像素挪动、拉伸、补齐，丢掉的东西还是丢了。暗室处理的是声音：它把这张图的原始音频重新解码一遍，按你设定的时序重新读取每一行，所以没有任何拉伸或凭空生成，每个像素都和第一次收到时一样，来自信号本身。"
+          }
+        }
+      }
+    },
+    "Measuring": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "测量中"
+          }
+        }
+      }
+    },
+    "Microphone access is off. Turn it on in Settings.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "麦克风权限已关闭，请在“设置”中开启。"
+          }
+        }
+      }
+    },
+    "Missing": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "缺失"
+          }
+        }
+      }
+    },
+    "Mode": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "模式"
+          }
+        }
+      }
+    },
+    "Modes": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "模式"
+          }
+        }
+      }
+    },
+    "More": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "更多"
+          }
+        }
+      }
+    },
+    "Name": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "名称"
+          }
         }
       }
     },
-    "Adjust the radio's volume so the Level bar stays in the green, roughly −30 to −10 dB. If it turns red and says Clipping, turn the radio down." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "调节电台音量，让电平条保持在绿色区间，大约 −30 到 −10 dB。如果变红并显示“削波”，就把电台音量调低。"
+    "Never": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "永不"
           }
         }
       }
     },
-    "All Pictures" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "全部图片"
+    "New Event": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新建活动"
           }
         }
       }
     },
-    "Apple Watch" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Apple Watch"
+    "New Event…": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新建活动…"
           }
         }
       }
     },
-    "Apricot SSTV" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Apricot SSTV"
+    "New pictures go here until %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新图片会归入这里，直到 %@"
           }
         }
       }
     },
-    "Apricot SSTV collects no data." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Apricot SSTV 不收集任何数据。"
+    "No ads, no account. Nothing is collected or sent anywhere; pictures only move between your watch and your iPhone.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "没有广告，不需要账户。不收集任何数据，也不向任何地方发送；图片只在你的手表和 iPhone 之间传输。"
           }
         }
       }
     },
-    "Apricot SSTV turns the sound of slow-scan television into pictures. Tune your radio to a frequency where SSTV is sent, and let your iPhone or Apple Watch hear it." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Apricot SSTV 能把慢扫描电视（SSTV）的声音还原成图片。把电台调到有 SSTV 信号的频率，让 iPhone 或 Apple Watch 听到它就行。"
+    "No ads, no subscriptions, no account.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "没有广告，没有订阅，不需要账户。"
           }
         }
       }
     },
-    "Audio lost" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "丢失的音频"
+    "No Apple Watch paired": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "没有配对的 Apple Watch"
           }
         }
       }
     },
-    "Automatic" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "自动"
+    "No Apricot SSTV pictures were found in that folder.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "这个文件夹里没有找到 Apricot SSTV 的图片。"
           }
         }
       }
     },
-    "Automatic finds the mode from each picture's VIS header. Choose a mode to receive only that one. Start Without VIS locks on to the line syncs when the header was missed." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "“自动”会根据每张图片的 VIS 头识别模式。选择某个模式则只接收这一种。“无 VIS 也开始”会在漏掉 VIS 头时按行同步锁定。"
+    "No audio": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "没有音频"
           }
         }
       }
     },
-    "Automatic suits most listening. If you know what's coming, such as PD120 from the International Space Station, choose that mode in Settings or the ⋯ menu on Receive. Other modes are then ignored, which also avoids false starts in noise." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "大多数情况下用“自动”即可。如果你知道将要收到什么，例如国际空间站的 PD120，可以在“设置”或“接收”页的 ⋯ 菜单中选择该模式。之后其他模式会被忽略，这也能避免在噪声中误触发。"
+    "No audio is coming in.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "没有收到音频。"
           }
         }
       }
     },
-    "By %@" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "作者：%@"
+    "No Events": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "没有活动"
           }
         }
       }
     },
-    "Callsign" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "呼号"
+    "No Fragments": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "没有片段"
           }
         }
       }
     },
-    "Can't send: %@" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "无法发送：%@"
+    "no memory for the audio": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "没有足够的内存生成音频"
           }
         }
       }
     },
-    "Can't start: %@" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "无法开始：%@"
+    "No picture for %lld min: stopped": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld 分钟未收到图片，已停止"
           }
         }
       }
     },
-    "Cancel" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "取消"
+    "No picture was found in the raw audio.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "原始音频中没有找到图片。"
           }
         }
       }
     },
-    "Change Photo" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "更换照片"
+    "No Picture Yet": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "还没有图片"
           }
         }
       }
     },
-    "Check before going on the air" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "发射前先检查"
+    "No picture yet": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "还没有图片"
           }
         }
       }
     },
-    "Check that the Level bar moves, that Mode is Automatic or matches the picture, and that the tuning marker sits near 1900 Hz during the VIS header. Weak or distorted audio can hide the header; Start Without VIS helps." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "检查电平条是否在动、模式是否为“自动”或与图片一致，以及 VIS 头期间调谐标记是否在 1900 Hz 附近。音频太弱或失真可能听不出 VIS 头，这时“无 VIS 也开始”会有帮助。"
+    "No picture: stops in %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未收到图片，%@ 后停止"
           }
         }
       }
     },
-    "Choose a Photo" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "选择一张照片"
+    "No Pictures": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "没有图片"
           }
         }
       }
     },
-    "Choose a photo to send." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "选择要发送的照片。"
+    "No Pictures from Audio Files": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "没有来自音频文件的图片"
           }
         }
       }
     },
-    "Choose a photo, then tap it to move and zoom it in the frame. Your callsign is drawn at the top left; add a second line, such as a signal report, if you like." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "选择一张照片，然后轻点它，在画面中移动和缩放。你的呼号会画在左上角；也可以再加一行，例如信号报告。"
+    "No pictures yet": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "还没有图片"
           }
         }
       }
     },
-    "Choose All Pictures in the menu at the top right." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在右上角的菜单中选择“全部图片”。"
+    "No pictures yet. Pictures received while the event is current go here; others can be added from the gallery with Select.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "还没有图片。设为当前活动期间收到的图片会归到这里；其他图片可以在图片列表里点“选择”后加入。"
           }
         }
       }
     },
-    "Choose Photo" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "选择照片"
+    "No Raw Audio": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "没有原始音频"
           }
         }
       }
     },
-    "Choosing a mode" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "选择模式"
+    "No SSTV picture was found in this recording.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "这段录音里没有找到 SSTV 图片。"
           }
         }
       }
     },
-    "Clear Picture" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "清除图片"
+    "no usable microphone input": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "没有可用的麦克风输入"
           }
         }
       }
     },
-    "CLIP" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "削波"
+    "No. There are no ads, no accounts and no analytics. Nothing leaves your devices, except pictures going from your watch to your iPhone.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "不会。没有广告，没有账户，也没有统计分析。除了图片从手表传到 iPhone，没有任何东西离开你的设备。"
           }
         }
       }
     },
-    "Clipping" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "削波"
+    "None": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无"
           }
         }
       }
     },
-    "Clock" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "时钟"
+    "Not available": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "不可用"
           }
         }
       }
     },
-    "Complete" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "完整"
+    "Not measured": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未测得"
           }
         }
       }
     },
-    "Connect the audio" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "连接音频"
+    "Not synced yet": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "尚未同步"
           }
         }
       }
     },
-    "Connect the audio output (headphone adapter or USB interface) to the radio's audio input; the iPhone's volume sets the level. Before sending on the air with a new setup, share a WAV (top left) and check it with another SSTV decoder." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "将音频输出（耳机转接器或 USB 声卡）连接到电台的音频输入，用 iPhone 的音量调节电平。使用新设置正式发射前，请先分享一个 WAV 文件（左上角），并用其他 SSTV 解码器检查。"
+    "Not yet": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "尚未"
           }
         }
       }
     },
-    "Connect the iPhone's audio output (a headphone adapter or a USB audio interface) to the radio's microphone or data input, and turn on VOX so the radio transmits when it hears the audio. The iPhone's volume sets the level: start low and raise it until the radio's ALC just begins to move." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "把 iPhone 的音频输出（耳机转接器或 USB 声卡）接到电台的话筒或数据输入，并打开 VOX，让电台听到音频时自动发射。用 iPhone 的音量调节电平：从小音量开始，逐渐调大，直到电台的 ALC 刚开始动作。"
+    "Note": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "备注"
           }
         }
       }
     },
-    "Connect the radio" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "连接电台"
+    "Notes": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "备注"
           }
         }
       }
     },
-    "Could not write image.png" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "无法写入 image.png"
+    "Notes and Events": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "备注与活动"
           }
         }
       }
     },
-    "Couldn't Make the WAV" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "无法生成 WAV"
+    "Nothing is collected or sent anywhere. Pictures stay on your iPhone and Apple Watch, and only move between the two.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "不收集任何数据，也不向任何地方发送。图片只保存在你的 iPhone 和 Apple Watch 上，也只在两者之间传输。"
           }
         }
       }
     },
-    "decoder could not start" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "解码器无法启动"
+    "Nothing is overwritten": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "不会覆盖原图"
           }
         }
       }
     },
-    "Delete" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "删除"
+    "Nothing upright found here": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "这里没找到竖直的边"
           }
         }
       }
     },
-    "Delete %lld pictures already on the iPhone?" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "要删除 iPhone 上已有的 %lld 张图片吗？"
+    "Off": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "关闭"
           }
         }
       }
     },
-    "Delete %lld pictures?" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "要删除 %lld 张图片吗？"
+    "Off while sending": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "发送时关闭"
           }
         }
       }
     },
-    "Delete all %lld pictures from this iPhone?" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "要从这台 iPhone 删除全部 %lld 张图片吗？"
+    "Offset": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "偏移"
           }
         }
       }
     },
-    "Delete All Pictures" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "删除所有图片"
+    "OK": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "好"
           }
         }
       }
     },
-    "Delete Synced (%lld)" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "删除已同步的（%lld）"
+    "On iPhone": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已在 iPhone 上"
           }
         }
       }
     },
-    "Delete Synced, in the watch's Pictures, removes the pictures the iPhone already has." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "手表“图片”里的“删除已同步的”会删除 iPhone 上已有的图片。"
+    "On the air": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "关于发射"
           }
         }
       }
     },
-    "Delete this picture from the watch?" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "要从手表上删除这张图片吗？"
+    "Open Apricot SSTV on the watch, tap Listen, and keep the watch near the radio's speaker. The watch taps you when a picture starts, when it's saved, when the signal is lost, and when listening stops by itself.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在手表上打开 Apricot SSTV，轻点“接收”，让手表靠近电台的扬声器。图片开始、保存、信号丢失以及接收自动停止时，手表都会轻敲你的手腕。"
           }
         }
       }
     },
-    "Delete this picture?" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "要删除这张图片吗？"
+    "Opens the adjust screen.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打开调整页面。"
           }
         }
       }
     },
-    "Deselect All" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "取消全选"
+    "Options": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选项"
           }
         }
       }
     },
-    "Does Apricot SSTV collect any data?" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Apricot SSTV 会收集数据吗？"
+    "Original": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "原图"
           }
         }
       }
     },
-    "Done" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "完成"
+    "Out of memory": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "内存不足"
           }
         }
       }
     },
-    "Drag to move, pinch to zoom, double-tap to switch between fill and fit." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "拖移可移动，双指捏合可缩放，轻点两下可在填满与完整显示之间切换。"
+    "Output: %@. The iPhone's volume sets the level.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "输出：%@。用 iPhone 的音量调节电平。"
           }
         }
       }
     },
-    "Drawn at the top left of every picture you send, to identify your station." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "画在每张发送图片的左上角，用来表明你的电台身份。"
+    "Photo in the %@ frame": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 画面中的照片"
           }
         }
       }
     },
-    "Either that mode isn't one of the 14 that Apricot SSTV handles, or you chose a single mode and this picture is a different one." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "要么这个模式不在 Apricot SSTV 支持的 14 种之内，要么你只选择了一种模式，而这张图片是别的模式。"
+    "Photo Library": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "照片图库"
           }
         }
       }
     },
-    "Encoding %@…" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "正在编码 %@…"
+    "Picture": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "图片"
           }
         }
       }
     },
-    "Ended" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "结束方式"
+    "Picture Deleted": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "图片已删除"
           }
         }
       }
     },
-    "Every mode can be received and sent, with the VIS header or, when it was missed, from the line syncs." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "每种模式都可以接收和发送；可以通过 VIS 头识别，漏掉 VIS 头时也可以通过行同步识别。"
+    "Picture Down": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "图片下移"
           }
         }
       }
     },
-    "Every saved picture goes to the iPhone by itself when the iPhone app is installed and the two are near each other. You don't need to open either app. In the watch's Pictures, a phone icon marks the ones the iPhone already has." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "只要 iPhone 上装了 App 且两台设备在附近，每张保存的图片都会自动传到 iPhone，无需打开任何一边的 App。在手表的“图片”中，带手机图标的表示 iPhone 上已经有了。"
+    "Picture to send": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "要发送的图片"
           }
         }
       }
     },
-    "Fades and gaps" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "衰落和中断"
+    "Picture Up": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "图片上移"
           }
         }
       }
     },
-    "Fill Frame" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "填满画面"
+    "Pictures": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "图片"
           }
         }
       }
     },
-    "Filter" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "筛选"
+    "Pictures come to the iPhone": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "图片自动传到 iPhone"
           }
         }
       }
     },
-    "Fit Whole Photo" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "完整显示照片"
+    "Pictures from the watch don't reach the iPhone.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "手表上的图片没有传到 iPhone。"
           }
         }
       }
     },
-    "Free Software" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "自由软件"
+    "Pictures from your radio, through the microphone or a USB audio interface. Apple Watch can receive on its own, and its pictures come to this iPhone.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通过麦克风或 USB 声卡接收电台传来的图片。Apple Watch 可以独立接收，收到的图片会传到这台 iPhone。"
           }
         }
       }
     },
-    "Free software under the GNU GPL v3, with no warranty." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "依照 GNU GPL v3 发布的自由软件，不提供任何担保。"
+    "Pictures go to the iPhone once its Apricot SSTV app is installed and nearby.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iPhone 装好 Apricot SSTV 并在附近时，图片会自动传过去。"
           }
         }
       }
     },
-    "Freeing space" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "释放空间"
+    "Pictures on Apple Watch are not affected.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Watch 上的图片不受影响。"
           }
         }
       }
     },
-    "From Apple Watch" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "来自 Apple Watch"
+    "Pictures Only": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "只保存图片"
           }
         }
       }
     },
-    "From iPhone" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "来自 iPhone"
+    "Pictures received from now on, here or on Apple Watch, go into it until the end of its last day. You can stop this at any time.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "从现在起，在这台 iPhone 或 Apple Watch 上收到的图片都会归入它，直到最后一天结束。随时可以停止。"
           }
         }
       }
     },
-    "Getting Started" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "入门"
+    "Pictures received on Apple Watch come to this iPhone by themselves when the two are near each other.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Watch 上收到的图片会在两台设备靠近时自动传到这台 iPhone。"
           }
         }
       }
     },
-    "Help" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "帮助"
+    "Pictures that join this event take its frequency, unless one was written for them.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "加入这个活动的图片会沿用它的频率，除非图片自己已经填了频率。"
           }
         }
       }
     },
-    "Hold the iPhone near the radio's speaker, or, for a much cleaner signal, connect the radio's audio output to a USB audio interface plugged into the iPhone. Receive shows which input is in use." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "把 iPhone 放在电台扬声器旁边；想要干净得多的信号，可以把电台的音频输出接到插在 iPhone 上的 USB 声卡。“接收”页会显示当前使用的输入。"
+    "Pictures you receive here or on Apple Watch appear here.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在这里或 Apple Watch 上收到的图片会显示在这里。"
           }
         }
       }
     },
-    "If the sender's clock runs a little fast or slow, a picture would lean. Apricot SSTV measures this from the line syncs and straightens the picture as it goes; Sender's clock shows the difference in ppm." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "如果发送方的时钟稍快或稍慢，图片就会倾斜。Apricot SSTV 会根据行同步测出这个偏差，边接收边把图片拉直；“发送方时钟”以 ppm 显示这个偏差。"
+    "Prepare the picture": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "准备图片"
           }
         }
       }
     },
-    "If the signal fades or the audio is interrupted, the picture carries on at the right line when it comes back within two minutes." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "如果信号衰落或音频中断，只要在两分钟内恢复，图片会从正确的那一行继续。"
+    "Privacy": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "隐私"
           }
         }
       }
     },
-    "Image" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "图像"
+    "Privacy Policy": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "隐私政策"
           }
         }
       }
     },
-    "Input" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "输入"
+    "Put a photo in the frame, add your callsign, and send it through your radio.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "把照片放进画框，加上呼号，通过电台发出去。"
           }
         }
       }
     },
-    "Input changed" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "输入设备已更改"
+    "Put the marks further apart": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "把两个标记拉开一些"
           }
         }
       }
     },
-    "Interrupted" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已中断"
+    "Questions": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "常见问题"
           }
         }
       }
     },
-    "Interrupted by a new picture" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "被新图片打断"
+    "Raw Audio": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "原始音频"
           }
         }
       }
     },
-    "Invalid picture ID" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "无效的图片 ID"
+    "Raw audio": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "原始音频"
           }
         }
       }
     },
-    "iPhone" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "iPhone"
+    "Ready": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "就绪"
           }
         }
       }
     },
-    "iPod nano Version" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "iPod nano 版"
+    "Ready to Send": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "可以发送"
           }
         }
       }
     },
-    "It says a mode was skipped." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "提示某个模式被跳过了。"
+    "Receive": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "接收"
           }
         }
       }
     },
-    "Its marks are the tones SSTV uses: 1200 Hz (sync), 1500 Hz (black), 1900 Hz (the VIS leader) and 2300 Hz (white). During a picture the marker moves between black and white; a steady 1900 Hz means a picture is about to start. Tuning errors up to ±150 Hz are corrected from the VIS header." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "刻度对应 SSTV 使用的音调：1200 Hz（同步）、1500 Hz（黑）、1900 Hz（VIS 引导音）和 2300 Hz（白）。接收图片时，标记在黑与白之间移动；稳定停在 1900 Hz 表示一张图片即将开始。±150 Hz 以内的调谐误差会根据 VIS 头自动校正。"
+    "Receive slow-scan television pictures from a radio on your iPhone or Apple Watch, and send your own from your iPhone.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在 iPhone 或 Apple Watch 上接收电台传来的慢扫描电视（SSTV）图片，也可以用 iPhone 发送你自己的图片。"
           }
         }
       }
     },
-    "Last picture" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "最近一张图片"
+    "Receive slow-scan television pictures from your radio. They go to your iPhone by themselves.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "接收电台传来的慢扫描电视图片，图片会自动传到你的 iPhone。"
           }
         }
       }
     },
-    "Level" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "电平"
+    "Receive Timeout": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "接收超时"
           }
         }
       }
     },
-    "License" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "许可证"
+    "Received on": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "接收设备"
           }
         }
       }
     },
-    "Line syncs (no VIS)" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "行同步（无 VIS）"
+    "Received picture": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "收到的图片"
           }
         }
       }
     },
-    "Listen" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "接收"
+    "Receiving": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "接收"
           }
         }
       }
     },
-    "Listening" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "正在接收"
+    "Receiving %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在接收 %@"
           }
         }
       }
     },
-    "Listening…" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "正在接收…"
+    "Receiving on the watch": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在手表上接收"
           }
         }
       }
     },
-    "Lock on to %@ line syncs when the VIS header was missed." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "漏掉 VIS 头时，按 %@ 的行同步锁定。"
+    "Reception": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "接收"
           }
         }
       }
     },
-    "Lock on to line syncs when the VIS header was missed." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "漏掉 VIS 头时，按行同步锁定。"
+    "Recordings made elsewhere": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "别处录下的录音"
           }
         }
       }
     },
-    "Lost" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "丢失"
+    "Redo": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重做"
           }
         }
       }
     },
-    "Making the WAV" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "正在生成 WAV"
+    "Remove from Event": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "移出活动"
           }
         }
       }
     },
-    "Measuring" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "测量中"
+    "Remove from Favorites": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "从常用图片中移除"
           }
         }
       }
     },
-    "Microphone access is off. Turn it on in Settings." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "麦克风权限已关闭，请在“设置”中开启。"
+    "Reset to Detected": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "恢复检测值"
           }
         }
       }
     },
-    "Mode" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "模式"
+    "Resumed": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "续收"
           }
         }
       }
     },
-    "Modes" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "模式"
+    "Resumed after interruption": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "中断后已恢复"
           }
         }
       }
     },
-    "No ads, no account. Nothing is collected or sent anywhere; pictures only move between your watch and your iPhone." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "没有广告，不需要账户。不收集任何数据，也不向任何地方发送；图片只在你的手表和 iPhone 之间传输。"
+    "Revert to Original": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "复原"
           }
         }
       }
     },
-    "No ads, no subscriptions, no account." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "没有广告，没有订阅，不需要账户。"
+    "Revert to the picture as received?": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "要复原为收到时的图片吗？"
           }
         }
       }
     },
-    "No Apple Watch paired" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "没有配对的 Apple Watch"
+    "Rows": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "行数"
           }
         }
       }
     },
-    "No audio" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "没有音频"
+    "RX %lld/%lld": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "接收 %lld/%lld"
           }
         }
       }
     },
-    "No audio is coming in." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "没有收到音频。"
+    "Sample Rate": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "采样率"
           }
         }
       }
     },
-    "no memory for the audio" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "没有足够的内存生成音频"
+    "Sample rate": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "采样率"
           }
         }
       }
     },
-    "No picture yet" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "还没有图片"
+    "Satellite or callsign": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "卫星或呼号"
           }
         }
       }
     },
-    "No Picture Yet" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "还没有图片"
+    "Save": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存"
           }
         }
       }
     },
-    "No Pictures" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "没有图片"
+    "Save failed: %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存失败：%@"
           }
         }
       }
     },
-    "No Pictures from Apple Watch" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "没有来自 Apple Watch 的图片"
+    "Save Raw Audio": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存原始音频"
           }
         }
       }
     },
-    "No Pictures from iPhone" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "没有来自 iPhone 的图片"
+    "Saved": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已保存"
           }
         }
       }
     },
-    "No pictures yet" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "还没有图片"
+    "Saved Pictures": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已保存的图片"
           }
         }
       }
     },
-    "no usable microphone input" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "没有可用的麦克风输入"
+    "Saves the most battery. A picture coming in is finished first.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最省电。正在收的图会先收完。"
           }
         }
       }
     },
-    "No. There are no ads, no accounts and no analytics. Nothing leaves your devices, except pictures going from your watch to your iPhone." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "不会。没有广告，没有账户，也没有统计分析。除了图片从手表传到 iPhone，没有任何东西离开你的设备。"
+    "Second line (optional)": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "第二行（可选）"
           }
         }
       }
     },
-    "Not available" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "不可用"
+    "Select": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择"
           }
         }
       }
     },
-    "Not measured" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "未测得"
+    "Select All": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "全选"
           }
         }
       }
     },
-    "Not synced yet" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "尚未同步"
+    "Select Pictures": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择图片"
           }
         }
       }
     },
-    "Not yet" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "尚未"
+    "Send": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "发送"
           }
         }
       }
     },
-    "Nothing is collected or sent anywhere. Pictures stay on your iPhone and Apple Watch, and only move between the two." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "不收集任何数据，也不向任何地方发送。图片只保存在你的 iPhone 和 Apple Watch 上，也只在两者之间传输。"
+    "Sender's clock": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "发送方时钟"
           }
         }
       }
     },
-    "Off" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "关闭"
+    "Sending": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "发送"
           }
         }
       }
     },
-    "Off while sending" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "发送时关闭"
+    "Sending %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在发送 %@"
           }
         }
       }
     },
-    "Offset" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "偏移"
+    "Sent": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已发送"
           }
         }
       }
     },
-    "OK" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "好"
+    "Set the level": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "调整电平"
           }
         }
       }
     },
-    "On iPhone" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已在 iPhone 上"
+    "Settings": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "设置"
           }
         }
       }
     },
-    "On the air" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "关于发射"
+    "Share": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "分享"
           }
         }
       }
     },
-    "Open Apricot SSTV on the watch, tap Listen, and keep the watch near the radio's speaker. You can lower your wrist: receiving carries on, and the watch taps you when a picture starts and when it's saved." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在手表上打开 Apricot SSTV，轻点“接收”，让手表靠近电台扬声器。放下手腕后接收会继续；图片开始和保存时，手表会轻触提醒你。"
+    "Share Audio": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "分享音频"
           }
         }
       }
     },
-    "Opens the adjust screen." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "打开调整页面。"
+    "Share WAV": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "分享 WAV"
           }
         }
       }
     },
-    "Options" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "选项"
+    "Shift": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "平移"
           }
         }
       }
     },
-    "Out of memory" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "内存不足"
+    "Show": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "显示"
           }
         }
       }
     },
-    "Output: %@. The iPhone's volume sets the level." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "输出：%@。用 iPhone 的音量调节电平。"
+    "Signal": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "信号"
           }
         }
       }
     },
-    "Photo in the %@ frame" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ 画面中的照片"
+    "Signal lost": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "信号丢失"
           }
         }
       }
     },
-    "Picture Deleted" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "图片已删除"
+    "Size": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "大小"
           }
         }
       }
     },
-    "Picture to send" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "要发送的图片"
+    "Skip %@: not supported": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "跳过 %@：不支持此模式"
           }
         }
       }
     },
-    "Pictures" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "图片"
+    "Skipped %@: receiving %@ only": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已跳过 %1$@：只接收 %2$@"
           }
         }
       }
     },
-    "Pictures come to the iPhone" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "图片自动传到 iPhone"
+    "Slant": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "斜度"
           }
         }
       }
     },
-    "Pictures from the watch don't reach the iPhone." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "手表上的图片没有传到 iPhone。"
+    "Slow-scan television on iPhone and Apple Watch.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在 iPhone 和 Apple Watch 上收发慢扫描电视。"
           }
         }
       }
     },
-    "Pictures go to the iPhone once its Apricot SSTV app is installed and nearby." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "iPhone 装好 Apricot SSTV 并在附近时，图片会自动传过去。"
+    "SodaGray": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "苏打灰"
           }
         }
       }
     },
-    "Pictures on Apple Watch are not affected." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Apple Watch 上的图片不受影响。"
+    "Source": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "来源"
           }
         }
       }
     },
-    "Pictures received on Apple Watch come to this iPhone by themselves when the two are near each other." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Apple Watch 上收到的图片会在两台设备靠近时自动传到这台 iPhone。"
+    "Source Code": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "源代码"
           }
         }
       }
     },
-    "Pictures you receive here or on Apple Watch appear here." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在这里或 Apple Watch 上收到的图片会显示在这里。"
+    "Start": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "开始"
           }
         }
       }
     },
-    "Prepare the picture" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "准备图片"
+    "Start Without VIS": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无 VIS 也开始"
           }
         }
       }
     },
-    "Privacy" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "隐私"
+    "Started": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "开始时间"
           }
         }
       }
     },
-    "Privacy Policy" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "隐私政策"
+    "Started by": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "开始方式"
           }
         }
       }
     },
-    "Questions" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "常见问题"
+    "Starting…": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在开始…"
           }
         }
       }
     },
-    "Ready" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "就绪"
+    "Status": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "状态"
           }
         }
       }
     },
-    "Receive" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "接收"
+    "Stop": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "停止"
           }
         }
       }
     },
-    "Receive slow-scan television pictures from a radio on your iPhone or Apple Watch, and send your own from your iPhone." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在 iPhone 或 Apple Watch 上接收电台传来的慢扫描电视（SSTV）图片，也可以用 iPhone 发送你自己的图片。"
+    "Stop Adding New Pictures": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "停止归入新图片"
           }
         }
       }
     },
-    "Received on" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "接收设备"
+    "Stop Listening": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "停止接收"
           }
         }
       }
     },
-    "Received picture" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "收到的图片"
+    "Stopped": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已停止"
           }
         }
       }
     },
-    "Receiving" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "接收"
+    "Stopped after leaving the app": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "离开 App 后已停止"
           }
         }
       }
     },
-    "Receiving %@" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "正在接收 %@"
+    "Stopped when the screen dimmed": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "屏幕变暗后已停止"
           }
         }
       }
     },
-    "Receiving on the watch" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在手表上接收"
+    "Stopped: %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已停止：%@"
           }
         }
       }
     },
-    "Reception" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "接收"
+    "Stopped: audio system reset": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已停止：音频系统已重置"
           }
         }
       }
     },
-    "Resumed" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "续收"
+    "Stopped: interrupted": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已停止：被打断"
           }
         }
       }
     },
-    "Resumed after interruption" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "中断后已恢复"
+    "Stopped: the audio output changed": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已停止：音频输出已更改"
           }
         }
       }
     },
-    "Rows" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "行数"
+    "Stopping by itself": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自动停止"
           }
         }
       }
     },
-    "RX %lld/%lld" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "接收 %lld/%lld"
+    "Stops in": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自动停止"
           }
         }
       }
     },
-    "Sample rate" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "采样率"
+    "Straight pictures": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "让图片不歪斜"
           }
         }
       }
     },
-    "Save failed: %@" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "保存失败：%@"
+    "sync": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "同步"
           }
         }
       }
     },
-    "Saved" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已保存"
+    "Sync": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "同步"
           }
         }
       }
     },
-    "Saved Pictures" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已保存的图片"
+    "Synced": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已同步"
           }
         }
       }
     },
-    "Second line (optional)" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "第二行（可选）"
+    "syncs found": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "找到同步"
           }
         }
       }
     },
-    "Select" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "选择"
+    "Syncs found": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "找到的同步"
           }
         }
       }
     },
-    "Select All" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "全选"
+    "Tap Listen. When a picture's VIS header is heard, the picture builds line by line, and it is saved to Pictures when it ends. You can lock the iPhone: receiving carries on.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "轻点“接收”。听到图片的 VIS 头后，图片会一行一行地出现，结束时自动存入“图片”。锁定 iPhone 后接收也会继续。"
           }
         }
       }
     },
-    "Select Pictures" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "选择图片"
+    "Tap Send. Receiving stops while sending. Keep the radio connected until the progress bar finishes; you can lock the iPhone.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "轻点“发送”。发送时会停止接收。在进度条走完之前保持电台连接；可以锁定 iPhone。"
           }
         }
       }
     },
-    "Send" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "发送"
+    "Tap Send. The radio keys on VOX.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "轻点“发送”，电台由 VOX 自动发射。"
           }
         }
       }
     },
-    "Sender's clock" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "发送方时钟"
+    "Tap the picture or Adjust to move and zoom the photo in the frame.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "轻点图片或“调整位置和大小”，在画框中移动和缩放照片。"
           }
         }
       }
     },
-    "Sending" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "发送"
+    "Tap to Listen": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "轻点开始接收"
           }
         }
       }
     },
-    "Sending %@" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "正在发送 %@"
+    "Test Card": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "测试卡"
           }
         }
       }
     },
-    "Sent" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已发送"
+    "Text on the picture": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "图片上的文字"
           }
         }
       }
     },
-    "Set the level" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "调整电平"
+    "the chosen mode": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "所选模式"
           }
         }
       }
     },
-    "Settings" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "设置"
+    "the encoder failed": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "编码器出错"
           }
         }
       }
     },
-    "Share" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "分享"
+    "The file isn't a picture Apricot SSTV can read.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "这个文件不是 Apricot SSTV 能读取的图片。"
           }
         }
       }
     },
-    "Share WAV" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "分享 WAV"
+    "The first time you open the app on the watch, you choose what lowering your wrist does: keep listening, or stop to save battery (after the picture coming in). Change it under Wrist Down in the watch's Settings, which are apart from the iPhone's. If it stopped, the reason stays on screen, with a button to listen again and keep listening from then on.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "第一次在手表上打开 App 时，你会选择放下手腕后怎么办：继续接收，或者停止以节省电量（正在收的图会先收完）。之后可以在手表“设置”的“放下手腕后”中更改，手表的设置和 iPhone 的分开。如果接收停了，原因会一直显示在屏幕上，旁边有一个按钮，可以重新接收并且从此放下手腕也继续。"
           }
         }
       }
     },
-    "Show" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "显示"
+    "The iPhone app must be installed, and the watch and iPhone near each other. Transfers wait and finish by themselves. Settings shows whether the watch app is installed.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "需要 iPhone 上装有 App，并且手表和 iPhone 在附近。传输会自动等待并完成。“设置”里可以看到手表 App 是否已安装。"
           }
         }
       }
     },
-    "Signal" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "信号"
+    "The picture is noisy or the colors are wrong.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "图片噪点多或颜色不对。"
           }
         }
       }
     },
-    "Signal lost" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "信号丢失"
+    "The picture stays.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "图片会保留。"
           }
         }
       }
     },
-    "Skip %@: not supported" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "跳过 %@：不支持此模式"
+    "The picture's raw audio, kept when Save Raw Audio is on (on the iPhone, and on the watch for its own pictures). A picture without it can still be shared, but not developed again. Open a picture and tap Edit, or Develop Again in the Darkroom.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "需要这张图的原始音频，在开启“保存原始音频”时保留（iPhone 和手表各有自己的开关）。没有原始音频的图片仍然可以分享，但不能重新冲洗。打开一张图片，点“编辑”或“在暗室中冲洗”即可进入。"
           }
         }
       }
     },
-    "Skipped %@: receiving %@ only" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已跳过 %1$@：只接收 %2$@"
+    "The pictures stay.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "图片会保留。"
           }
         }
       }
     },
-    "SodaGray" : {
-      "comment" : "The author's name",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "苏打灰"
+    "The raw audio can't be read.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法读取原始音频。"
           }
         }
       }
     },
-    "Source" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "来源"
+    "The sound this picture was decoded from, as a WAV file. Share it to decode it again in another app.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "解码出这张图片的声音，保存为 WAV 文件。可以分享到其他 App 中重新解码。"
           }
         }
       }
     },
-    "Source Code" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "源代码"
+    "The tuning bar": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "调谐条"
           }
         }
       }
     },
-    "Space Used" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "占用空间"
+    "Then, from what Develop found: the mode, where the first line starts (a line at a time, or finely), the slant (the sender's clock error, set by hand or measured on the picture with two points on an upright edge or a region with upright edges) and the horizontal position. Every change is decoded again from the sound. Touch and hold the picture to compare with the picture as received.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "然后在冲洗的结果上继续调：模式、第一行起点（一行一行地移，或细调）、斜度（发送方的时钟偏差，可以手动设，也可以在图片上测：在一条竖直的边上放两个点，或框住一块有竖直边的区域）以及左右位置。每一次改动都会从声音重新解码。按住图片可以和收到时的原图对比。"
           }
         }
       }
     },
-    "Start" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "开始"
+    "They're in Pictures, each with its stretch of the recording as raw audio, to develop again in the darkroom. When they were received is worked out from the file's date.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "它们已存进“图片”，每张都带着录音中属于自己的那一段作为原始音频，可以在暗室里重新冲洗。接收时间是根据文件的日期推算的。"
           }
         }
       }
     },
-    "Start Without VIS" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "无 VIS 也开始"
+    "This event has ended. To add new pictures to it as they come in, change its last day.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "这个活动已经结束。如果还想让新收到的图片自动归入，请修改它的最后一天。"
           }
         }
       }
     },
-    "Started" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "开始时间"
+    "This file can't be read as audio.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法把这个文件当作音频读取。"
           }
         }
       }
     },
-    "Started by" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "开始方式"
+    "This picture has no raw audio here, so it can't be developed again. If the watch kept it, it comes after the picture.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "这张图片在这里还没有原始音频，所以不能重新冲洗。如果手表保存了，它会在图片之后传过来。"
           }
         }
       }
     },
-    "Starting…" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "正在开始…"
+    "This picture has no raw audio.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "这张图片没有原始音频。"
           }
         }
       }
     },
-    "Status" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "状态"
+    "This picture isn't on the iPhone yet. Delete it?": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "这张图片还没传到 iPhone。要删除吗？"
           }
         }
       }
     },
-    "Stop" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "停止"
+    "This picture was kept without its sound, so it can't be developed again. With Save Raw Audio on, new pictures keep theirs.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "这张图片保存时没有保留声音，所以不能重新冲洗。开启“保存原始音频”后，新收到的图片会保留。"
           }
         }
       }
     },
-    "Stopped" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已停止"
+    "This recording's sample rate is too low to decode SSTV.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "这段录音的采样率太低，无法解码 SSTV。"
           }
         }
       }
     },
-    "Stopped: %@" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已停止：%@"
+    "To keep a picture here, choose Add to Favorites in the photo menu after placing it in the frame.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "要把图片放到这里，先把它放进画框，再在图片菜单中选择“添加到常用图片”。"
           }
         }
       }
     },
-    "Stopped: audio system reset" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已停止：音频系统已重置"
+    "Tone": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "音调"
           }
         }
       }
     },
-    "Stopped: interrupted" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已停止：被打断"
+    "Too few rows to count as a picture: mostly false starts, sometimes a picture caught at its very end. Each is kept with its raw audio (if saved), which may hold the whole picture: open one and Edit to develop it in the darkroom.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "行数太少、算不上一张图的片段：大多是误触发，有时是只赶上结尾的图片。每个片段都和它的原始音频（如果保存了）一起保留，音频里可能有整张图：打开它，点“编辑”，到暗室里重新冲洗。"
           }
         }
       }
     },
-    "Stopped: the audio output changed" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已停止：音频输出已更改"
+    "Too loud: turn the radio down": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "太响了：请调低电台音量"
           }
         }
       }
     },
-    "Straight pictures" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "让图片不歪斜"
+    "Too loud: turn the radio down.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "太响了：请调低电台音量。"
           }
         }
       }
     },
-    "sync" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "同步"
+    "Touch and hold the picture to see it as received.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "按住图片可查看收到时的原样。"
           }
         }
       }
     },
-    "Sync" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "同步"
+    "Touch and hold to see it as received.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "按住可查看收到时的原样。"
           }
         }
       }
     },
-    "Synced" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已同步"
+    "Transmitting needs an amateur radio license and must follow its rules, including identifying your station.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "发射需要业余无线电执照，并须遵守执照的相关规定，包括表明你的电台身份。"
           }
         }
       }
     },
-    "Syncs found" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "找到的同步"
+    "Tuning offset": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "调谐偏移"
           }
         }
       }
     },
-    "Tap Listen" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "轻点“接收”"
+    "Turn off fitting to set the sender's clock error yourself, when the fit leans the picture. Or measure it on the picture: put two marks on one edge that should be upright, or drag across a part with upright edges, and Apply.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "如果拟合出来的图是斜的，可以关闭拟合，自己设定发送方的时钟偏差；也可以直接在图片上测：把两个标记放到一条本该竖直的边上，或者框住一块有竖直边的地方，然后点“应用”。"
           }
         }
       }
     },
-    "Tap Listen. When a picture's VIS header is heard, the picture builds line by line, and it is saved to Pictures when it ends. You can lock the iPhone: receiving carries on." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "轻点“接收”。听到图片的 VIS 头后，图片会一行一行地出现，结束时自动存入“图片”。锁定 iPhone 后接收也会继续。"
+    "Two Points": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "两点测量"
           }
         }
       }
     },
-    "Tap Send. Receiving stops while sending. Keep the radio connected until the progress bar finishes; you can lock the iPhone." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "轻点“发送”。发送时会停止接收。在进度条走完之前保持电台连接；可以锁定 iPhone。"
+    "Undo": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "撤销"
           }
         }
       }
     },
-    "Tap Send. The radio keys on VOX." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "轻点“发送”，电台由 VOX 自动发射。"
+    "Unknown": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未知"
           }
         }
       }
     },
-    "Text on the picture" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "图片上的文字"
+    "Until you tap Stop, or no picture comes for the receive timeout.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "直到你轻点“停止”，或者超过接收超时还没有收到图片。"
           }
         }
       }
     },
-    "the chosen mode" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "所选模式"
+    "Untitled Event": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未命名活动"
           }
         }
       }
     },
-    "the encoder failed" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "编码器出错"
+    "Uses the least space.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "占用空间最少。"
           }
         }
       }
     },
-    "The frame is %lld × %lld. Tap the picture or Adjust to move and zoom the photo in it." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "画面为 %1$lld × %2$lld。轻点图片或“调整”可在画面中移动、缩放照片。"
+    "Usually it's the level: too low lets noise in, too high (Clipping) distorts the tones. A cable or USB interface is much cleaner than a microphone held to a speaker.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通常是电平问题：太低会混入噪声，太高（削波）会让音调失真。用连接线或 USB 声卡，比把麦克风对着扬声器干净得多。"
           }
         }
       }
     },
-    "The iPhone app must be installed, and the watch and iPhone near each other. Transfers wait and finish by themselves. Settings shows whether the watch app is installed." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "需要 iPhone 上装有 App，并且手表和 iPhone 在附近。传输会自动等待并完成。“设置”里可以看到手表 App 是否已安装。"
+    "Version %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "版本 %@"
           }
         }
       }
     },
-    "The picture is noisy or the colors are wrong." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "图片噪点多或颜色不对。"
+    "Vertical Position": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "上下位置"
           }
         }
       }
     },
-    "The tuning bar" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "调谐条"
+    "VIS header": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "VIS 头"
           }
         }
       }
     },
-    "This picture isn't on the iPhone yet. Delete it?" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "这张图片还没传到 iPhone。要删除吗？"
+    "Waiting for %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "等待 %@"
           }
         }
       }
     },
-    "Tone" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "音调"
+    "Waiting for a picture": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "等待图片"
           }
         }
       }
     },
-    "Too loud: turn the radio down" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "太响了：请调低电台音量"
+    "Waiting for VIS": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "等待 VIS"
           }
         }
       }
     },
-    "Too loud: turn the radio down." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "太响了：请调低电台音量。"
+    "Watch app not installed": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "手表 App 未安装"
           }
         }
       }
     },
-    "Transmitting needs an amateur radio license and must follow its rules, including identifying your station." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "发射需要业余无线电执照，并须遵守执照的相关规定，包括表明你的电台身份。"
+    "Website": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "网站"
           }
         }
       }
     },
-    "Tuning offset" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "调谐偏移"
+    "What It Does": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "功能"
           }
         }
       }
     },
-    "Unknown" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "未知"
+    "What it needs": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "需要什么"
           }
         }
       }
     },
-    "Usually it's the level: too low lets noise in, too high (Clipping) distorts the tones. A cable or USB interface is much cleaner than a microphone held to a speaker." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "通常是电平问题：太低会混入噪声，太高（削波）会让音调失真。用连接线或 USB 声卡，比把麦克风对着扬声器干净得多。"
+    "When the screen dims or you leave the app, listening stops, after the picture coming in. Saves the most battery.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "屏幕变暗或离开 App 时停止接收；如果正在收图，等这张收完再停。最省电。"
           }
         }
       }
     },
-    "Version %@" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "版本 %@"
+    "Where the picture's first line starts in the recording. Move it a line at a time if the top of the picture is missing or the picture starts too low.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "图片第一行在录音中的起点。如果图片顶部缺了一截，或者整张图偏下，可以一行一行地移动。"
           }
         }
       }
     },
-    "VIS header" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "VIS 头"
+    "With a new setup, tap the share button to make a WAV and decode it with another SSTV program, or play it to Apricot SSTV on Apple Watch.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用新设置时，先轻点分享按钮生成 WAV，用其他 SSTV 程序解码检查，或者放给 Apple Watch 上的 Apricot SSTV 接收。"
           }
         }
       }
     },
-    "Waiting for a picture" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "等待图片"
+    "With Save Raw Audio on, each picture keeps the sound it was decoded from, from as long before the picture to as long after it as the picture takes to send, so nothing is lost if its start or end was misjudged. Share it from the picture's details as a WAV file to decode it in another program, or to show someone what was received. Tapping Stop ends the recording there. Turn it off in Settings to save space.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "开启“保存原始音频”后，每张图片都会保留解码它所用的声音：图片前后各多保存一张图的发送时长，就算图片的开头或结尾判断错了，声音也不会丢。可以在图片的详细信息中把它分享为 WAV 文件，用其他程序解码，或者让别人听听收到的是什么。轻点“停止”时录音也随之结束。想节省空间，可以在“设置”中关闭。"
           }
         }
       }
     },
-    "Waiting for VIS" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "等待 VIS"
+    "With Start Without VIS on, a picture whose header was missed still starts after a few lines, from its line syncs.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打开“无 VIS 也开始”后，即使漏掉了 VIS 头，也会在几行之后根据行同步开始接收。"
           }
         }
       }
     },
-    "Watch app not installed" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "手表 App 未安装"
+    "Wrist Down": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "放下手腕后"
           }
         }
       }
     },
-    "Website" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "网站"
+    "You can change these in Settings.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "以后可以在“设置”中更改。"
           }
         }
       }
     },
-    "What It Does" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "功能"
+    "You can change this in Settings at any time.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "随时可以在“设置”中更改。"
           }
         }
       }
     },
-    "With a new setup, tap the share button to make a WAV and decode it with another SSTV program, or play it to Apricot SSTV on Apple Watch." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "使用新设置时，先轻点分享按钮生成 WAV，用其他 SSTV 程序解码检查，或者放给 Apple Watch 上的 Apricot SSTV 接收。"
+    "Your Pictures": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "你的图片"
           }
         }
       }
     },
-    "With Start Without VIS on, a picture whose header was missed still starts after a few lines, from its line syncs." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "打开“无 VIS 也开始”后，即使漏掉了 VIS 头，也会在几行之后根据行同步开始接收。"
+    "© %@ %@. Apricot SSTV is free software: you can redistribute it and modify it under the terms of the GNU General Public License, version 3. It comes with no warranty. Its decoder began as Apricot SSTV for the iPod nano.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "© %1$@ %2$@。Apricot SSTV 是自由软件：你可以依照 GNU 通用公共许可证第 3 版的条款重新分发和修改它。本软件不提供任何担保。它的解码器源自 iPod nano 版的 Apricot SSTV。"
           }
         }
       }
     }
   },
-  "version" : "1.0"
+  "version": "1.0"
 }

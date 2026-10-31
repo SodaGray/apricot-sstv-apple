@@ -2,17 +2,20 @@
 //
 //  ReceptionThumbnail.swift
 //  A saved picture, loaded off the main thread. Reloads when the
-//  picture is saved again (a resumed picture keeps its ID).
+//  picture is saved again (a resumed picture keeps its ID), or edited.
 //
 
 import SwiftUI
 import CoreGraphics
+import Combine
 
 struct Thumbnail: View {
     let meta: ReceptionMeta
     var cornerRadius: CGFloat = 3
 
     @State private var image: CGImage?
+    /// When the darkroom last saved or reverted it (0: never).
+    @State private var editStamp: Double = 0
 
     var body: some View {
         ZStack {
@@ -24,8 +27,12 @@ struct Thumbnail: View {
                     .aspectRatio(contentMode: .fit)
             }
         }
-        .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
-        .task(id: "\(meta.id)|\(meta.endedAt.timeIntervalSince1970)") {
+        .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+        .onAppear { editStamp = ReceptionStore.editStamp(id: meta.id) }
+        .onReceive(NotificationCenter.default.publisher(for: .receptionsChanged)) { _ in
+            editStamp = ReceptionStore.editStamp(id: meta.id)
+        }
+        .task(id: "\(meta.id)|\(meta.endedAt.timeIntervalSince1970)|\(editStamp)") {
             let id = meta.id
             let loaded = await Task.detached(priority: .utility) {
                 LoadedImage(image: ReceptionStore.loadImage(id: id))

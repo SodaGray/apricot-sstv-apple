@@ -45,6 +45,17 @@ static void *d_calloc(size_t n, size_t sz)
 #define FC_HZ    1700                   /* mixer centre: 1100..2300 -> -600..+600 */
 #define FIR_FCUT 1500.0                 /* low-pass -6 dB point (image at -2800 Hz is rejected) */
 #define FIR_TAPS_44K 127
+/* High-pass before the mixer, HP_STAGES biquads (Butterworth, 2 = 4th order)
+ * at HP_HZ. The low-pass above still passes 200 Hz at about -6 dB, and wind,
+ * traffic and handling rumble picked up by a microphone are often louder
+ * than the signal: enough to hide the VIS bits and the 1200 Hz syncs, and to
+ * pull the tuning-offset estimate far off. */
+#ifndef HP_STAGES
+#define HP_STAGES    2
+#endif
+#ifndef HP_HZ
+#define HP_HZ        450.0
+#endif
 
 #define VB_N     1024                   /* 1 ms tone bins kept for the VIS detector */
 #define VB_MASK  (VB_N - 1)
@@ -56,9 +67,12 @@ static void *d_calloc(size_t n, size_t sz)
 #define SYNC_Q_MIN   0.60f              /* matched-template score for a "good" sync */
 #define AUTO_PULSE_Q 0.60f              /* pulse candidates for autosync (each is then checked
                                            against every mode's sync length, grid and landmarks) */
-#define LV_LEN       (1u << 17)         /* level ring, tone samples: 11.9 s at Fs = 11025.
-                                           Lines older than that keep the timing they were
-                                           drawn with. Fixed, so memory doesn't depend on the rate */
+#define LV_LEN       (1u << 22)         /* level ring, tone samples: 380 s at Fs = 11025, 349 s at
+                                           12000: a whole picture (PD290 is 289 s), so every line
+                                           is re-timed when the slant fit improves. (The nano had
+                                           room for 11.9 s, and older lines kept the timing they
+                                           were drawn with: the top of a picture could lean while
+                                           the bottom was straight.) 4 MB + 0.5 MB of sync bits */
 #define FH_LEN       (1u << 16)         /* tone history: 5.9 s at 11025 (autosync looks back
                                            4 PD240 lines) */
 #define FH_HZ0       900.0f             /* tone history as uint8: 900 + 6 * q Hz */
@@ -74,6 +88,17 @@ typedef char img_bytes_cover_max[(IMG_BYTES >= 2u * SSTV_MAX_W * SSTV_MAX_H) ? 1
 #define RD_BUDGET    10240              /* channel-pixels re-timed per sstv_feed call (bounds
                                            the per-frame cost on the nano) */
 #define NPULSE       32
+#ifndef SYNC_LEN_PCT
+#define SYNC_LEN_PCT 55                 /* % of a pulse that must read as sync tone for autosync
+                                           (was 70: echo and fading smear a sync's edges; the
+                                           grid and landmark checks still reject noise) */
+#endif
+#ifndef SP_STEP_HZ
+#define SP_STEP_HZ   60.0f              /* a tone step this small (per tone sample) is "picture" */
+#endif
+#ifndef SP_MIN_PCT
+#define SP_MIN_PCT   60u                /* % of small steps in a period for a picture to be there */
+#endif
 #define NGAPS        8                  /* recent input gaps remembered (tone-index ranges) */
 #define RESUME_S     120.0              /* resume a lost picture if its syncs return within this */
 
@@ -163,6 +188,8 @@ struct SstvRx {
     double Fs;                          /* tone (decimated) rate */
 
     /* mixer + decimating complex FIR at the input rate */
+    float hp_b[2][3], hp_a[2][2];       /* high-pass: two biquads (transposed direct form II) */
+    float hp_z[2][2];
     float lo_re, lo_im, lo_cr, lo_ci;   /* mixer: rotating phasor and its per-sample step */
     float *h; int L, M;                 /* M = (L-1)/2, symmetric taps h[0..M] */
     float *bi, *bq; int bpos, dcount;
@@ -201,6 +228,14 @@ struct SstvRx {
     int      fit_n, fit_span, fit_full;
     int      k, nper;                   /* next sync period to decode, periods per image */
     int      miss_run, sync_good, sync_seen, redraws, relocks;
+    int      absent_run;                /* consecutive periods with neither a sync nor a picture */
+    uint32_t sp_n, sp_ok; float sp_prev; /* this period: tone steps, and how many were small */
+    int      par_v_even, par_v_odd;     /* Robot 36: separator votes for V on even / odd lines */
+    int      par_phase;                 /* ... and the parity they settled on (1: V on odd lines) */
+    /* darkroom: decoding a recording again with settings chosen by hand */
+    int      manual;                    /* started by sstv_start_at: no VIS starts, never "lost" */
+    int      slant_fixed; double slant_ppm;   /* line period fixed at this clock error */
+    double   shift_ms;                  /* every line sampled this much later (picture moves left) */
     int      can_resume;                /* last picture ended early (lost/aborted), not counted */
     uint32_t t_end;                     /* tone index where it ended */
     uint32_t gap0[NGAPS], gap1[NGAPS]; int gapi;   /* [gap0, gap1): tone samples that were gaps */
@@ -368,6 +403,7 @@ static void render_period(SstvRx *s, int k, double t)
      * sample after the true crossing; take it back (edge test: decoded edges
      * sat 0.17 px early without this, within 0.05 px with it) */
     t -= 0.5;
+    t += s->shift_ms * 0.001 * Fs;                 /* darkroom: move the picture sideways */
     /* t is (trailing edge - nominal sync); lay the channels out from the edge
      * itself with the fitted clock, so a big skew doesn't shift them */
     t += s->Ls - m->sync * Fs;
@@ -382,15 +418,30 @@ static void render_period(SstvRx *s, int k, double t)
         sample_chan(s, base, (float)(t + m->ch[c].t0 * Fs), (float)(m->ch[c].len * Fs),
                     w, s->chbuf[c]);
     if (m->color == CM_R36) {
+        /* R-Y and B-Y alternate line by line, and the separator after Y says
+         * which one follows. A faded or echoing separator is easily misread,
+         * and one misread line swaps its colours (a stripe), so the lines vote:
+         * each clear separator votes for "V on even lines" or "V on odd
+         * lines", and every line follows the majority. */
         float sep = 0, p, p1 = (float)(t + 0.1040 * Fs);
-        int ns = 0;
+        int ns = 0, phase, j;
         for (p = (float)(t + 0.1005 * Fs); p < p1; p += 1.0f) { sep += lvl_rel(s, base, p); ns++; }
         sep = ns ? sep / (float)ns : 128.0f;
-        s->ct[k] = (uint8_t)(sep < 80 ? CT_V : sep > 175 ? CT_U : ((k & 1) ? CT_U : CT_V));
+        if (!s->done[k] && (sep < 80 || sep > 175)) {       /* first drawing only: one vote a line */
+            if ((sep < 80) == !(k & 1)) s->par_v_even++; else s->par_v_odd++;
+        }
+        phase = s->par_v_odd > s->par_v_even;
+        s->ct[k] = (uint8_t)(((k + phase) & 1) ? CT_U : CT_V);
         memcpy(s->Y + k * R36_W, s->chbuf[0], R36_W);
         memcpy(s->C + k * R36_W, s->chbuf[1], R36_W);
         s->done[k] = 1;
-        compose36(s, k - 1); compose36(s, k); compose36(s, k + 1);
+        if (phase != s->par_phase) {                         /* the vote turned: redo every line */
+            s->par_phase = phase;
+            for (j = 0; j < R36_H; j++) if (s->done[j]) s->ct[j] = (uint8_t)(((j + phase) & 1) ? CT_U : CT_V);
+            for (j = 0; j < R36_H; j++) compose36(s, j);
+        } else {
+            compose36(s, k - 1); compose36(s, k); compose36(s, k + 1);
+        }
     } else {
         const uint8_t *Y = 0, *Y2 = 0, *V = 0, *U = 0, *R = 0, *G = 0, *B = 0;
         for (c = 0; c < m->nch; c++) {
@@ -472,6 +523,17 @@ static void fit_model(SstvRx *s)
     for (k = 0; k <= s->k && k < MAXP; k++)
         if (s->mgood[k]) { r[n++] = s->mpos[k] - s->Pprior * k; if (k < kmin) kmin = k; if (k > kmax) kmax = k; }
     s->fit_n = n; s->fit_span = n ? kmax - kmin : 0; s->fit_full = 0;
+    if (s->slant_fixed) {                             /* darkroom: the period is given, fit the phase */
+        b = s->Pnom * (1.0 + s->slant_ppm * 1e-6);
+        s->fb = b;
+        if (n == 0) return;
+        for (k = 0, n = 0; k <= s->k && k < MAXP; k++)
+            if (s->mgood[k]) r[n++] = s->mpos[k] - b * k;
+        sort_d(r, n);
+        s->fa = (n & 1) ? r[n / 2] : 0.5 * (r[n / 2 - 1] + r[n / 2]);
+        s->fit_full = (s->fit_span >= 8);
+        return;
+    }
     if (n == 0) return;                               /* keep the start guess */
     if (n < 4 || s->fit_span < 4) {                   /* too few: prior period, median offset */
         sort_d(r, n);
@@ -555,6 +617,9 @@ static void finish(SstvRx *s, int why)
     s->state = SSTV_IDLE;
     s->end_kind = why;
     s->t_end = s->n;
+    /* forget this picture's sync pulses: autosync would otherwise find its
+     * last lines' grid and start a "new" picture on them at once */
+    s->npulses = 0; s->cand = 0;
     s->can_resume = (why == SSTV_END_LOST || why == SSTV_END_ABORT) && s->k * 6 < s->nper * 5 && s->fit_n >= 4;
     if (s->k * 6 >= s->nper * 5) s->images++;
     if (s->k * 6 >= s->nper * 5 && s->fit_full && s->fit_n * 4 >= s->nper && s->fit_span * 2 >= s->nper) {
@@ -604,9 +669,11 @@ static void start_rx(SstvRx *s, const Mode *m, double t0, int kind, float off)
     s->Pprior = s->Pnom * (1.0 + s->ppm_prior * 1e-6);
     s->nper = mode_periods(m);
     s->state = SSTV_RX; s->start_kind = kind; s->end_kind = SSTV_END_NONE;
-    s->t_ref = t0; s->fa = 0; s->fb = s->Pprior;
+    s->t_ref = t0; s->fa = 0; s->fb = s->slant_fixed ? s->Pnom * (1.0 + s->slant_ppm * 1e-6) : s->Pprior;
     s->fit_n = s->fit_span = s->fit_full = 0;
     s->k = 0; s->miss_run = 0; s->sync_good = s->sync_seen = 0; s->redraws = 0;
+    s->absent_run = 0; s->sp_n = s->sp_ok = 0;
+    s->par_v_even = s->par_v_odd = 0; s->par_phase = 0;
     s->rd_pending = 0; s->rd_j = 0;
     for (k = 0; k < MAXP; k++) { s->mgood[k] = 0; s->done[k] = 0; }
     memset(s->img, 0, need * sizeof *s->img);
@@ -618,12 +685,21 @@ static void start_rx(SstvRx *s, const Mode *m, double t0, int kind, float off)
 
 static void process_period(SstvRx *s)
 {
-    int k = s->k, lost;
+    int k = s->k, lost, present;
     double W = search_window(s), pos, t;
     float q = find_sync(s, line_t(s, k), W, &pos);
     s->sync_seen++;
-    if (q >= SYNC_Q_MIN) { s->mgood[k] = 1; s->mpos[k] = pos - s->t_ref; s->sync_good++; s->miss_run = 0; }
-    else { s->mgood[k] = 0; s->miss_run++; }
+    present = s->sp_n > 0 && s->sp_ok * 100u >= s->sp_n * SP_MIN_PCT
+              && !in_gap(s, line_t(s, k), line_t(s, k) + s->fb);   /* a gap holds its last tone: not picture */
+    s->sp_n = s->sp_ok = 0;
+    if (q >= SYNC_Q_MIN) { s->mgood[k] = 1; s->mpos[k] = pos - s->t_ref; s->sync_good++; s->miss_run = 0; s->absent_run = 0; }
+    else {
+        s->mgood[k] = 0; s->miss_run++;
+        /* no sync, but the picture is still coming in: carry on along the
+         * fitted line grid (syncs are the first thing a weak or echoing
+         * signal loses). Only a missing picture counts towards "lost". */
+        if (present) s->absent_run = 0; else s->absent_run++;
+    }
     fit_model(s);
     t = line_t(s, k);
     /* straighten: if the fit moved, re-time the periods already drawn. Done as
@@ -645,7 +721,7 @@ static void process_period(SstvRx *s)
     lost = (int)((s->start_kind == SSTV_START_VIS ? LOST_S_VIS : LOST_S_SYNC) / s->m->line);
     if (lost < 8) lost = 8;
     if (s->k >= s->nper) finish(s, SSTV_END_COMPLETE);
-    else if (s->miss_run >= lost) finish(s, SSTV_END_LOST);
+    else if (!s->manual && s->absent_run >= lost) finish(s, SSTV_END_LOST);
 }
 
 /* ------------------------------------------------------------------ VIS */
@@ -691,6 +767,23 @@ static int vis_test(const SstvRx *s, uint32_t j, int *code, float *off, float *e
     return 1;
 }
 
+/* Were the picture in progress's syncs still coming in during [a, b]? Then a
+ * "VIS" heard there is picture content that happened to look like one (a
+ * grey picture holds the 1900 Hz leader tone well), not a new picture: a
+ * real one comes after the old picture has stopped. */
+static int syncs_during(const SstvRx *s, double a, double b)
+{
+    int k;
+    if (s->state != SSTV_RX) return 0;
+    for (k = s->k - 1; k >= 0 && k < MAXP; k--) {
+        double t = s->mpos[k] + s->t_ref;
+        if (!s->mgood[k]) continue;
+        if (t < a) break;
+        if (t <= b) return 1;
+    }
+    return 0;
+}
+
 static void vis_bin_done(SstvRx *s, uint32_t j)
 {
     int code; float off, err;
@@ -707,7 +800,7 @@ static void vis_bin_done(SstvRx *s, uint32_t j)
         s->last_vis = s->vis_code;
         s->last_vis_ok = m != 0;
         s->revision++;
-        if (m && !(s->state == SSTV_RX && t_end < s->t_ref + 1.0 * s->Fs))
+        if (m && !s->manual && !(s->state == SSTV_RX && t_end < s->t_ref + 1.0 * s->Fs) && !syncs_during(s, t_end - 0.8 * s->Fs, t_end))
             start_rx(s, m, t_end + m->first * s->Fs * (1.0 + s->ppm_prior * 1e-6), SSTV_START_VIS, s->vis_off);
     }
 }
@@ -751,7 +844,7 @@ static int sync_len_ok(const SstvRx *s, const Mode *m, uint32_t edge)
     uint32_t pre = (uint32_t)iround((m->sync * 0.4 < 0.003 ? m->sync * 0.4 : 0.003) * s->Fs);
     uint32_t in0 = edge - Ls + Ls / 10u, in1 = edge - Ls / 10u;
     if (edge < Ls + g + pre + 1u) return 0;
-    if (sbits(s, in0, in1) * 10 < (int)(in1 - in0) * 7) return 0;
+    if (sbits(s, in0, in1) * 100 < (int)(in1 - in0) * SYNC_LEN_PCT) return 0;
     return sbits(s, edge - Ls - g - pre, edge - Ls - g) * 10 <= (int)pre * 3;
 }
 
@@ -881,6 +974,14 @@ static void on_tone(SstvRx *s, float f)
         s->fh[i & s->fh_mask] = (uint8_t)(q <= 0.0f ? 0 : q >= 255.0f ? 255 : (int)q);
     }
     put_tone(s, i, f);
+    {   /* picture present? A picture's tone moves in small steps (pixels are
+         * many tone samples long); noise jumps all over the band. */
+        float d = f - s->sp_prev;
+        if (d < 0) d = -d;
+        s->sp_prev = f;
+        s->sp_n++;
+        if (d < SP_STEP_HZ) s->sp_ok++;
+    }
     s->n = i + 1;
     s->tone_ema += s->ema_a * (f - s->tone_ema);
 
@@ -931,6 +1032,20 @@ SstvRx *sstv_new(int in_rate)
     }
     s->Y = (uint8_t *)(s->img + R36_W * R36_H);
     s->C = s->Y + R36_W * R36_H;
+
+    /* high-pass: 4th-order Butterworth as two biquads, bilinear transform */
+    {
+        static const double q4[2] = { 0.54119610, 1.30656296 }, q2[1] = { 0.70710678 };
+        const double *q = HP_STAGES == 1 ? q2 : q4;
+        double w = PI_D * HP_HZ / in_rate, K = m_sin(w) / m_cos(w), K2 = K * K;
+        int j;
+        for (j = 0; j < HP_STAGES; j++) {
+            double norm = 1.0 / (1.0 + K / q[j] + K2);
+            s->hp_b[j][0] = (float)norm; s->hp_b[j][1] = (float)(-2.0 * norm); s->hp_b[j][2] = (float)norm;
+            s->hp_a[j][0] = (float)(2.0 * (K2 - 1.0) * norm);
+            s->hp_a[j][1] = (float)((1.0 - K / q[j] + K2) * norm);
+        }
+    }
 
     /* mixer: e^(-j 2 pi FC t), as a phasor rotated each sample (any rate, no
      * table) and pulled back to unit length at each decimated output */
@@ -984,10 +1099,15 @@ void sstv_feed(SstvRx *s, const int16_t *x, int n, int stride)
     Fs2pi = (float)(s->Fs / (2.0 * PI_D));
     if (stride < 1) stride = 1;
     for (i = 0; i < n; i++) {
-        float v = (float)x[(long)i * stride];
-        int p = s->bpos;
-        float lr = s->lo_re, li = s->lo_im;
-        float re = v * lr, im = v * li;
+        float v = (float)x[(long)i * stride], lr = s->lo_re, li = s->lo_im, re, im;
+        int p = s->bpos, j;
+        for (j = 0; j < HP_STAGES; j++) {             /* high-pass */
+            float y = s->hp_b[j][0] * v + s->hp_z[j][0];
+            s->hp_z[j][0] = s->hp_b[j][1] * v - s->hp_a[j][0] * y + s->hp_z[j][1];
+            s->hp_z[j][1] = s->hp_b[j][2] * v - s->hp_a[j][1] * y;
+            v = y;
+        }
+        re = v * lr; im = v * li;
         s->lo_re = lr * s->lo_cr - li * s->lo_ci;
         s->lo_im = lr * s->lo_ci + li * s->lo_cr;
         s->bi[p] = s->bi[p + L] = re;
@@ -1035,7 +1155,8 @@ void sstv_gap(SstvRx *s, int n)
     g0 = s->n;
     s->gap0[s->gapi] = g0; s->gap1[s->gapi] = g0 + t + 8u;   /* + the filter's settling */
     s->gapi = (s->gapi + 1) % NGAPS;
-    for (k = 0; k < 2 * s->L; k++) s->bi[k] = s->bq[k] = 0.0f;   /* restart the filter clean */
+    for (k = 0; k < 2 * s->L; k++) s->bi[k] = s->bq[k] = 0.0f;   /* restart the filters clean */
+    for (k = 0; k < 2; k++) s->hp_z[k][0] = s->hp_z[k][1] = 0.0f;
     s->zr1 = 1.0f; s->zi1 = 0.0f;
     {   /* hold the last tone (never a sync tone, so no false syncs) */
         float f = s->med2 < 1450.0f ? 1500.0f : s->med2;
@@ -1073,6 +1194,10 @@ void sstv_status(const SstvRx *s, SstvStatus *st)
     st->images = s->images;
     st->gaps = s->gaps;
     st->revision = s->revision;
+    if (s->start_kind != SSTV_START_NONE) {
+        st->start_s = (s->t_ref + s->fa) / s->Fs;
+        st->ppm_fit = (s->fb / s->Pnom - 1.0) * 1e6;
+    }
 }
 
 const uint16_t *sstv_image(const SstvRx *s, int *w, int *h)
@@ -1110,6 +1235,27 @@ void sstv_clear(SstvRx *s)
 
 void sstv_set_autosync(SstvRx *s, int on) { if (s) s->autosync = on ? 1 : 0; }
 void sstv_set_mode(SstvRx *s, int vis) { if (s) s->lock_vis = mode_by_vis(vis) ? vis : -1; }
+
+void sstv_set_slant(SstvRx *s, int fixed, double ppm)
+{
+    if (!s) return;
+    if (ppm > 20000) ppm = 20000;
+    if (ppm < -20000) ppm = -20000;
+    s->slant_fixed = fixed ? 1 : 0;
+    s->slant_ppm = ppm;
+}
+
+void sstv_set_shift(SstvRx *s, double ms) { if (s) s->shift_ms = ms; }
+
+int sstv_start_at(SstvRx *s, int vis, double seconds, double offset_hz)
+{
+    const Mode *m = mode_by_vis(vis);
+    if (!s || !m || seconds < 0) return 0;
+    s->manual = 1;
+    s->autosync = 0;
+    start_rx(s, m, seconds * s->Fs, SSTV_START_SYNC, (float)offset_hz);
+    return 1;
+}
 
 void sstv_set_ppm_prior(SstvRx *s, int ppm)
 {

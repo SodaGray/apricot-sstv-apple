@@ -3,13 +3,23 @@
 //  ReceptionStore.swift
 //  One received picture = one folder:
 //
-//    Documents/Receptions/<id>/image.png
-//    Documents/Receptions/<id>/meta.json
-//    Documents/Receptions/<id>/synced      (watch only: the iPhone has it)
+//    Documents/Receptions/<id>/image.png     the picture as received (never edited)
+//    Documents/Receptions/<id>/meta.json     how it was received
+//    Documents/Receptions/<id>/audio.wav     its audio (when Save Raw Audio is on)
+//    Documents/Receptions/<id>/audio.json    the audio's rate and gaps
+//    Documents/Receptions/<id>/edited.png    (iPhone) the picture developed again in the darkroom
+//    Documents/Receptions/<id>/edit.json     (iPhone) the settings it was developed with
+//    Documents/Receptions/<id>/notes.json    (iPhone) notes written about it, its event (Events.swift)
+//    Documents/Receptions/<id>/synced        (watch only) the iPhone has the picture
+//    Documents/Receptions/<id>/audio-synced  (watch only) the iPhone has the audio
+//
+//    Documents/Receptions/.recording/        audio being recorded right now
 //
 //  The same layout on the watch and the phone, so a picture can be
 //  copied from one to the other as it is. meta.json is written last:
-//  a folder without it is incomplete.
+//  a folder without it is incomplete. Edits are files beside these, as in
+//  Photos: image.png and audio.wav stay the originals, and reverting just
+//  removes edited.png and edit.json.
 //
 //  Every change posts .receptionsChanged on the main queue.
 //
@@ -43,10 +53,16 @@ nonisolated struct ReceptionMeta: Codable, Sendable, Identifiable, Equatable {
     var syncSeen: Int
     var relocks: Int
     var sampleRate: Int
-    /// "watch" or "phone": where it was received.
+    /// "watch" or "phone": where it was received; "file": decoded from an
+    /// audio file on the iPhone.
     var device: String
 
     var isComplete: Bool { end == "complete" }
+
+    /// Too few rows to count as a picture (the receiver's threshold): a
+    /// false start, or a picture caught at its very end. Kept anyway, for
+    /// its raw audio; the gallery shows fragments apart.
+    var isFragment: Bool { rows < max(16, height / 8) }
 
     /// How it ended, for showing (end itself stays English in meta.json).
     var endDescription: String {
@@ -67,9 +83,14 @@ nonisolated struct ReceptionMeta: Codable, Sendable, Identifiable, Equatable {
             : String(localized: "Line syncs (no VIS)")
     }
 
-    /// Where it was received, for showing.
+    /// Where it was received, for showing ("file": decoded from an audio
+    /// file, AudioFileImport.swift).
     var deviceDescription: String {
-        device == "watch" ? String(localized: "Apple Watch") : String(localized: "iPhone")
+        switch device {
+        case "watch": String(localized: "Apple Watch")
+        case "file": String(localized: "Audio File")
+        default: String(localized: "iPhone")
+        }
     }
 }
 
@@ -92,6 +113,23 @@ nonisolated enum ReceptionStore {
 
     private static func metaURL(for id: String) -> URL {
         folder(for: id).appending(path: "meta.json")
+    }
+
+    static func audioURL(for id: String) -> URL {
+        folder(for: id).appending(path: "audio.wav")
+    }
+
+    private static func audioInfoURL(for id: String) -> URL {
+        folder(for: id).appending(path: "audio.json")
+    }
+
+    private static func audioSyncedURL(for id: String) -> URL {
+        folder(for: id).appending(path: "audio-synced")
+    }
+
+    /// Where recordings in progress are written (hidden: list() skips it).
+    static var recordingDirectory: URL {
+        root.appending(path: ".recording", directoryHint: .isDirectory)
     }
 
     private static func syncedURL(for id: String) -> URL {
@@ -145,6 +183,9 @@ nonisolated enum ReceptionStore {
         }
 
         try writeMeta(meta)
+        #if os(iOS)
+        EventStore.assignOnArrival(meta)
+        #endif
         postChanged()
     }
 
@@ -162,6 +203,9 @@ nonisolated enum ReceptionStore {
         try fm.copyItem(at: source, to: dest)
 
         try writeMeta(meta)
+        #if os(iOS)
+        EventStore.assignOnArrival(meta)
+        #endif
         postChanged()
     }
 
@@ -178,10 +222,96 @@ nonisolated enum ReceptionStore {
         try encoder.encode(meta).write(to: metaURL(for: meta.id), options: .atomic)
     }
 
-    // MARK: Synced mark (watch)
+    // MARK: Audio
 
+    static func hasAudio(id: String) -> Bool {
+        isValidID(id) && FileManager.default.fileExists(atPath: audioURL(for: id).path)
+    }
+
+    static func audioInfo(id: String) -> AudioInfo? {
+        guard isValidID(id),
+              let data = try? Data(contentsOf: audioInfoURL(for: id))
+        else { return nil }
+        return try? JSONDecoder().decode(AudioInfo.self, from: data)
+    }
+
+    /// Size of audio.wav in bytes (0 if none).
+    static func audioByteCount(id: String) -> Int64 {
+        guard hasAudio(id: id),
+              let size = try? audioURL(for: id).resourceValues(forKeys: [.fileSizeKey]).fileSize
+        else { return 0 }
+        return Int64(size)
+    }
+
+    /// Files a finished recording with its picture. Returns false, and
+    /// deletes the recording, if the picture wasn't kept.
+    @discardableResult
+    static func attachAudio(id: String, from recording: URL, info: AudioInfo) throws -> Bool {
+        let fm = FileManager.default
+        guard isValidID(id), fm.fileExists(atPath: metaURL(for: id).path) else {
+            try? fm.removeItem(at: recording)
+            return false
+        }
+        try installAudio(id: id, moving: recording, info: info)
+        return true
+    }
+
+    /// Takes audio that arrived from the watch. It may come before or
+    /// after its picture; the folder is made if it isn't there yet.
+    static func importAudio(id: String, from source: URL, info: AudioInfo) throws {
+        guard isValidID(id) else { throw StoreError.badID }
+        let fm = FileManager.default
+        try fm.createDirectory(at: folder(for: id), withIntermediateDirectories: true)
+        // Staged beside the folder (not in .recording, which is cleared at
+        // launch), then moved in.
+        let staging = root.appending(path: ".incoming", directoryHint: .isDirectory)
+        let copy = staging.appending(path: "\(id).wav")
+        try fm.createDirectory(at: staging, withIntermediateDirectories: true)
+        try? fm.removeItem(at: copy)
+        try fm.copyItem(at: source, to: copy)
+        try installAudio(id: id, moving: copy, info: info)
+    }
+
+    private static func installAudio(id: String, moving file: URL, info: AudioInfo) throws {
+        let fm = FileManager.default
+        try? fm.removeItem(at: audioSyncedURL(for: id))
+        let dest = audioURL(for: id)
+        try? fm.removeItem(at: dest)
+        try fm.moveItem(at: file, to: dest)
+        try JSONEncoder().encode(info).write(to: audioInfoURL(for: id), options: .atomic)
+        postChanged()
+    }
+
+    /// Removes a picture's audio and keeps the picture.
+    static func deleteAudio(id: String) throws {
+        guard isValidID(id) else { throw StoreError.badID }
+        let fm = FileManager.default
+        try? fm.removeItem(at: audioInfoURL(for: id))
+        try? fm.removeItem(at: audioSyncedURL(for: id))
+        try fm.removeItem(at: audioURL(for: id))
+        postChanged()
+    }
+
+    /// Recordings left half-written by a previous run (the app was
+    /// stopped mid-picture). Call once at launch, before receiving.
+    static func removeLeftoverRecordings() {
+        try? FileManager.default.removeItem(at: recordingDirectory)
+    }
+
+    // MARK: Synced marks (watch)
+
+    /// The iPhone has everything there is: the picture, and its audio if
+    /// there is any.
     static func isSynced(id: String) -> Bool {
+        isImageSynced(id: id) && (!hasAudio(id: id) || isAudioSynced(id: id))
+    }
+
+    static func isImageSynced(id: String) -> Bool {
         FileManager.default.fileExists(atPath: syncedURL(for: id).path)
+    }
+
+    static func isAudioSynced(id: String) -> Bool {
+        FileManager.default.fileExists(atPath: audioSyncedURL(for: id).path)
     }
 
     static func markSynced(id: String) {
@@ -189,6 +319,12 @@ nonisolated enum ReceptionStore {
               FileManager.default.fileExists(atPath: metaURL(for: id).path)
         else { return }
         FileManager.default.createFile(atPath: syncedURL(for: id).path, contents: Data())
+        postChanged()
+    }
+
+    static func markAudioSynced(id: String) {
+        guard hasAudio(id: id) else { return }
+        FileManager.default.createFile(atPath: audioSyncedURL(for: id).path, contents: Data())
         postChanged()
     }
 
@@ -214,12 +350,73 @@ nonisolated enum ReceptionStore {
         return decodeMeta(data)
     }
 
+    /// The picture as shown: the darkroom's version if there is one.
     static func loadImage(id: String) -> CGImage? {
-        guard
-            isValidID(id),
-            let source = CGImageSourceCreateWithURL(imageURL(for: id) as CFURL, nil)
-        else { return nil }
+        guard isValidID(id) else { return nil }
+        return load(displayImageURL(for: id))
+    }
+
+    /// The picture as it was received, whatever was done to it since.
+    static func loadOriginalImage(id: String) -> CGImage? {
+        guard isValidID(id) else { return nil }
+        return load(imageURL(for: id))
+    }
+
+    private static func load(_ url: URL) -> CGImage? {
+        guard let source = CGImageSourceCreateWithURL(url as CFURL, nil) else { return nil }
         return CGImageSourceCreateImageAtIndex(source, 0, nil)
+    }
+
+    // MARK: Edits (darkroom)
+
+    static func editedImageURL(for id: String) -> URL {
+        folder(for: id).appending(path: "edited.png")
+    }
+
+    private static func editURL(for id: String) -> URL {
+        folder(for: id).appending(path: "edit.json")
+    }
+
+    /// edited.png if there is one, else image.png: what to show and share.
+    static func displayImageURL(for id: String) -> URL {
+        hasEdit(id: id) ? editedImageURL(for: id) : imageURL(for: id)
+    }
+
+    static func hasEdit(id: String) -> Bool {
+        isValidID(id) && FileManager.default.fileExists(atPath: editedImageURL(for: id).path)
+    }
+
+    /// Changes whenever an edit is saved or reverted (for reloading thumbnails).
+    static func editStamp(id: String) -> Double {
+        guard hasEdit(id: id),
+              let date = try? editedImageURL(for: id).resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate
+        else { return 0 }
+        return date.timeIntervalSince1970
+    }
+
+    static func editSettings(id: String) -> Data? {
+        guard hasEdit(id: id) else { return nil }
+        return try? Data(contentsOf: editURL(for: id))
+    }
+
+    /// Saves a developed picture beside the original.
+    static func saveEdit(id: String, image: CGImage, settings: Data) throws {
+        guard isValidID(id) else { throw StoreError.badID }
+        guard let dest = CGImageDestinationCreateWithURL(
+            editedImageURL(for: id) as CFURL, UTType.png.identifier as CFString, 1, nil
+        ) else { throw StoreError.cannotWriteImage }
+        CGImageDestinationAddImage(dest, image, nil)
+        guard CGImageDestinationFinalize(dest) else { throw StoreError.cannotWriteImage }
+        try settings.write(to: editURL(for: id), options: .atomic)
+        postChanged()
+    }
+
+    /// Back to the picture as received.
+    static func revertEdit(id: String) {
+        guard isValidID(id) else { return }
+        try? FileManager.default.removeItem(at: editedImageURL(for: id))
+        try? FileManager.default.removeItem(at: editURL(for: id))
+        postChanged()
     }
 
     // MARK: Coding

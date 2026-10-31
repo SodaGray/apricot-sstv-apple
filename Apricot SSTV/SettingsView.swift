@@ -4,12 +4,14 @@
 //  Apricot SSTV
 //
 //  The Settings tab: the few things worth remembering (receive mode,
-//  starting without VIS, the callsign drawn on sent pictures), how much
-//  is saved, whether the watch is set up, and Help and About.
+//  starting without VIS, the receive timeout, saving raw audio, the
+//  callsign drawn on sent pictures), how much is saved, whether the
+//  watch is set up, and the introduction, Help and About.
 //
 
 import SwiftUI
 import Combine
+import UniformTypeIdentifiers
 
 struct SettingsView: View {
     @EnvironmentObject private var rx: Receiver
@@ -19,9 +21,15 @@ struct SettingsView: View {
     @State private var callsignDraft = ""
     @FocusState private var editingCallsign: Bool
 
-    @State private var storageBytes: Int64 = 0
+    @State private var usage = LibraryTransfer.Usage()
+    @State private var confirmDeleteAudio = false
+    @State private var exporting = false
+    @State private var importing = false
+    @State private var transferMessage: String?
     @State private var watchStatus: PhoneSync.WatchStatus = .notPaired
     @State private var confirmDeleteAll = false
+    @State private var confirmDeleteFragments = false
+    @State private var showIntroduction = false
 
     var body: some View {
         NavigationStack {
@@ -40,7 +48,10 @@ struct SettingsView: View {
             callsignDraft = callsign
             refresh()
         }
-        .onChange(of: list.items) { refresh() }
+        // Any save, arrival or delete (audio too) changes the space used.
+        .onReceive(NotificationCenter.default.publisher(for: .receptionsChanged)) { _ in
+            refresh()
+        }
         .onChange(of: editingCallsign) {
             if !editingCallsign, callsignDraft != callsign { callsign = callsignDraft }
         }
@@ -56,6 +67,7 @@ struct SettingsView: View {
 
     // MARK: Sections
 
+    @ViewBuilder
     private var receivingSection: some View {
         Section {
             Picker("Mode", selection: $rx.chosenMode) {
@@ -69,6 +81,32 @@ struct SettingsView: View {
             Text("Receiving")
         } footer: {
             Text("Automatic finds the mode from each picture's VIS header. Choose a mode to receive only that one. Start Without VIS locks on to the line syncs when the header was missed.")
+        }
+
+        Section {
+            Picker("Receive Timeout", selection: $rx.timeoutMinutes) {
+                ForEach(Receiver.timeoutChoices, id: \.self) { minutes in
+                    Text(timeoutTitle(minutes)).tag(minutes)
+                }
+            }
+        } footer: {
+            Text("Listening stops when no picture has come in for this long, to save battery.")
+        }
+
+        Section {
+            Toggle("Save Raw Audio", isOn: $rx.saveAudio)
+            if rx.saveAudio {
+                Picker("Sample Rate", selection: $rx.fullRateAudio) {
+                    Text("12 kHz").tag(false)
+                    Text("Full Rate").tag(true)
+                }
+            }
+        } footer: {
+            if rx.saveAudio {
+                Text("Keeps the sound of each picture with it as a WAV file, to share from the picture's details or develop again in the darkroom: from as long before the picture as it takes to send, to as long after it, in case its start or end was misjudged. 12 kHz holds everything the decoder uses: about 8 MB for a Martin M1 picture. Full Rate keeps the sound as it came in (usually 48 kHz), for other programs or for listening, at four times the size. A change takes effect the next time you tap Listen. Apple Watch has its own settings and always uses 12 kHz.")
+            } else {
+                Text("Keeps the sound of each picture with it as a WAV file, to share from the picture's details or develop again in the darkroom. Apple Watch has its own settings.")
+            }
         }
     }
 
@@ -90,13 +128,86 @@ struct SettingsView: View {
     private var picturesSection: some View {
         Section {
             LabeledContent("Saved Pictures") {
-                Text(verbatim: "\(list.items.count)")
+                Text(verbatim: "\(list.items.count - list.fragmentIDs.count)")
                     .monospacedDigit()
             }
-            LabeledContent("Space Used") {
-                Text(storageBytes, format: .byteCount(style: .file))
-                    .monospacedDigit()
+            if !list.fragmentIDs.isEmpty {
+                LabeledContent("Fragments") {
+                    Text(verbatim: "\(list.fragmentIDs.count)")
+                        .monospacedDigit()
+                }
             }
+            LabeledContent("Pictures") {
+                Text(usage.pictures, format: .byteCount(style: .file)).monospacedDigit()
+            }
+            LabeledContent("Raw Audio") {
+                Text(usage.audio, format: .byteCount(style: .file)).monospacedDigit()
+            }
+            if usage.favorites > 0 {
+                LabeledContent("Favorites") {
+                    Text(usage.favorites, format: .byteCount(style: .file)).monospacedDigit()
+                }
+            }
+
+            Button {
+                exporting = true
+            } label: {
+                Label("Export Library…", systemImage: "square.and.arrow.up")
+            }
+            .disabled(list.items.isEmpty && usage.favorites == 0)
+            .fileExporter(
+                isPresented: $exporting,
+                document: LibraryExport(),
+                contentType: .folder,
+                defaultFilename: LibraryExport.defaultName
+            ) { result in
+                if case .failure(let error) = result { transferMessage = error.localizedDescription }
+            }
+
+            Button {
+                importing = true
+            } label: {
+                Label("Import Library…", systemImage: "square.and.arrow.down")
+            }
+            .fileImporter(isPresented: $importing, allowedContentTypes: [.folder]) { result in
+                switch result {
+                case .success(let url): importLibrary(url)
+                case .failure(let error): transferMessage = error.localizedDescription
+                }
+            }
+
+            Button("Delete All Raw Audio", role: .destructive) {
+                confirmDeleteAudio = true
+            }
+            .disabled(usage.audio == 0)
+            .confirmationDialog(
+                "Delete the raw audio of every picture on this iPhone?",
+                isPresented: $confirmDeleteAudio,
+                titleVisibility: .visible
+            ) {
+                Button("Delete All Raw Audio", role: .destructive) {
+                    Task.detached(priority: .userInitiated) { LibraryTransfer.deleteAllAudio() }
+                }
+            } message: {
+                Text("The pictures stay.")
+            }
+
+            Button("Delete All Fragments", role: .destructive) {
+                confirmDeleteFragments = true
+            }
+            .disabled(list.fragmentIDs.isEmpty)
+            .confirmationDialog(
+                String(localized: "Delete all \(list.fragmentIDs.count) fragments from this iPhone?"),
+                isPresented: $confirmDeleteFragments,
+                titleVisibility: .visible
+            ) {
+                Button("Delete All Fragments", role: .destructive) {
+                    for id in list.fragmentIDs { try? ReceptionStore.delete(id: id) }
+                }
+            } message: {
+                Text("Fragments are too short to count as pictures, but their raw audio may hold a whole picture. Pictures are not affected.")
+            }
+
             Button("Delete All Pictures", role: .destructive) {
                 confirmDeleteAll = true
             }
@@ -112,6 +223,33 @@ struct SettingsView: View {
             }
         } header: {
             Text("Pictures")
+        } footer: {
+            Text("Export Library saves every picture with its details, notes and raw audio, your events and your favorites, as a folder in Files. Import Library takes such a folder back; pictures already here are skipped. To find pictures in a recording made elsewhere, use Decode Audio File in the ⋯ menu on Receive.")
+        }
+        .alert(
+            transferMessage ?? "",
+            isPresented: Binding(get: { transferMessage != nil }, set: { if !$0 { transferMessage = nil } })
+        ) {
+            Button("OK", role: .cancel) {}
+        }
+    }
+
+    private func importLibrary(_ url: URL) {
+        Task {
+            let outcome = await Task.detached(priority: .userInitiated) {
+                Result { try LibraryTransfer.importFolder(url) }
+            }.value
+            switch outcome {
+            case .success(let r):
+                if r.pictures == 0 && r.favorites == 0 && r.events == 0 && r.skipped == 0 {
+                    transferMessage = String(localized: "No Apricot SSTV pictures were found in that folder.")
+                } else {
+                    transferMessage = String(localized: "Imported \(r.pictures) pictures, \(r.events) events and \(r.favorites) favorites. \(r.skipped) were already here.")
+                }
+            case .failure(let error):
+                transferMessage = error.localizedDescription
+            }
+            refresh()
         }
     }
 
@@ -127,6 +265,19 @@ struct SettingsView: View {
 
     private var otherSection: some View {
         Section {
+            Button {
+                showIntroduction = true
+            } label: {
+                Label {
+                    Text("Introduction").foregroundStyle(.primary)
+                } icon: {
+                    Image(systemName: "sparkles")
+                }
+            }
+            .sheet(isPresented: $showIntroduction) {
+                OnboardingView(purpose: .review)
+                    .environmentObject(rx)
+            }
             NavigationLink {
                 HelpView()
             } label: {
@@ -148,6 +299,10 @@ struct SettingsView: View {
 
     // MARK: Helpers
 
+    private func timeoutTitle(_ minutes: Int) -> String {
+        minutes == 0 ? String(localized: "Never") : String(localized: "\(minutes) min")
+    }
+
     private var watchStatusText: String {
         switch watchStatus {
         case .unsupported: String(localized: "Not available")
@@ -160,30 +315,8 @@ struct SettingsView: View {
     private func refresh() {
         watchStatus = PhoneSync.shared.watchStatus
         Task {
-            storageBytes = await Self.folderSize(ReceptionStore.root)
+            usage = await Task.detached(priority: .utility) { LibraryTransfer.usage() }.value
         }
-    }
-
-    /// Total size of the files under a folder, worked out off the main thread.
-    private nonisolated static func folderSize(_ url: URL) async -> Int64 {
-        await Task.detached(priority: .utility) {
-            folderSizeNow(url)
-        }.value
-    }
-
-    private nonisolated static func folderSizeNow(_ url: URL) -> Int64 {
-        let keys: [URLResourceKey] = [.fileSizeKey, .isRegularFileKey]
-        guard let files = FileManager.default.enumerator(at: url, includingPropertiesForKeys: keys) else {
-            return 0
-        }
-        var total: Int64 = 0
-        for case let file as URL in files {
-            let values = try? file.resourceValues(forKeys: Set(keys))
-            if values?.isRegularFile == true {
-                total += Int64(values?.fileSize ?? 0)
-            }
-        }
-        return total
     }
 
     private func deleteAll() {
